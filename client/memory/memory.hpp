@@ -3,84 +3,96 @@
 #include "memory/scanned_result.hpp"
 #include <common/utility/utility.hpp>
 
+#define SCANNER_ADHERE_TO_PROTECTION 1
+
 namespace Client::Memory {
-    struct MaskedSignature {
-        std::vector<std::uint8_t> data{};
-        std::vector<std::uint8_t> mask{};
-    };
+	struct MaskedSignature {
+		std::vector<std::uint8_t> data{};
+		std::vector<std::uint8_t> mask{};
+	};
 
-    template <typename T = void*>
-    inline std::enable_if_t<std::is_pointer_v<T>, ScannedResult<std::remove_pointer_t<T>>> MaskedSigScan(MaskedSignature sig, std::string peModule) {
-        std::size_t patLen = sig.mask.size();
-        MODULEINFO modInfo = Common::Utility::GetModuleInfo(peModule);
-        std::size_t modBase = (std::size_t)(modInfo.lpBaseOfDll);
-        std::size_t modLen = (std::size_t)(modInfo.SizeOfImage);
+	template <typename T = void*>
+	inline std::enable_if_t<std::is_pointer_v<T>, ScannedResult<std::remove_pointer_t<T>>> MaskedSigScan(MaskedSignature sig, std::string peModule) {
+		std::size_t patLen = sig.mask.size();
+		MODULEINFO modInfo = Common::Utility::GetModuleInfo(peModule);
+		std::size_t modBase = (std::size_t)(modInfo.lpBaseOfDll);
+		std::size_t modLen = (std::size_t)(modInfo.SizeOfImage);
 
-        for (std::size_t ix = 0; ix < modLen - patLen; ix++) {
-            bool found = true;
+		MEMORY_BASIC_INFORMATION64 pageInfo = {};
+		for (auto currentPage = modBase; currentPage < modBase + modLen; currentPage = pageInfo.BaseAddress + pageInfo.RegionSize) {
+			VirtualQuery(reinterpret_cast<LPCVOID>(currentPage), reinterpret_cast<PMEMORY_BASIC_INFORMATION>(&pageInfo), sizeof(MEMORY_BASIC_INFORMATION));
+			if (pageInfo.Protect == PAGE_NOACCESS || pageInfo.State != MEM_COMMIT || pageInfo.Protect & PAGE_GUARD) {
+				continue;
+			}
 
-            for (std::size_t jx = 0; jx < patLen; jx++) {
-                if (sig.mask[jx] != '?' && sig.data[jx] != *(std::uint8_t*)(modBase + ix + jx)) {
-                    found = false;
-                    break;
-                }
-            }
+			for (auto currentAddr = pageInfo.BaseAddress; currentAddr < pageInfo.BaseAddress + pageInfo.RegionSize - 0x8; currentAddr++) {
+				if (currentAddr < modBase + modLen - patLen) {
+					bool found = true;
 
-            if (found) {
-                return ScannedResult<std::remove_pointer_t<T>>((void*)(modBase + ix));
-            }
-        }
+					for (std::size_t jx = 0; jx < patLen; jx++) {
+						if (sig.mask[jx] != '?' && sig.data[jx] != *(std::uint8_t*)(currentAddr + jx)) {
+							found = false;
+							break;
+						}
+					}
 
-        return ScannedResult<std::remove_pointer_t<T>>(nullptr);
-    }
+					if (found) {
+						return ScannedResult<std::remove_pointer_t<T>>((void*)(currentAddr));
+					}
+				}
+			}
+		}
 
-    template <typename T = void*>
-    inline std::enable_if_t<std::is_pointer_v<T>, ScannedResult<std::remove_pointer_t<T>>> SigScan(std::string pattern, std::string peModule, std::string name = "<unknown>") {
-        MaskedSignature sig{};
+		return ScannedResult<std::remove_pointer_t<T>>(nullptr);
+	}
 
-        char* base = const_cast<char*>(pattern.c_str());
+	template <typename T = void*>
+	inline std::enable_if_t<std::is_pointer_v<T>, ScannedResult<std::remove_pointer_t<T>>> SigScan(std::string pattern, std::string peModule, std::string name = "<unknown>") {
+		MaskedSignature sig{};
 
-        for (char* cur = base; cur < base + pattern.length(); cur++) {
-            if ('\?' != *cur) { // check is ?
-                sig.data.push_back((std::uint8_t)(strtoul(cur, &cur, 16)));
-                sig.mask.push_back('x');
-                continue;
-            }
+		char* base = const_cast<char*>(pattern.c_str());
 
-            cur++;
-            if ('\?' == *cur) { // check is double ?
-                cur++;
-            }
+		for (char* cur = base; cur < base + pattern.length(); cur++) {
+			if ('\?' != *cur) { // check is ?
+				sig.data.push_back((std::uint8_t)(strtoul(cur, &cur, 16)));
+				sig.mask.push_back('x');
+				continue;
+			}
 
-            sig.data.push_back((std::uint8_t)'\xFF');
-            sig.mask.push_back('?');
-        }
+			cur++;
+			if ('\?' == *cur) { // check is double ?
+				cur++;
+			}
 
-        ScannedResult<std::remove_pointer_t<T>> res = MaskedSigScan<T>(sig, peModule);
-        if (res) {
-            LOG("Scanner", DEBUG, "Found '{}' {}+0x{:X}", name, peModule, res.As<std::uintptr_t>());
-        }
-        else {
-            LOG("Scanner", WARN, "Failed to find '{}' in {} ({})", name, peModule, pattern);
-        }
-        return res;
-    }
+			sig.data.push_back((std::uint8_t)'\xFF');
+			sig.mask.push_back('?');
+		}
 
-    template <typename T = void*>
-    inline std::enable_if_t<std::is_pointer_v<T>, ScannedResult<std::remove_pointer_t<T>>> GetExport(std::string exportName, std::string peModule) {
-        HMODULE mod = GetModuleHandleA(peModule.c_str());
-        if (!mod) {
-            LOG("Scanner", WARN, "Failed to find module '{}' while trying to find '{}'", exportName, peModule);
-            return ScannedResult<std::remove_pointer_t<T>>(nullptr);
-        }
+		ScannedResult<std::remove_pointer_t<T>> res = MaskedSigScan<T>(sig, peModule);
+		if (res) {
+			LOG("Scanner", DEBUG, "Found '{}' {}+0x{:X}", name, peModule, res.As<std::uintptr_t>() - (std::uintptr_t)Common::Utility::GetModuleInfo(peModule).lpBaseOfDll);
+		}
+		else {
+			LOG("Scanner", WARN, "Failed to find '{}' in {} ({})", name, peModule, pattern);
+		}
+		return res;
+	}
 
-        ScannedResult<std::remove_pointer_t<T>> res = ScannedResult<std::remove_pointer_t<T>>(reinterpret_cast<void*>(GetProcAddress(mod, exportName.c_str())));
-        if (res) {
-            LOG("Scanner", DEBUG, "Found '{}' {}+0x{:X}", exportName, peModule, res.As<std::uintptr_t>());
-        }
-        else {
-            LOG("Scanner", WARN, "Failed to find '{}' in {}", exportName, peModule);
-        }
-        return res;
-    }
+	template <typename T = void*>
+	inline std::enable_if_t<std::is_pointer_v<T>, ScannedResult<std::remove_pointer_t<T>>> GetExport(std::string exportName, std::string peModule) {
+		HMODULE mod = GetModuleHandleA(peModule.c_str());
+		if (!mod) {
+			LOG("Scanner", WARN, "Failed to find module '{}' while trying to find '{}'", exportName, peModule);
+			return ScannedResult<std::remove_pointer_t<T>>(nullptr);
+		}
+
+		ScannedResult<std::remove_pointer_t<T>> res = ScannedResult<std::remove_pointer_t<T>>(reinterpret_cast<void*>(GetProcAddress(mod, exportName.c_str())));
+		if (res) {
+			LOG("Scanner", DEBUG, "Found '{}' {}+0x{:X}", exportName, peModule, res.As<std::uintptr_t>());
+		}
+		else {
+			LOG("Scanner", WARN, "Failed to find '{}' in {}", exportName, peModule);
+		}
+		return res;
+	}
 }

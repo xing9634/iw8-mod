@@ -22,7 +22,7 @@ namespace Client::Game {
 			g_LaunchInfo.second, {
 				// unk_AuthManager
 				{
-					{ "48 89 05 ? ? ? ? 48 B9 ? ? ? ? ? ? ? ? 48 89 54 24", SETUP_MOD(Add(3).Rip()) },
+					{ "4C 8B 35 ? ? ? ? 4C 89 BC 24 ? ? ? ? 49 BF", SETUP_MOD(Add(3).Rip()) },
 					SETUP_POINTER(unk_AuthManager)
 				}
 			}
@@ -30,9 +30,7 @@ namespace Client::Game {
 	}
 
 	Pointers::Pointers() {
-		LOG("Pointers", INFO, "hello from pointers");
 		this->GetPointerList().Apply();
-		LOG("Pointers", INFO, "goodybe");
 
 		/*Memory::GetExport("LoadImageA", "user32.dll")
 			.Apply(&this->m_LoadImageA);
