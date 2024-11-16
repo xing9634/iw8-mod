@@ -119,9 +119,9 @@ newaction {
 	end
 }
 
-workspace "t9-mod"
+workspace "iw8-mod"
 startproject "client"
-filename "t9_%{_ACTION}"
+filename "iw8_%{_ACTION}"
 
 configurations { "Debug", "Release" }
 platforms { "x64" }
@@ -243,7 +243,7 @@ project "launcher"
 	location "launcher"
 	kind "ConsoleApp"
 	language "C++"
-	targetname "t9-mod"
+	targetname "iw8-mod"
 
 	files {
 		"launcher/**.hpp",
