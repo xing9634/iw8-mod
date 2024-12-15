@@ -95,7 +95,6 @@ namespace Client {
 			Functions::SV_Cmd_ArgvT* m_SV_Cmd_Argv{};
 			Functions::SV_UpdateUserinfo_fT* m_SV_UpdateUserinfo_f{};
 			Functions::Sys_MicrosecondsT* m_Sys_Microseconds{};
-			Functions::Unk_GetBNetClassT* m_Unk_GetBNetClass{};
 
 			IW8::clientUIActive_t* m_clientUIActives{};
 			IW8::CmdArgs* m_cmd_args{};
@@ -104,6 +103,7 @@ namespace Client {
 			IW8::lua_State** m_LUI_luaVM{};
 			bool* m_s_luaInFrontend{};
 			IW8::LocalUserPresenceData(*m_s_presenceData)[8] {};
+			IW8::BNetClass* m_Unk_BNetClass{};
 		};
 	}
 	inline std::unique_ptr<Game::Pointers> g_Pointers{};

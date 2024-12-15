@@ -230,11 +230,6 @@ namespace Client::Game {
 					{ "83 3D ? ? ? ? ? 49 B8 ? ? ? ? ? ? ? ? F2 0F 10 15" },
 					SETUP_POINTER(Sys_Microseconds)
 				},
-				// Unk_GetBNetClass
-				{
-					{ "E8 ? ? ? ? 44 38 B8", SETUP_MOD(Add(1).Rip()) },
-					SETUP_POINTER(Unk_GetBNetClass)
-				},
 				// clientUIActives
 				{
 					{ "48 8D 15 ? ? ? ? 8B 4C 10", SETUP_MOD(Add(3).Rip()) },
@@ -269,6 +264,11 @@ namespace Client::Game {
 				{
 					{ "48 8D 05 ? ? ? ? 4C 8D 05 ? ? ? ? 48 39 08 74 ? FF C2 48 05", SETUP_MOD(Add(3).Rip()) },
 					SETUP_POINTER(s_presenceData)
+				},
+				// Unk_BNetClass
+				{
+					{ "83 3D ? ? ? ? ? 74 ? B8 ? ? ? ? C3", SETUP_MOD(Add(2).Rip().Add(1)) },
+					SETUP_POINTER(Unk_BNetClass)
 				}
 			}
 		};

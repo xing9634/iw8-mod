@@ -17,9 +17,7 @@ void Client::Hook::Hooks::HK_R_EndFrame::hkCallback() {
 			std::uint64_t xuidId = xuid.m_ID * xuid.m_ID;
 
 			LOG("Game/R_EndFrame", INFO, "Patching auth...");
-			IW8::BNetClass* bnet = g_Pointers->m_Unk_GetBNetClass();
-
-			bnet->m_FinishedAuth = true;
+			g_Pointers->m_Unk_BNetClass->m_FinishedAuth = true;
 
 			*Memory::SigScan("48 8D 3D ? ? ? ? 0F 1F 44 00 ? 48 63 C3", g_GameModuleName, "XUID Check #1").Add(3).Rip() // verified
 				.As<std::uint64_t*>() = xuidMagic | xuidId;
@@ -34,8 +32,8 @@ void Client::Hook::Hooks::HK_R_EndFrame::hkCallback() {
 			//utils::hook::set<int>(0x14E371231_g, 1); // presumably is authed?
 			*Memory::SigScan("80 3D ? ? ? ? ? 74 ? 48 89 7C 24", g_GameModuleName, "Auth Check #1").Add(2).Rip().Add(1) // verified
 				.As<int*>() = 1;
-			bnet->m_State = 2;
-			bnet->m_FinishedAuth = true;
+			g_Pointers->m_Unk_BNetClass->m_State = 2;
+			g_Pointers->m_Unk_BNetClass->m_FinishedAuth = true;
 
 			//IW8::dvar_t* DVARBOOL_xp_dec_dc = reinterpret_cast<IW8::dvar_t*>(0x14EE560B0_g);
 #			ifdef _REPLAY
@@ -50,9 +48,9 @@ void Client::Hook::Hooks::HK_R_EndFrame::hkCallback() {
 					.As<int*>() = 2;
 #			endif
 
-			bnet->m_Var3 = 0x795230F0;
-			bnet->m_Var4 = 0x1F;
-			bnet->m_Var5 = 0x00000000;
+			g_Pointers->m_Unk_BNetClass->m_Var3 = 0x795230F0;
+			g_Pointers->m_Unk_BNetClass->m_Var4 = 0x1F;
+			g_Pointers->m_Unk_BNetClass->m_Var5 = 0x00000000;
 
 			LOG("Game/R_EndFrame", INFO, "Patched auth.");
 			s_PatchedAuth = true;

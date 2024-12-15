@@ -63,5 +63,4 @@ namespace Client::Game::Functions {
 	using SV_Cmd_ArgvT = const char*(int argIndex);
 	using SV_UpdateUserinfo_fT = void(void* cl);
 	using Sys_MicrosecondsT = std::uint64_t();
-	using Unk_GetBNetClassT = IW8::BNetClass*();
 }
