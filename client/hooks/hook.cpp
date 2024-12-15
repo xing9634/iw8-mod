@@ -3,6 +3,7 @@
 #include "memory/memory.hpp"
 #include "game/game.hpp"
 
+#include <utility/hook.hpp>
 #include <utility/memory.hpp>
 #include <utility/nt.hpp>
 
@@ -72,6 +73,15 @@ namespace Client::Hook {
 
 			_this->m_SV_UpdateUserinfo_fHK = new Memory::MinHook(g_Pointers->m_SV_UpdateUserinfo_f);
 			_this->m_SV_UpdateUserinfo_fHK->Hook<HK_SV_UpdateUserinfo_f>();
+
+			Common::Utility::Hook::Nop(Memory::SigScan("E8 ? ? ? ? 8B 0D ? ? ? ? 8B 15", g_GameModuleName,
+				"Lost Connection Fix #1").Get(), 5);
+			Common::Utility::Hook::Nop(Memory::SigScan("E8 ? ? ? ? 80 3D ? ? ? ? ? 75 ? C6 05 ? ? ? ? ? E8", g_GameModuleName,
+				"Lost Connection Fix #2").Get(), 5);
+			Common::Utility::Hook::Nop(Memory::SigScan("E8 ? ? ? ? 33 D2 48 8D 4D ? 41 B8 ? ? ? ? E8 ? ? ? ? E8", g_GameModuleName,
+				"Lost Connection Fix #3").Get(), 5);
+			Common::Utility::Hook::Nop(Memory::SigScan("E8 ? ? ? ? 4C 8B 77 ? 48 C7 C6", g_GameModuleName,
+				"Lost Connection Fix #4").Get(), 5);
 
 			return 0;
 		}, this, 0, nullptr);
