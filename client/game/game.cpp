@@ -225,6 +225,11 @@ namespace Client::Game {
 					{ "48 89 5C 24 ? 48 89 74 24 ? 55 57 41 54 41 56 41 57 48 8B EC 48 83 EC ? 8B 5A" },
 					SETUP_POINTER(ProcessScriptFile)
 				},
+				// R_AddCmdDrawText
+				{
+					{ "E8 ? ? ? ? 48 8B 05 ? ? ? ? 0F 28 DF", SETUP_MOD(Add(1).Rip()) },
+					SETUP_POINTER(R_AddCmdDrawText)
+				},
 				// R_EndFrame
 				{
 					{ "48 8B 15 ? ? ? ? 45 33 D2 4C 8B 0D" },
@@ -284,6 +289,11 @@ namespace Client::Game {
 				{
 					{ "48 8D 05 ? ? ? ? 4C 8D 05 ? ? ? ? 48 39 08 74 ? FF C2 48 05", SETUP_MOD(Add(3).Rip()) },
 					SETUP_POINTER(s_presenceData)
+				},
+				// sharedUiInfo_assets
+				{
+					{ "48 89 05 ? ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? B2 ? 48 89 05 ? ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? 33 D2", SETUP_MOD(Add(3).Rip()) },
+					SETUP_POINTER(sharedUiInfo_assets)
 				},
 				// Unk_BNetClass
 				{

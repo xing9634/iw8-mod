@@ -6,6 +6,7 @@
 #include "engine/iw8/MaterialConstantDef.hpp"
 #include "engine/iw8/MaterialTechniqueSet.hpp"
 #include "engine/iw8/MaterialTextureDef.hpp"
+#include "engine/iw8/enums/MaterialGeometryType.hpp"
 
 namespace IW8 {
 	class Material {

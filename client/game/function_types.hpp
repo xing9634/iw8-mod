@@ -1,4 +1,5 @@
 #pragma once
+#include "engine/iw8/CachedAssets_t.hpp"
 #include "engine/iw8/clientUIActive_t.hpp"
 #include "engine/iw8/CmdArgs.hpp"
 #include "engine/iw8/DDLContext.hpp"
@@ -62,6 +63,7 @@ namespace Client::Game::Functions {
 	using LUI_OpenMenuT = void(IW8::LocalClientNum_t localClientNum, const char* menuName, int isPopup, int isModal, int isExclusive);
 	using PartyHost_StartPrivatePartyT = void(IW8::LocalClientNum_t localClientNum, int localControllerIndex, bool currentlyActive, IW8::PartyHostType hostType);
 	using ProcessScriptFileT = void(void* scrContext, IW8::ScriptFile* scriptFile);
+	using R_AddCmdDrawTextT = void(const char* text, int maxChars, void* font, int fontHeight, float x, float y, float xScale, float yScale, float rotation, const float* color);
 	using R_EndFrameT = void();
 	using SEH_StringEd_GetStringT = const char*(const char* pszReference);
 	using SV_Cmd_ArgvT = const char*(int argIndex);

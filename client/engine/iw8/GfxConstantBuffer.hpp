@@ -2,6 +2,8 @@
 #include "engine/engine_common.hpp"
 #include "engine/iw8/GfxConstantBufferDesc.hpp"
 
+#include <d3d12.h>
+
 namespace IW8 {
 	class GfxConstantBuffer : public GfxConstantBufferDesc {
 	public:

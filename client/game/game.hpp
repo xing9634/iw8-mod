@@ -94,6 +94,7 @@ namespace Client {
 			Functions::LUI_OpenMenuT* m_LUI_OpenMenu{};
 			Functions::PartyHost_StartPrivatePartyT* m_PartyHost_StartPrivateParty{};
 			Functions::ProcessScriptFileT* m_ProcessScriptFile{};
+			Functions::R_AddCmdDrawTextT* m_R_AddCmdDrawText{};
 			Functions::R_EndFrameT* m_R_EndFrame{};
 			Functions::SEH_StringEd_GetStringT* m_SEH_StringEd_GetString{};
 			Functions::SV_Cmd_ArgvT* m_SV_Cmd_Argv{};
@@ -107,6 +108,7 @@ namespace Client {
 			IW8::lua_State** m_LUI_luaVM{};
 			bool* m_s_luaInFrontend{};
 			IW8::LocalUserPresenceData(*m_s_presenceData)[8] {};
+			IW8::CachedAssets_t* m_sharedUiInfo_assets{};
 			IW8::BNetClass* m_Unk_BNetClass{};
 		};
 	}
