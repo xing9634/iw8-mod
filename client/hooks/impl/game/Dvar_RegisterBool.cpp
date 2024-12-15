@@ -16,5 +16,9 @@ IW8::dvar_t* Client::Hook::Hooks::HK_Dvar_RegisterBool::hkCallback(const char* d
 		LOG("Game/Dvar_RegisterBool", INFO, "Patched 'lui_cod_points_enabled' -> false");
 		valuePatched = false;
 	}
+	if (strcmp(dvarName, "LRKPTLNQTT") == 0) {
+		LOG("Game/Dvar_RegisterBool", INFO, "Patched 'lui_enable_magma_blade_layout' -> false");
+		valuePatched = false;
+	}
 	return m_Original(dvarName, valuePatched, flags, description);
 }

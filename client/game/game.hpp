@@ -81,12 +81,15 @@ namespace Client {
 			Functions::Live_GetLocalClientNameT* m_Live_GetLocalClientName{};
 			Functions::Live_IsUserSignedInToDemonwareT* m_Live_IsUserSignedInToDemonware{};
 			Functions::lua_getfieldT* m_lua_getfield{};
+			Functions::lua_pushbooleanT* m_lua_pushboolean{};
 			Functions::lua_pushstringT* m_lua_pushstring{};
 			Functions::lua_removeT* m_lua_remove{};
 			Functions::lua_tobooleanT* m_lua_toboolean{};
 			Functions::lua_tointeger32T* m_lua_tointeger32{};
 			Functions::LuaShared_PCallT* m_LuaShared_PCall{};
 			Functions::LUI_BeginTableT* m_LUI_BeginTable{};
+			Functions::LUI_CoD_LuaCall_IsGameModeAllowedT* m_LUI_CoD_LuaCall_IsGameModeAllowed{};
+			Functions::LUI_CoD_LuaCall_IsPremiumPlayerT* m_LUI_CoD_LuaCall_IsPremiumPlayer{};
 			Functions::LUI_EndTableT* m_LUI_EndTable{};
 			Functions::LUI_OpenMenuT* m_LUI_OpenMenu{};
 			Functions::PartyHost_StartPrivatePartyT* m_PartyHost_StartPrivateParty{};

@@ -49,12 +49,15 @@ namespace Client::Game::Functions {
 	using Live_GetLocalClientNameT = const char*();
 	using Live_IsUserSignedInToDemonwareT = bool(int controllerIndex);
 	using lua_getfieldT = void(IW8::lua_State* L, int idx, const char* k);
+	using lua_pushbooleanT = void(IW8::lua_State* L, int b);
 	using lua_pushstringT = void(IW8::lua_State* L, const char* str);
 	using lua_removeT = void(IW8::lua_State* L, int idx);
 	using lua_tobooleanT = bool(IW8::lua_State* L, int idx);
 	using lua_tointeger32T = std::int64_t(IW8::lua_State* L, int idx);
 	using LuaShared_PCallT = bool(IW8::lua_State* luaVM, int nargs, int nresults);
 	using LUI_BeginTableT = void(const char* key, IW8::lua_State* luaVM);
+	using LUI_CoD_LuaCall_IsGameModeAllowedT = std::int64_t(IW8::lua_State* luaVM);
+	using LUI_CoD_LuaCall_IsPremiumPlayerT = std::int64_t(IW8::lua_State* luaVM);
 	using LUI_EndTableT = void(IW8::lua_State* luaVM);
 	using LUI_OpenMenuT = void(IW8::LocalClientNum_t localClientNum, const char* menuName, int isPopup, int isModal, int isExclusive);
 	using PartyHost_StartPrivatePartyT = void(IW8::LocalClientNum_t localClientNum, int localControllerIndex, bool currentlyActive, IW8::PartyHostType hostType);

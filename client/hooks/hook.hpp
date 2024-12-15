@@ -34,6 +34,14 @@ namespace Client {
 				int>;
 			Memory::MinHook<Game::Functions::Live_IsUserSignedInToDemonwareT>* m_Live_IsUserSignedInToDemonwareHK;
 
+			using HK_LUI_CoD_LuaCall_IsGameModeAllowed = HookPlate::FastcallHook<"LUI_CoD_LuaCall_IsGameModeAllowed", std::int64_t,
+				IW8::lua_State*>;
+			Memory::MinHook<Game::Functions::LUI_CoD_LuaCall_IsGameModeAllowedT>* m_LUI_CoD_LuaCall_IsGameModeAllowedHK;
+
+			using HK_LUI_CoD_LuaCall_IsPremiumPlayer = HookPlate::FastcallHook<"LUI_CoD_LuaCall_IsPremiumPlayer", std::int64_t,
+				IW8::lua_State*>;
+			Memory::MinHook<Game::Functions::LUI_CoD_LuaCall_IsPremiumPlayerT>* m_LUI_CoD_LuaCall_IsPremiumPlayerHK;
+
 			using HK_PartyHost_StartPrivateParty = HookPlate::FastcallHook<"PartyHost_StartPrivateParty", void,
 				int, int, bool, int>;
 			Memory::MinHook<Game::Functions::PartyHost_StartPrivatePartyT>* m_PartyHost_StartPrivatePartyHK;
