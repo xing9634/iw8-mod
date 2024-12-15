@@ -58,6 +58,7 @@ namespace Client {
 			Functions::Com_GameInfo_GetGameTypeForInternalNameT* m_Com_GameInfo_GetGameTypeForInternalName{};
 			Functions::Com_GameInfo_GetMapInfoForLoadNameT* m_Com_GameInfo_GetMapInfoForLoadName{};
 			Functions::Com_ParseNavStringsT* m_Com_ParseNavStrings{};
+			Functions::Com_SetErrorMessageT* m_Com_SetErrorMessage{};
 			Functions::DB_LoadXFileT* m_DB_LoadXFile{};
 			Functions::DB_Zones_PerformZoneLoadT* m_DB_Zones_PerformZoneLoad{};
 			Functions::DDL_GetEnumT* m_DDL_GetEnum{};

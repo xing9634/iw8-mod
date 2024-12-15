@@ -55,6 +55,9 @@ namespace Client::Hook {
 			_this->m_Live_IsUserSignedInToDemonwareHK = new Memory::MinHook(g_Pointers->m_Live_IsUserSignedInToDemonware);
 			_this->m_Live_IsUserSignedInToDemonwareHK->Hook<HK_Live_IsUserSignedInToDemonware>();
 
+			_this->m_PartyHost_StartPrivatePartyHK = new Memory::MinHook(g_Pointers->m_PartyHost_StartPrivateParty);
+			_this->m_PartyHost_StartPrivatePartyHK->Hook<HK_PartyHost_StartPrivateParty>();
+
 			_this->m_R_EndFrameHK = new Memory::MinHook(g_Pointers->m_R_EndFrame);
 			_this->m_R_EndFrameHK->Hook<HK_R_EndFrame>();
 

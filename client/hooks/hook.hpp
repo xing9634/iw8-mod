@@ -34,6 +34,10 @@ namespace Client {
 				int>;
 			Memory::MinHook<Game::Functions::Live_IsUserSignedInToDemonwareT>* m_Live_IsUserSignedInToDemonwareHK;
 
+			using HK_PartyHost_StartPrivateParty = HookPlate::FastcallHook<"PartyHost_StartPrivateParty", void,
+				int, int, bool, int>;
+			Memory::MinHook<Game::Functions::PartyHost_StartPrivatePartyT>* m_PartyHost_StartPrivatePartyHK;
+
 			using HK_R_EndFrame = HookPlate::FastcallHook<"R_EndFrame", void>;
 			Memory::MinHook<Game::Functions::R_EndFrameT>* m_R_EndFrameHK;
 

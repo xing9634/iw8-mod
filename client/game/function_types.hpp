@@ -26,6 +26,7 @@ namespace Client::Game::Functions {
 	using Com_GameInfo_GetGameTypeForInternalNameT = IW8::gameTypeInfo* (const char* gameTypeName);
 	using Com_GameInfo_GetMapInfoForLoadNameT = IW8::mapInfo* (const char* mapName);
 	using Com_ParseNavStringsT = bool(const char* pStr, const char** navStrings, int navStringMax, int* navStringCount);
+	using Com_SetErrorMessageT = void(const char* errorMessage);
 	using DB_LoadXFileT = int(const char* zoneName, uintptr_t zoneMem, uintptr_t assetList, int zoneFlags, bool wasPaused, int failureMode, uintptr_t outSignature);
 	using DB_Zones_PerformZoneLoadT = std::int64_t(bool processingPreloadedFiles, bool isBaseMap, bool wasPaused, IW8::DB_FastFileFailureMode failureMode);
 	using DDL_GetEnumT = const char*(const IW8::DDLState* state, const IW8::DDLContext* ddlContext);

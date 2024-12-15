@@ -67,6 +67,9 @@ namespace Client {
 			rpc->partySize = 1; // placeholder
 			rpc->partyMax = g_Pointers->m_Dvar_GetIntSafe("OOTQKOTRM" /* party_maxplayers */);
 
+			rpc->button1name = "Discord";
+			rpc->button1link = "https://discord.gg/dPzJajt";
+
 			if (*g_Pointers->m_s_luaInFrontend) {
 				rpc->details = rpc->largeImageText = "In Menus";
 				rpc->state = rpc->smallImageText = "Waiting";

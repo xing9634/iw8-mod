@@ -45,6 +45,11 @@ namespace Client::Game {
 					{ "48 83 EC ? 45 33 D2 41 C7 01" },
 					SETUP_POINTER(Com_ParseNavStrings)
 				},
+				// Com_SetErrorMessage
+				{
+					{ "E8 ? ? ? ? EB ? 40 38 2D", SETUP_MOD(Add(1).Rip()) },
+					SETUP_POINTER(Com_SetErrorMessage)
+				},
 				// DB_LoadXFile
 				{
 					{ "E8 ? ? ? ? 8B F8 44 38 AB", SETUP_MOD(Add(1).Rip()) },
