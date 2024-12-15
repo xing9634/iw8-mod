@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/gitlab/license/xifil/iw8-mod.svg)](https://gitlab.com/xifil/iw8-mod/-/blob/develop/LICENSE)
+[![License](https://img.shields.io/gitlab/license/xifil/iw8-mod.svg)](https://gitlab.com/xifil/iw8-mod/-/blob/master/LICENSE)
 [![Open Issues](https://img.shields.io/gitlab/issues/open/xifil/iw8-mod.svg)](https://gitlab.com/xifil/iw8-mod/-/issues)
 [![Discord](https://img.shields.io/discord/769966964030046298?color=%237289DA&label=members&logo=discord&logoColor=%23FFFFFF)](https://discord.gg/dPzJajt)
 
