@@ -123,7 +123,7 @@ workspace "iw8-mod"
 startproject "client"
 filename "iw8_%{_ACTION}"
 
-configurations { "Debug", "Release" }
+configurations { "DebugShip", "ReleaseShip", "DebugReplay", "ReleaseReplay" }
 platforms { "x64" }
 
 warnings "Extra"
@@ -137,14 +137,24 @@ buildoptions { "/sdl-" }
 
 cppdialect "C++latest"
 
-filter "configurations:Release"
-	defines { "_NDEBUG" }
+filter "configurations:ReleaseShip"
+	defines { "_NDEBUG", "_SHIP" }
 	optimize "Full"
 	intrinsics "on"
 	functionlevellinking "on"
 
-filter "configurations:Debug"
-	defines { "_DEBUG" }
+filter "configurations:DebugShip"
+	defines { "_DEBUG", "_SHIP" }
+	symbols "On"
+
+filter "configurations:ReleaseReplay"
+	defines { "_NDEBUG", "_REPLAY" }
+	optimize "Full"
+	intrinsics "on"
+	functionlevellinking "on"
+
+filter "configurations:DebugReplay"
+	defines { "_DEBUG", "_REPLAY" }
 	symbols "On"
 
 filter "system:Windows"
@@ -171,6 +181,7 @@ project "client"
 	links {
 		"backward-cpp",
 		"common",
+		"discord-rpc",
 		"imgui",
 		"minhook"
 	}
@@ -179,6 +190,7 @@ project "client"
 		"common/",
 		"vendor/asmjit/src/",
 		"vendor/backward-cpp/",
+		"vendor/discord-rpc/",
 		"vendor/gsl/include/",
 		"vendor/imgui/",
 		"vendor/json/single_include/",
@@ -296,6 +308,22 @@ group "vendor"
 		vpaths { ["*"] = {} }
 		includedirs { "vendor/%{prj.name}/" }
 		defines { "NOMINMAX" }
+
+		targetdir(buildDir)
+		objdir(intBuildDir)
+	project "discord-rpc"
+		location "vendor/%{prj.name}"
+		kind "StaticLib"
+		language "C++"
+
+		files {
+			"vendor/%{prj.name}/**.h",
+			"vendor/%{prj.name}/**.cpp"
+		}
+		vpaths { ["*"] = {} }
+		includedirs {
+			"vendor/%{prj.name}/"
+		}
 
 		targetdir(buildDir)
 		objdir(intBuildDir)

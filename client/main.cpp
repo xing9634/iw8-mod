@@ -1,52 +1,38 @@
 #include "common.hpp"
+#include "discord/discord_rpc.hpp"
 #include "game/game.hpp"
+#include "hooks/hook.hpp"
+#include "memory/iat.hpp"
+
 #include <utility/nt.hpp>
+#include <utility/memory.hpp>
 
 BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 	using namespace Client;
 	if (reason == DLL_PROCESS_ATTACH) {
 		DisableThreadLibraryCalls(hMod);
 		g_Module = hMod;
-		g_MainThread = CreateThread(nullptr, 0, [](PVOID) -> DWORD {
-			Common::g_LogService = std::make_unique<Common::LogService>();
-			g_LaunchInfo = Common::GameLaunchType::GetLaunchInfo();
-			Common::WinAPI::_SetConsoleTitle("t9-mod: "s + GIT_DESCRIBE + " (" + Common::GameLaunchType::GetDisplayName(g_LaunchInfo.first) + ")");
-			Common::Utility::NT::Library().Unprotect();
-			LOG("MainThread", INFO, "T9-Mod injected.");
 
-			while (g_Running) {
-				// no, we are not planning on unloading the mod, that will cause
-				// absolute disaster. instead, we just unload it when the dll is
-				// called for detach, therefore safely exiting.
-				std::this_thread::sleep_for(1s);
-			}
+		Common::g_LogService = std::make_unique<Common::LogService>();
+		Common::WinAPI::_SetConsoleTitle("iw8-mod: " GIT_DESCRIBE);
+		auto game = Common::Utility::NT::Library();
+		g_GameModuleName = game.GetName();
+		LOG("MainThread", INFO, "IW8-Mod injected. (base: 0x{:016X})", reinterpret_cast<std::size_t>(game.GetPtr()));
 
-			if (g_Pointers) {
-				g_Pointers.reset();
-				LOG("MainThread", INFO, "Pointers uninitialized.");
-			}
+		if (remove("Data/data/CASCRepair.mrk") == 0) {
+			LOG("MainThread", INFO, "Prevented TACT error E_REPAIR (28) by deleting CASCRepair.mrk.");
+		}
 
-			Common::g_LogService.reset();
-			return 0;
-		}, nullptr, 0, &g_MainThreadId);
+		g_Hooks = std::make_unique<Hook::Hooks>();
+		LOG("MainThread", INFO, "Hooks initialized.");
 	}
 	else if (reason == DLL_PROCESS_DETACH) {
+		Client::Discord::Destroy();
+		g_Hooks.reset();
 		g_Running = false;
 	}
 
 	return TRUE;
-}
-
-bool s_CalledMainEntryPoint = false;
-void MainEntryPoint() {
-	if (s_CalledMainEntryPoint) {
-		return;
-	}
-	s_CalledMainEntryPoint = true;
-	using namespace Client;
-
-	g_Pointers = std::make_unique<Game::Pointers>();
-	LOG("MainThread", INFO, "Pointers initialized.");
 }
 
 extern "C" __declspec(dllexport) int /* EDiscordResult */ /* DISCORD_API */ DiscordCreate(int /* DiscordVersion */ version, struct DiscordCreateParams* params, struct IDiscordCore** result) {
@@ -54,7 +40,7 @@ extern "C" __declspec(dllexport) int /* EDiscordResult */ /* DISCORD_API */ Disc
 	_Unreferenced_parameter_(params);
 	_Unreferenced_parameter_(result);
 
-	MainEntryPoint();
+	CreateThread(nullptr, 0, Client::Discord::Thread, nullptr, 0, nullptr);
 
 	LOG("Proxy/DiscordCreate", INFO, "DiscordCreate called, returning 1 (ServiceUnavailable).");
 	return 1 /* DiscordResult_ServiceUnavailable */;

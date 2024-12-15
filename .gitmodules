@@ -16,3 +16,6 @@
 [submodule "vendor/backward-cpp"]
 	path = vendor/backward-cpp
 	url = https://github.com/bombela/backward-cpp.git
+[submodule "vendor/discord-rpc"]
+	path = vendor/discord-rpc
+	url = https://github.com/EinTim23/discord-rpc.git
