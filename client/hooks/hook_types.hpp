@@ -73,34 +73,33 @@ namespace Client::HookPlate {
 			const char* m_Target{};
 			funcType* m_Callback{};
 			funcType** m_Original{};
-			funcType** m_PtrToFunc{};
+			Memory::MinHook<funcType>* m_Hook = nullptr;
 
 			HookData(const char* name, const char* target, funcType* callback, funcType** original) {
 				this->m_Name = name;
 				this->m_Target = target;
 				this->m_Callback = callback;
 				this->m_Original = original;
-				this->m_PtrToFunc = nullptr;
 			}
 
 			void Hook(IW8::luaL_Reg* reg) {
-				if (this->m_Original == nullptr || this->m_Callback == nullptr) {
+				if (this->m_Hook) {
 					return;
 				}
 
-				*this->m_Original = reg->m_Func;
-				reg->m_Func = this->m_Callback;
-				this->m_PtrToFunc = &reg->m_Func;
+				this->m_Hook = new Memory::MinHook(reg->m_Func);
+				this->m_Hook->Hook(this->m_Callback, this->m_Original);
 				LOG("LuaHookStore", DEBUG, "Hooked {} ({}).", this->m_Name, this->m_Target);
 			}
 
 			void Unhook() {
-				if (this->m_PtrToFunc == nullptr || this->m_Original == nullptr || *this->m_Original == nullptr) {
+				if (!this->m_Hook) {
 					return;
 				}
 
-				*this->m_PtrToFunc = *this->m_Original;
-				*this->m_Original = nullptr;
+				this->m_Hook->Unhook();
+				delete this->m_Hook;
+				this->m_Hook = nullptr;
 				LOG("LuaHookStore", DEBUG, "Unhooked {} ({}).", this->m_Name, this->m_Target);
 			}
 		};
@@ -122,6 +121,12 @@ namespace Client::HookPlate {
 				}
 			}
 			return nullptr;
+		}
+
+		~LuaHookStore() {
+			for (HookData& hk : this->m_Hooks) {
+				hk.Unhook();
+			}
 		}
 	private:
 		std::vector<HookData> m_Hooks{};

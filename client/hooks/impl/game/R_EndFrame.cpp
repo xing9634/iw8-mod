@@ -54,8 +54,13 @@ void Client::Hook::Hooks::HK_R_EndFrame::hkCallback() {
 			}
 
 			//utils::hook::set(0x14E5C0730_g, 2);
-			*Memory::SigScan("83 3D ? ? ? ? ? 7E ? 33 C9", g_GameModuleName, "Auth Check #2").Add(2).Rip()
-				.As<int*>() = 2;
+#			ifdef _REPLAY
+				*Memory::SigScan("48 8D 2D ? ? ? ? 84 C0 74 ? 48 69 C7", g_GameModuleName, "Auth Check #2").Add(3).Rip()
+					.As<int*>() = 2;
+#			else
+				*Memory::SigScan("83 3D ? ? ? ? ? 7E ? 33 C9", g_GameModuleName, "Auth Check #2").Add(2).Rip()
+					.As<int*>() = 2;
+#			endif
 			/*
 #			ifdef _REPLAY
 				*Memory::SigScan("4C 8D 35 ? ? ? ? 48 8B D8", g_GameModuleName, "Auth Check #2").Add(3).Rip()

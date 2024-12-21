@@ -11,6 +11,16 @@ namespace Client::Memory {
 			: m_DetourPointer(pointer)
 		{}
 
+		template <typename C, typename O>
+		void Hook(C* callback, O** original) {
+			if (this->m_DetourPointer == nullptr) {
+				return;
+			}
+
+			MH_CreateHook(this->m_DetourPointer, reinterpret_cast<void*>(callback), reinterpret_cast<void**>(original));
+			MH_EnableHook(this->m_DetourPointer);
+		}
+
 		template <typename T>
 		void Hook() {
 			if (this->m_DetourPointer == nullptr) {
