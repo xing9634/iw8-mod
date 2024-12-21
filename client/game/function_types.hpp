@@ -57,6 +57,7 @@ namespace Client::Game::Functions {
 	using lua_removeT = void(IW8::lua_State* L, int idx);
 	using lua_tobooleanT = bool(IW8::lua_State* L, int idx);
 	using lua_tointeger32T = std::int64_t(IW8::lua_State* L, int idx);
+	using lua_tolstringT = const char*(IW8::lua_State* L, int idx, std::size_t* len);
 	using luaL_openlibT = void(IW8::lua_State* L, const char* libname, const IW8::luaL_Reg* l, std::uint32_t nup);
 	using LuaShared_PCallT = bool(IW8::lua_State* luaVM, int nargs, int nresults);
 	using LUI_BeginTableT = void(const char* key, IW8::lua_State* luaVM);

@@ -87,6 +87,7 @@ namespace Client {
 			Functions::lua_removeT* m_lua_remove{};
 			Functions::lua_tobooleanT* m_lua_toboolean{};
 			Functions::lua_tointeger32T* m_lua_tointeger32{};
+			Functions::lua_tolstringT* m_lua_tolstring{};
 			Functions::luaL_openlibT* m_luaL_openlib{};
 			Functions::LuaShared_PCallT* m_LuaShared_PCall{};
 			Functions::LUI_BeginTableT* m_LUI_BeginTable{};

@@ -190,6 +190,11 @@ namespace Client::Game {
 					{ "E8 ? ? ? ? 8B F0 80 FB", SETUP_MOD(Add(1).Rip()) },
 					SETUP_POINTER(lua_tointeger32)
 				},
+				// lua_tolstring
+				{
+					{ "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 49 8B F8 8B DA 48 8B F1" },
+					SETUP_POINTER(lua_tolstring)
+				},
 				// luaL_openlib
 				{
 					{ "48 89 5C 24 ? 55 56 41 56 48 83 EC ? 48 8B 41" },
