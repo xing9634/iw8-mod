@@ -16,8 +16,10 @@ namespace Client {
 
 			// Lua - we register them, then they actually hook in Game/luaL_openlib
 			HookPlate::LuaHookStore m_LuaHookStore{};
+			using HK_LUI_CoD_LuaCall_IsBattleNetAuthReady = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsBattleNetAuthReady", "Engine.JBIHDJBH">;
 			using HK_LUI_CoD_LuaCall_IsGameModeAllowed = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsGameModeAllowed", "Engine.CEGDBDIIIE">;
 			using HK_LUI_CoD_LuaCall_IsPremiumPlayer = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsPremiumPlayer", "Engine.CFHBIHABCB">;
+			using HK_LUI_CoD_LuaCall_IsPremiumPlayerReady = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsPremiumPlayerReady", "Engine.ECFHDAEIDA">;
 
 			// Game
 			using HK_DB_LoadXFile = HookPlate::FastcallHook<"DB_LoadXFile", int,
