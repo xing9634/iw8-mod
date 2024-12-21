@@ -39,6 +39,7 @@ namespace Client::Game::Functions {
 	using DDL_SetEnumT = void(IW8::DDLState* state, IW8::DDLContext* ddlContext, const char* val);
 	using DDL_SetIntT = void(IW8::DDLState* state, IW8::DDLContext* ddlContext, int val);
 	using DDL_SetStringT = void(IW8::DDLState* state, IW8::DDLContext* ddlContext, const char* val);
+	using Dvar_FindVarByNameT = IW8::dvar_t*(const char* dvarName);
 	using Dvar_GetIntSafeT = int(const char* dvarName);
 	using Dvar_GetStringSafeT = const char*(const char* dvarName);
 	using Dvar_RegisterBoolT = IW8::dvar_t*(const char* dvarName, bool value, std::uint32_t flags, const char* description);

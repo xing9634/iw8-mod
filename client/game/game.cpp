@@ -100,6 +100,11 @@ namespace Client::Game {
 					{ "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 49 8B D8 48 8B F2 48 8B F9 E8" },
 					SETUP_POINTER(DDL_SetString)
 				},
+				// Dvar_FindVarByName
+				{
+					{ "E8 ? ? ? ? 48 8B CB 48 63 50", SETUP_MOD(Add(1).Rip()) },
+					SETUP_POINTER(Dvar_FindVarByName)
+				},
 				// Dvar_GetIntSafe
 				{
 					{ "E8 ? ? ? ? 8B D0 85 C0 75 ? 38 05", SETUP_MOD(Add(1).Rip()) },

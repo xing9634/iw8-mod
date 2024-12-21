@@ -69,6 +69,7 @@ namespace Client {
 			Functions::DDL_SetEnumT* m_DDL_SetEnum{};
 			Functions::DDL_SetIntT* m_DDL_SetInt{};
 			Functions::DDL_SetStringT* m_DDL_SetString{};
+			Functions::Dvar_FindVarByNameT* m_Dvar_FindVarByName{};
 			Functions::Dvar_GetIntSafeT* m_Dvar_GetIntSafe{};
 			Functions::Dvar_GetStringSafeT* m_Dvar_GetStringSafe{};
 			Functions::Dvar_RegisterBoolT* m_Dvar_RegisterBool{};
