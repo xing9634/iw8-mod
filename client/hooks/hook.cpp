@@ -29,7 +29,7 @@ namespace Client::Hook {
 
 		// game_dx12_ship_replay
 #		ifdef _REPLAY
-			Common::Utility::Memory::SafeMemSet(game.GetPtr() + 0x003061A0, '\xC3'); // todo: utility::hook::jump
+			Common::Utility::Hook::Jump(game.GetPtr() + 0x003061A0, MysteryFunctionDetour);
 #		endif
 
 		g_Pointers = std::make_unique<Game::Pointers>();
@@ -41,8 +41,10 @@ namespace Client::Hook {
 				std::this_thread::sleep_for(3s);
 #			endif
 
+			_this->m_LuaHookStore.Register<HK_LuaShared_LuaCall_IsDemoBuild>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_ActivateInitialClient>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsBattleNetAuthReady>();
+			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsBattleNetLanOnly>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsConnectedToGameServer>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsGameModeAllowed>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsNetworkConnected>();
