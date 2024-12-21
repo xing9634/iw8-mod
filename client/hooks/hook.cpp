@@ -41,6 +41,9 @@ namespace Client::Hook {
 				std::this_thread::sleep_for(3s);
 #			endif
 
+			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsGameModeAllowed>();
+			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsPremiumPlayer>();
+
 			_this->m_DB_LoadXFileHK = new Memory::MinHook(g_Pointers->m_DB_LoadXFile);
 			_this->m_DB_LoadXFileHK->Hook<HK_DB_LoadXFile>();
 
@@ -56,11 +59,8 @@ namespace Client::Hook {
 			_this->m_Live_IsUserSignedInToDemonwareHK = new Memory::MinHook(g_Pointers->m_Live_IsUserSignedInToDemonware);
 			_this->m_Live_IsUserSignedInToDemonwareHK->Hook<HK_Live_IsUserSignedInToDemonware>();
 
-			_this->m_LUI_CoD_LuaCall_IsGameModeAllowedHK = new Memory::MinHook(g_Pointers->m_LUI_CoD_LuaCall_IsGameModeAllowed);
-			_this->m_LUI_CoD_LuaCall_IsGameModeAllowedHK->Hook<HK_LUI_CoD_LuaCall_IsGameModeAllowed>();
-
-			_this->m_LUI_CoD_LuaCall_IsPremiumPlayerHK = new Memory::MinHook(g_Pointers->m_LUI_CoD_LuaCall_IsPremiumPlayer);
-			_this->m_LUI_CoD_LuaCall_IsPremiumPlayerHK->Hook<HK_LUI_CoD_LuaCall_IsPremiumPlayer>();
+			_this->m_luaL_openlibHK = new Memory::MinHook(g_Pointers->m_luaL_openlib);
+			_this->m_luaL_openlibHK->Hook<HK_luaL_openlib>();
 
 			_this->m_PartyHost_StartPrivatePartyHK = new Memory::MinHook(g_Pointers->m_PartyHost_StartPrivateParty);
 			_this->m_PartyHost_StartPrivatePartyHK->Hook<HK_PartyHost_StartPrivateParty>();
@@ -92,8 +92,7 @@ namespace Client::Hook {
 		this->DeleteHook(&this->m_SEH_StringEd_GetStringHK);
 		this->DeleteHook(&this->m_R_EndFrameHK);
 		this->DeleteHook(&this->m_PartyHost_StartPrivatePartyHK);
-		this->DeleteHook(&this->m_LUI_CoD_LuaCall_IsPremiumPlayerHK);
-		this->DeleteHook(&this->m_LUI_CoD_LuaCall_IsGameModeAllowedHK);
+		this->DeleteHook(&this->m_luaL_openlibHK);
 		this->DeleteHook(&this->m_Live_IsUserSignedInToDemonwareHK);
 		this->DeleteHook(&this->m_Live_GetLocalClientNameHK);
 		this->DeleteHook(&this->m_dwGetLogOnStatusHK);

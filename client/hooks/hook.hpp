@@ -14,6 +14,11 @@ namespace Client {
 				LPTOP_LEVEL_EXCEPTION_FILTER>;
 			Memory::IAT* m_SetUnhandledExceptionFilterHK;
 
+			// Lua - we register them, then they actually hook in Game/luaL_openlib
+			HookPlate::LuaHookStore m_LuaHookStore{};
+			using HK_LUI_CoD_LuaCall_IsGameModeAllowed = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsGameModeAllowed", "Engine.CEGDBDIIIE">;
+			using HK_LUI_CoD_LuaCall_IsPremiumPlayer = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsPremiumPlayer", "Engine.CFHBIHABCB">;
+
 			// Game
 			using HK_DB_LoadXFile = HookPlate::FastcallHook<"DB_LoadXFile", int,
 				const char*, uintptr_t, uintptr_t, int, bool, int, uintptr_t>;
@@ -34,13 +39,9 @@ namespace Client {
 				int>;
 			Memory::MinHook<Game::Functions::Live_IsUserSignedInToDemonwareT>* m_Live_IsUserSignedInToDemonwareHK;
 
-			using HK_LUI_CoD_LuaCall_IsGameModeAllowed = HookPlate::FastcallHook<"LUI_CoD_LuaCall_IsGameModeAllowed", std::int64_t,
-				IW8::lua_State*>;
-			Memory::MinHook<Game::Functions::LUI_CoD_LuaCall_IsGameModeAllowedT>* m_LUI_CoD_LuaCall_IsGameModeAllowedHK;
-
-			using HK_LUI_CoD_LuaCall_IsPremiumPlayer = HookPlate::FastcallHook<"LUI_CoD_LuaCall_IsPremiumPlayer", std::int64_t,
-				IW8::lua_State*>;
-			Memory::MinHook<Game::Functions::LUI_CoD_LuaCall_IsPremiumPlayerT>* m_LUI_CoD_LuaCall_IsPremiumPlayerHK;
+			using HK_luaL_openlib = HookPlate::FastcallHook<"luaL_openlib", void,
+				IW8::lua_State*, const char*, const IW8::luaL_Reg*, std::uint32_t>;
+			Memory::MinHook<Game::Functions::luaL_openlibT>* m_luaL_openlibHK;
 
 			using HK_PartyHost_StartPrivateParty = HookPlate::FastcallHook<"PartyHost_StartPrivateParty", void,
 				int, int, bool, int>;

@@ -185,6 +185,11 @@ namespace Client::Game {
 					{ "E8 ? ? ? ? 8B F0 80 FB", SETUP_MOD(Add(1).Rip()) },
 					SETUP_POINTER(lua_tointeger32)
 				},
+				// luaL_openlib
+				{
+					{ "48 89 5C 24 ? 55 56 41 56 48 83 EC ? 48 8B 41" },
+					SETUP_POINTER(luaL_openlib)
+				},
 				// LuaShared_PCall
 				{
 					{ "E8 ? ? ? ? 8B E8 F7 D6", SETUP_MOD(Add(1).Rip()) },
@@ -194,16 +199,6 @@ namespace Client::Game {
 				{
 					{ "E8 ? ? ? ? 85 ED 74 ? BB", SETUP_MOD(Add(1).Rip()) },
 					SETUP_POINTER(LUI_BeginTable)
-				},
-				// LUI_CoD_LuaCall_IsGameModeAllowed
-				{
-					{ "40 53 48 83 EC ? 48 8B D9 E8 ? ? ? ? 83 F8 ? 75 ? 8D 50 ? 48 8B CB E8 ? ? ? ? 85 C0 74 ? BA ? ? ? ? 48 8B CB E8 ? ? ? ? 85 C0 75 ? 48 8D 15 ? ? ? ? 48 8B CB E8 ? ? ? ? 48 8B CB E8 ? ? ? ? 83 F8 ? 0F 85 ? ? ? ? 8D 50 ? 48 8B CB E8 ? ? ? ? 85 C0 0F 84 ? ? ? ? BA ? ? ? ? 48 8B CB E8 ? ? ? ? 85 C0 0F 84 ? ? ? ? 48 89 74 24 ? BA ? ? ? ? 48 8B CB 48 89 7C 24 ? E8 ? ? ? ? BA ? ? ? ? 48 8B CB 8B F0" },
-					SETUP_POINTER(LUI_CoD_LuaCall_IsGameModeAllowed)
-				},
-				// LUI_CoD_LuaCall_IsPremiumPlayer
-				{
-					{ "40 53 48 83 EC ? 48 8B D9 E8 ? ? ? ? 83 F8 ? 75 ? 8B D0 48 8B CB E8 ? ? ? ? 85 C0 75 ? 48 8D 15 ? ? ? ? 48 8B CB E8 ? ? ? ? 48 8B CB E8 ? ? ? ? 83 F8 ? 0F 85 ? ? ? ? 8B D0 48 8B CB E8 ? ? ? ? 85 C0 0F 84 ? ? ? ? BA ? ? ? ? 48 8B CB" },
-					SETUP_POINTER(LUI_CoD_LuaCall_IsPremiumPlayer)
 				},
 				// LUI_EndTable
 				{

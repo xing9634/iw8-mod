@@ -9,6 +9,7 @@
 #include "engine/iw8/gentity_s.hpp"
 #include "engine/iw8/LocalUserPresenceData.hpp"
 #include "engine/iw8/lua_State.hpp"
+#include "engine/iw8/luaL_Reg.hpp"
 #include "engine/iw8/mapInfo.hpp"
 #include "engine/iw8/ScreenPlacement.hpp"
 #include "engine/iw8/ScriptFile.hpp"
@@ -55,10 +56,9 @@ namespace Client::Game::Functions {
 	using lua_removeT = void(IW8::lua_State* L, int idx);
 	using lua_tobooleanT = bool(IW8::lua_State* L, int idx);
 	using lua_tointeger32T = std::int64_t(IW8::lua_State* L, int idx);
+	using luaL_openlibT = void(IW8::lua_State* L, const char* libname, const IW8::luaL_Reg* l, std::uint32_t nup);
 	using LuaShared_PCallT = bool(IW8::lua_State* luaVM, int nargs, int nresults);
 	using LUI_BeginTableT = void(const char* key, IW8::lua_State* luaVM);
-	using LUI_CoD_LuaCall_IsGameModeAllowedT = std::int64_t(IW8::lua_State* luaVM);
-	using LUI_CoD_LuaCall_IsPremiumPlayerT = std::int64_t(IW8::lua_State* luaVM);
 	using LUI_EndTableT = void(IW8::lua_State* luaVM);
 	using LUI_OpenMenuT = void(IW8::LocalClientNum_t localClientNum, const char* menuName, int isPopup, int isModal, int isExclusive);
 	using PartyHost_StartPrivatePartyT = void(IW8::LocalClientNum_t localClientNum, int localControllerIndex, bool currentlyActive, IW8::PartyHostType hostType);
