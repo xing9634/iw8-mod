@@ -2,7 +2,6 @@
 #include "hooks/hook.hpp"
 
 std::map<std::pair<const char*, const char*>, bool> s_PatchedBooleanDvars = {
-	{ { "cg_autoSkipSplashScreen", "NPLRKNKKOP" }, true },
 	{ { "cg_drawBuildName", "LSSSQMQPNL" }, true },
 	{ { "cg_drawFastfileDebugInfo", "MOSSSSTTNL" }, true },
 	{ { "cg_drawFPS", "OLNTNRTPPL" }, true },

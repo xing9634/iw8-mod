@@ -7,6 +7,12 @@
 #define VT_GET(ptr, idx) (*(void***)(ptr))[idx]
 #define HIGH_ORDER_LOG_HOOK 0
 
+#ifdef _SHIP
+#	define SELECT(ship, nonShip) ship
+#else
+#	define SELECT(ship, nonShip) nonShip
+#endif
+
 namespace Client {
 	using namespace std::chrono_literals;
 	using namespace std::string_literals;

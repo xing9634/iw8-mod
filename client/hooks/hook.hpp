@@ -25,6 +25,7 @@ namespace Client {
 			using HK_LUI_CoD_LuaCall_IsNetworkConnected = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsNetworkConnected", "Engine.BACCCIHGDG">;
 			using HK_LUI_CoD_LuaCall_IsPremiumPlayer = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsPremiumPlayer", "Engine.CFHBIHABCB">;
 			using HK_LUI_CoD_LuaCall_IsPremiumPlayerReady = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsPremiumPlayerReady", "Engine.ECFHDAEIDA">;
+			using HK_LUI_CoD_LuaCall_ShouldShowDebugInfo = HookPlate::LuaHook<"LUI_CoD_LuaCall_ShouldShowDebugInfo", "Debug.CHFBFDCHBA">;
 
 			// Game
 			using HK_DB_LoadXFile = HookPlate::FastcallHook<"DB_LoadXFile", int,

@@ -43,13 +43,16 @@ namespace Client::Hook {
 
 			_this->m_LuaHookStore.Register<HK_LuaShared_LuaCall_IsDemoBuild>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_ActivateInitialClient>();
-			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsBattleNetAuthReady>();
-			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsBattleNetLanOnly>();
-			//_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsConnectedToGameServer>();
-			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsGameModeAllowed>();
-			//_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsNetworkConnected>();
-			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsPremiumPlayer>();
-			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsPremiumPlayerReady>();
+			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_ShouldShowDebugInfo>();
+#			ifdef _SHIP
+				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsBattleNetAuthReady>();
+				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsBattleNetLanOnly>();
+				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsConnectedToGameServer>();
+				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsGameModeAllowed>();
+				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsNetworkConnected>();
+				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsPremiumPlayer>();
+				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsPremiumPlayerReady>();
+#			endif
 
 			_this->m_DB_LoadXFileHK = new Memory::MinHook(g_Pointers->m_DB_LoadXFile);
 			_this->m_DB_LoadXFileHK->Hook<HK_DB_LoadXFile>();

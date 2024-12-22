@@ -71,13 +71,7 @@ const char* Client::Hook::Hooks::HK_SEH_StringEd_GetString::hkCallback(const cha
 	}
 
 	if (strcmp(pszReference, "MENU/STATUS") == 0) {
-		return "iw8-mod: " GIT_DESCRIBE ", on "
-#			ifdef _SHIP
-				"ship"
-#			else
-				"non-ship"
-#			endif
-			" build";
+		return "iw8-mod: " GIT_DESCRIBE ", on " SELECT("ship", "non-ship") " build";
 	}
 
 	//if (strstr(pszReference, "LOCAL") != nullptr || strstr(pszReference, "local") != nullptr) {
