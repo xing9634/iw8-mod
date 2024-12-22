@@ -64,7 +64,7 @@ namespace Client {
 		s_RPCStartTime = std::time(nullptr);
 
 		UpdateStatus([](DiscordRichPresence* rpc) {
-			rpc->partySize = 1; // placeholder
+			rpc->partySize = g_Pointers->m_Dvar_GetIntSafe("NKSQNMMRRQ" /* party_partyPlayerCountNum */);
 			rpc->partyMax = g_Pointers->m_Dvar_GetIntSafe("OOTQKOTRM" /* party_maxplayers */);
 
 			rpc->button1name = "Discord";
