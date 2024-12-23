@@ -12,14 +12,8 @@ void Client::Hook::Hooks::HK_R_EndFrame::hkCallback() {
 	if (g_Pointers->m_R_AddCmdDrawText) {
 		IW8::GfxFont* font = g_Pointers->m_sharedUiInfo_assets->m_SubtitleFont;
 		float color[4] = { .666f, .666f, .666f, .666f };
-		g_Pointers->m_R_AddCmdDrawText("iw8-mod: " GIT_DESCRIBE " ["
-#			ifdef _SHIP
-				"ship"
-#			else
-				"non-ship"
-#			endif
-			"]", 0x7FFFFFFF, font, font->m_PixelHeight,
-			4.f, 4.f + static_cast<float>(font->m_PixelHeight), 1.f, 1.f, 0.f, color);
+		g_Pointers->m_R_AddCmdDrawText("iw8-mod: " GIT_DESCRIBE " [" SELECT("ship", "non-ship") "]",
+			0x7FFFFFFF, font, font->m_PixelHeight, 4.f, 4.f + static_cast<float>(font->m_PixelHeight), 1.f, 1.f, 0.f, color);
 	}
 
 	if (!s_PatchedAuth) {
