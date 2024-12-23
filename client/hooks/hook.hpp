@@ -25,6 +25,7 @@ namespace Client {
 			using HK_LUI_CoD_LuaCall_IsNetworkConnected = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsNetworkConnected", "Engine.BACCCIHGDG">;
 			using HK_LUI_CoD_LuaCall_IsPremiumPlayer = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsPremiumPlayer", "Engine.CFHBIHABCB">;
 			using HK_LUI_CoD_LuaCall_IsPremiumPlayerReady = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsPremiumPlayerReady", "Engine.ECFHDAEIDA">;
+			using HK_LUI_CoD_LuaCall_NotifyServer = HookPlate::LuaHook<"LUI_CoD_LuaCall_NotifyServer", "Engine.EBHIFJCGBH">;
 			using HK_LUI_CoD_LuaCall_ShouldShowDebugInfo = HookPlate::LuaHook<"LUI_CoD_LuaCall_ShouldShowDebugInfo", "Debug.CHFBFDCHBA">;
 
 			// Game
@@ -39,6 +40,10 @@ namespace Client {
 			using HK_dwGetLogOnStatus = HookPlate::FastcallHook<"dwGetLogOnStatus", std::int64_t,
 				int>;
 			Memory::MinHook<Game::Functions::dwGetLogOnStatusT>* m_dwGetLogOnStatusHK;
+
+			using HK_DWServicesAccess__isReady = HookPlate::FastcallHook<"DWServicesAccess__isReady", bool,
+				void*, const int>;
+			Memory::MinHook<Game::Functions::DWServicesAccess__isReadyT>* m_DWServicesAccess__isReadyHK;
 
 			using HK_Live_GetLocalClientName = HookPlate::FastcallHook<"Live_GetLocalClientName", const char*>;
 			Memory::MinHook<Game::Functions::Live_GetLocalClientNameT>* m_Live_GetLocalClientNameHK;

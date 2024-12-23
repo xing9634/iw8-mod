@@ -125,6 +125,11 @@ namespace Client::Game {
 					{ "40 53 48 83 EC ? 48 63 C1 BA" },
 					SETUP_POINTER(dwGetLogOnStatus)
 				},
+				// DWServicesAccess__isReady
+				{
+					{ "48 83 EC ? 85 D2 78 ? 48 63 C2 48 3B 81 ? ? ? ? 73 ? 48 69 C0 ? ? ? ? 48 81 C1 ? ? ? ? 48 89 5C 24 ? 48 03 C8 32 DB 48 8B 01" },
+					SETUP_POINTER(DWServicesAccess__isReady)
+				},
 				// FS_ReadFile
 				{
 					{ "40 53 57 41 57 48 83 EC ? 48 8B FA" },

@@ -74,6 +74,7 @@ namespace Client {
 			Functions::Dvar_GetStringSafeT* m_Dvar_GetStringSafe{};
 			Functions::Dvar_RegisterBoolT* m_Dvar_RegisterBool{};
 			Functions::dwGetLogOnStatusT* m_dwGetLogOnStatus{};
+			Functions::DWServicesAccess__isReadyT* m_DWServicesAccess__isReady{};
 			Functions::FS_ReadFileT* m_FS_ReadFile{};
 			Functions::GamerProfile_SetDataByNameT* m_GamerProfile_SetDataByName{};
 			Functions::I_irandT* m_I_irand{};

@@ -44,6 +44,7 @@ namespace Client::Game::Functions {
 	using Dvar_GetStringSafeT = const char*(const char* dvarName);
 	using Dvar_RegisterBoolT = IW8::dvar_t*(const char* dvarName, bool value, std::uint32_t flags, const char* description);
 	using dwGetLogOnStatusT = std::int64_t(int controllerIndex);
+	using DWServicesAccess__isReadyT = bool(void* _this, const int controllerIndex);
 	using FS_ReadFileT = std::int64_t(const char* qpath, void** buffer);
 	using GamerProfile_SetDataByNameT = void(int controllerIndex, const char* settingName, float settingValue);
 	using I_irandT = std::int64_t(int min, int max);

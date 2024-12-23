@@ -43,6 +43,7 @@ namespace Client::Hook {
 
 			_this->m_LuaHookStore.Register<HK_LuaShared_LuaCall_IsDemoBuild>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_ActivateInitialClient>();
+			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_NotifyServer>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_ShouldShowDebugInfo>();
 #			ifdef _SHIP
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsBattleNetAuthReady>();
@@ -62,6 +63,9 @@ namespace Client::Hook {
 
 			_this->m_dwGetLogOnStatusHK = new Memory::MinHook(g_Pointers->m_dwGetLogOnStatus);
 			_this->m_dwGetLogOnStatusHK->Hook<HK_dwGetLogOnStatus>();
+
+			_this->m_DWServicesAccess__isReadyHK = new Memory::MinHook(g_Pointers->m_DWServicesAccess__isReady);
+			_this->m_DWServicesAccess__isReadyHK->Hook<HK_DWServicesAccess__isReady>();
 
 			_this->m_Live_GetLocalClientNameHK = new Memory::MinHook(g_Pointers->m_Live_GetLocalClientName);
 			_this->m_Live_GetLocalClientNameHK->Hook<HK_Live_GetLocalClientName>();
@@ -105,6 +109,7 @@ namespace Client::Hook {
 		this->DeleteHook(&this->m_luaL_openlibHK);
 		this->DeleteHook(&this->m_Live_IsUserSignedInToDemonwareHK);
 		this->DeleteHook(&this->m_Live_GetLocalClientNameHK);
+		this->DeleteHook(&this->m_DWServicesAccess__isReadyHK);
 		this->DeleteHook(&this->m_dwGetLogOnStatusHK);
 		this->DeleteHook(&this->m_Dvar_RegisterBoolHK);
 		this->DeleteHook(&this->m_DB_LoadXFileHK);
