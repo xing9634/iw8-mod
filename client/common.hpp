@@ -13,6 +13,8 @@
 #	define SELECT(ship, nonShip) nonShip
 #endif
 
+#define ENUM_UNDER(val) static_cast<std::underlying_type<decltype(val)>::type>(val)
+
 namespace Client {
 	using namespace std::chrono_literals;
 	using namespace std::string_literals;
