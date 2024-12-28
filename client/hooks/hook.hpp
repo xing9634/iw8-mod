@@ -14,6 +14,59 @@ namespace Client {
 				LPTOP_LEVEL_EXCEPTION_FILTER>;
 			Memory::IAT* m_SetUnhandledExceptionFilterHK;
 
+			// other IAT hooks - these can be called in DllMain for example (that's early!), nothing checks them
+			using HK_CloseSocket = HookPlate::StdcallHook<"ws2_32/closesocket", int,
+				SOCKET>;
+			Memory::IAT* m_CloseSocketHK;
+
+			using HK_Connect = HookPlate::StdcallHook<"ws2_32/connect", int,
+				SOCKET, const sockaddr*, int>;
+			Memory::IAT* m_ConnectHK;
+
+			using HK_FreeAddrInfo = HookPlate::StdcallHook<"ws2_32/freeaddrinfo", void,
+				PADDRINFOA>;
+			Memory::IAT* m_FreeAddrInfoHK;
+
+			using HK_GetAddrInfo = HookPlate::StdcallHook<"ws2_32/getaddrinfo", int,
+				PCSTR, PCSTR, const ADDRINFOA*, PADDRINFOA*>;
+			Memory::IAT* m_GetAddrInfoHK;
+
+			using HK_GetHostByName = HookPlate::StdcallHook<"ws2_32/gethostbyname", hostent*,
+				const char*>;
+			Memory::IAT* m_GetHostByNameHK;
+
+			using HK_GetPeerName = HookPlate::StdcallHook<"ws2_32/getpeername", int,
+				SOCKET, sockaddr*, int*>;
+			Memory::IAT* m_GetPeerNameHK;
+
+			using HK_GetSockName = HookPlate::StdcallHook<"ws2_32/getsockname", int,
+				SOCKET, sockaddr*, int*>;
+			Memory::IAT* m_GetSockNameHK;
+
+			using HK_IoctlSocket = HookPlate::StdcallHook<"ws2_32/ioctlsocket", int,
+				SOCKET, long, u_long*>;
+			Memory::IAT* m_IoctlSocketHK;
+
+			using HK_Recv = HookPlate::StdcallHook<"ws2_32/recv", int,
+				SOCKET, char*, int, int>;
+			Memory::IAT* m_RecvHK;
+
+			using HK_RecvFrom = HookPlate::StdcallHook<"ws2_32/recvfrom", int,
+				SOCKET, char*, int, int, sockaddr*, int*>;
+			Memory::IAT* m_RecvFromHK;
+
+			using HK_Select = HookPlate::StdcallHook<"ws2_32/select", int,
+				int, fd_set*, fd_set*, fd_set*, const timeval*>;
+			Memory::IAT* m_SelectHK;
+
+			using HK_Send = HookPlate::StdcallHook<"ws2_32/send", int,
+				SOCKET, const char*, int, int>;
+			Memory::IAT* m_SendHK;
+
+			using HK_SendTo = HookPlate::StdcallHook<"ws2_32/sendto", int,
+				SOCKET, const char*, int, int, sockaddr*, int>;
+			Memory::IAT* m_SendToHK;
+
 			// Lua - we register them, then they actually hook in Game/luaL_openlib
 			HookPlate::LuaHookStore m_LuaHookStore{};
 			using HK_LuaShared_LuaCall_IsDemoBuild = HookPlate::LuaHook<"LuaShared_LuaCall_IsDemoBuild", "Engine.BGAAHHAGAC">;

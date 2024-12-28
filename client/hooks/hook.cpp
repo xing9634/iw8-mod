@@ -13,6 +13,45 @@ namespace Client::Hook {
 
 		this->m_SetUnhandledExceptionFilterHK = new Memory::IAT("kernel32.dll", "SetUnhandledExceptionFilter");
 		this->m_SetUnhandledExceptionFilterHK->Hook<HK_SetUnhandledExceptionFilter>();
+
+		this->m_CloseSocketHK = new Memory::IAT("ws2_32.dll", "closesocket");
+		this->m_CloseSocketHK->Hook<HK_CloseSocket>();
+
+		this->m_ConnectHK = new Memory::IAT("ws2_32.dll", "connect");
+		this->m_ConnectHK->Hook<HK_Connect>();
+
+		this->m_FreeAddrInfoHK = new Memory::IAT("ws2_32.dll", "freeaddrinfo");
+		this->m_FreeAddrInfoHK->Hook<HK_FreeAddrInfo>();
+
+		this->m_GetAddrInfoHK = new Memory::IAT("ws2_32.dll", "getaddrinfo");
+		this->m_GetAddrInfoHK->Hook<HK_GetAddrInfo>();
+
+		this->m_GetHostByNameHK = new Memory::IAT("ws2_32.dll", "gethostbyname");
+		this->m_GetHostByNameHK->Hook<HK_GetHostByName>();
+
+		this->m_GetPeerNameHK = new Memory::IAT("ws2_32.dll", "getpeername");
+		this->m_GetPeerNameHK->Hook<HK_GetPeerName>();
+
+		this->m_GetSockNameHK = new Memory::IAT("ws2_32.dll", "getsockname");
+		this->m_GetSockNameHK->Hook<HK_GetSockName>();
+
+		this->m_IoctlSocketHK = new Memory::IAT("ws2_32.dll", "ioctlsocket");
+		this->m_IoctlSocketHK->Hook<HK_IoctlSocket>();
+
+		this->m_RecvHK = new Memory::IAT("ws2_32.dll", "recv");
+		this->m_RecvHK->Hook<HK_Recv>();
+
+		this->m_RecvFromHK = new Memory::IAT("ws2_32.dll", "recvfrom");
+		this->m_RecvFromHK->Hook<HK_RecvFrom>();
+
+		this->m_SelectHK = new Memory::IAT("ws2_32.dll", "select");
+		this->m_SelectHK->Hook<HK_Select>();
+
+		this->m_SendHK = new Memory::IAT("ws2_32.dll", "send");
+		this->m_SendHK->Hook<HK_Send>();
+
+		this->m_SendToHK = new Memory::IAT("ws2_32.dll", "sendto");
+		this->m_SendToHK->Hook<HK_SendTo>();
 	}
 
 	void MysteryFunctionDetour() {

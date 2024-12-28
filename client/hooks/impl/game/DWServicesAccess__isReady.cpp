@@ -6,13 +6,10 @@ std::int64_t startTime = 0;
 
 template <>
 bool Client::Hook::Hooks::HK_DWServicesAccess__isReady::hkCallback(void* _this, const int controllerIndex) {
-	_Unreferenced_parameter_(_this);
-	_Unreferenced_parameter_(controllerIndex);
-
 	/*
-		SEIZURE WARNING: DO NOT RETURN TRUE
+		SEIZURE WARNING: DO NOT JUST RETURN TRUE
 	*/
-	return false;
+	return m_Original(_this, controllerIndex);
 
 	/*if (startTime == 0) {
 		startTime = std::time(nullptr);
