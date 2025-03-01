@@ -95,6 +95,8 @@ namespace Common::Utility::NT {
 		void** GetIATEntry(const std::string& moduleName, const std::string& procName) const;
 		void** GetIATEntry(const std::string& moduleName, const char* name) const;
 
+		std::uint32_t GetChecksum();
+
 	private:
 		HMODULE m_Module;
 	};

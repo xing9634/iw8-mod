@@ -6,16 +6,22 @@
 
 #include <utility/nt.hpp>
 #include <utility/memory.hpp>
+#include <utility/strings.hpp>
 
 BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 	using namespace Client;
 	if (reason == DLL_PROCESS_ATTACH) {
 		DisableThreadLibraryCalls(hMod);
+		auto game = Common::Utility::NT::Library();
+
 		g_Module = hMod;
+		std::uint32_t gameChecksum = game.GetChecksum();
+		if (g_GameVersions.contains(gameChecksum)) {
+			g_GameIdentifier = g_GameVersions[gameChecksum];
+		}
 
 		Common::g_LogService = std::make_unique<Common::LogService>();
-		Common::WinAPI::_SetConsoleTitle("iw8-mod: " GIT_DESCRIBE);
-		auto game = Common::Utility::NT::Library();
+		Common::WinAPI::_SetConsoleTitle(std::format("iw8-mod: " GIT_DESCRIBE " - Call of Duty: Modern Warfare v{}", g_GameIdentifier.m_Version));
 		g_GameModuleName = game.GetName();
 		LOG("MainThread", INFO, "IW8-Mod injected. (base: 0x{:016X})", reinterpret_cast<std::size_t>(game.GetPtr()));
 
@@ -25,6 +31,26 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 
 		g_Hooks = std::make_unique<Hook::Hooks>();
 		LOG("MainThread", INFO, "Hooks initialized.");
+
+		Common::g_Console.m_OnInput = [](std::string input) {
+			if (input == "enable debug info") {
+				g_ShowDebugInfo = true;
+				LOG("Console/OnInput", INFO, "Enabled debug info.");
+			}
+			else if (input == "disable debug info") {
+				g_ShowDebugInfo = false;
+				LOG("Console/OnInput", INFO, "Disabled debug info.");
+			}
+			else if (Common::Utility::Strings::StartsWith(input, "openmenu ")) {
+				std::string menuName = input.substr(std::string("openmenu ").size());
+				LOG("Console/OnInput", INFO, "Opening menu: {}", menuName);
+				g_Pointers->m_LUI_OpenMenu(IW8::LocalClientNum_t::LOCAL_CLIENT_0, menuName.c_str(), true, false, false);
+			}
+			else {
+				LOG("Console/OnInput", INFO, "Unknown input received: {}", input);
+			}
+		};
+		Common::Console::StartInputThread();
 	}
 	else if (reason == DLL_PROCESS_DETACH) {
 		Client::Discord::Destroy();

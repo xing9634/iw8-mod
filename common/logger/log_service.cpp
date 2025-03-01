@@ -6,13 +6,15 @@ namespace Common {
 	LogService::LogService() {
 		AllocConsole();
 		freopen_s((FILE**)(stdout), "CONOUT$", "w", stdout);
-		SetConsoleTitleA("t6-mod");
+		freopen_s((FILE**)(stdin), "CONIN$", "r", stdin);
+		SetConsoleTitleA("iw8-mod");
 		SetConsoleOutputCP(CP_UTF8);
 
 		Utility::EnsureVTL();
 	}
 
 	LogService::~LogService() {
+		fclose(stdin);
 		fclose(stdout);
 		FreeConsole();
 	}

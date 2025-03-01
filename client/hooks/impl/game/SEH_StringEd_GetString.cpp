@@ -62,7 +62,7 @@ const char* Client::Hook::Hooks::HK_SEH_StringEd_GetString::hkCallback(const cha
 		return "MULTIPLAYER";
 	}
 
-	if (strcmp(pszReference, "MENU/POPUP_CONNECTING_OFFLINE") == 0) {
+	if (strcmp(pszReference, "MENU/POPUP_CONNECTING_OFFLINE") == 0 || strcmp(pszReference, "XBOXLIVE/POPUP_CONNECTION") == 0) {
 		return "Welcome to iw8-mod. Loading...";
 	}
 
@@ -71,7 +71,8 @@ const char* Client::Hook::Hooks::HK_SEH_StringEd_GetString::hkCallback(const cha
 	}
 
 	if (strcmp(pszReference, "MENU/STATUS") == 0) {
-		return "iw8-mod: " GIT_DESCRIBE ", on " SELECT("ship", "non-ship") " build";
+		return g_Pointers->m_j_va("iw8-mod: " GIT_DESCRIBE " - v%s%s", g_GameIdentifier.m_Version.c_str(),
+			g_GameIdentifier.m_Ship ? "\n^1Warning: Ship executables not fully supported" : "");
 	}
 
 	//if (strstr(pszReference, "LOCAL") != nullptr || strstr(pszReference, "local") != nullptr) {

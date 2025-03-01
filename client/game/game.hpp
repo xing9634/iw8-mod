@@ -26,12 +26,32 @@ namespace Client {
 
 			class PointerCalculator {
 			public:
-				PointerCalculator(SignatureCalculator calculator, std::string name, void** pointer)
-					: m_Calculator(calculator)
+				PointerCalculator(std::vector<GameVersion> targetVersions, SignatureCalculator calculator, std::string name, void** pointer)
+					: m_TargetVersions(targetVersions)
+					, m_Calculator(calculator)
 					, m_Name(name)
 					, m_Pointer(pointer)
 				{}
 
+				PointerCalculator(SignatureCalculator calculator, std::string name, void** pointer)
+					: PointerCalculator({}, calculator, name, pointer)
+				{}
+
+				bool TargetsVersion(GameVersion version) {
+					if (this->m_TargetVersions.empty()) {
+						return true;
+					}
+
+					for (const auto& targetVersion : this->m_TargetVersions) {
+						if (targetVersion == version) {
+							return true;
+						}
+					}
+
+					return false;
+				}
+
+				std::vector<GameVersion> m_TargetVersions;
 				SignatureCalculator m_Calculator;
 				std::string m_Name;
 				void** m_Pointer;
@@ -53,12 +73,14 @@ namespace Client {
 			explicit Pointers();
 			PointerList GetPointerList();
 
+			Functions::AddBaseDrawTextCmdT* m_AddBaseDrawTextCmd{};
 			Functions::CG_WorldPosToScreenPosRealT* m_CG_WorldPosToScreenPosReal{};
 			Functions::CL_PlayerData_GetDDLBufferT* m_CL_PlayerData_GetDDLBuffer{};
 			Functions::Com_GameInfo_GetGameTypeForInternalNameT* m_Com_GameInfo_GetGameTypeForInternalName{};
 			Functions::Com_GameInfo_GetMapInfoForLoadNameT* m_Com_GameInfo_GetMapInfoForLoadName{};
 			Functions::Com_ParseNavStringsT* m_Com_ParseNavStrings{};
 			Functions::Com_SetErrorMessageT* m_Com_SetErrorMessage{};
+			Functions::Content_DoWeHaveContentPackT* m_Content_DoWeHaveContentPack{};
 			Functions::DB_LoadXFileT* m_DB_LoadXFile{};
 			Functions::DB_Zones_PerformZoneLoadT* m_DB_Zones_PerformZoneLoad{};
 			Functions::DDL_GetEnumT* m_DDL_GetEnum{};
@@ -111,7 +133,23 @@ namespace Client {
 			bool* m_s_luaInFrontend{};
 			IW8::LocalUserPresenceData(*m_s_presenceData)[8] {};
 			IW8::CachedAssets_t* m_sharedUiInfo_assets{};
+			int* m_Unk_AuthCheck1{};
+			int* m_Unk_AuthCheck2{};
+			std::uint64_t* m_Unk_XUIDCheck1{};
+			std::uint64_t* m_Unk_XUIDCheck2{};
 			IW8::BNetClass* m_Unk_BNetClass{};
+
+			void R_AddCmdDrawText(const char* text, int maxChars, IW8::GfxFont* font, int fontHeight, float x, float y, float xScale, float yScale, float rotation,
+				const IW8::vec4_t* color)
+			{
+				if (this->m_R_AddCmdDrawText) {
+					this->m_R_AddCmdDrawText(text, maxChars, font, fontHeight, x, y, xScale, yScale, rotation, color);
+				}
+				else if (this->m_AddBaseDrawTextCmd) {
+					this->m_AddBaseDrawTextCmd(text, maxChars, font, nullptr, fontHeight, x, y, xScale, yScale, '\0', rotation, color, -1, '\0',
+						nullptr, false, 0, 0, nullptr, false);
+				}
+			}
 		};
 	}
 	inline std::unique_ptr<Game::Pointers> g_Pointers{};

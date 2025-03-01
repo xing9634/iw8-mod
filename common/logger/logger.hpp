@@ -26,7 +26,7 @@ namespace Common {
 			auto fileTimestamp = std::format("[{}-{}-{} {:0>2}:{:0>2}:{:0>2}]", localTime.tm_year + 1900, localTime.tm_mon + 1, localTime.tm_mday,
 				localTime.tm_hour, localTime.tm_min, localTime.tm_sec);
 
-			g_Console.Write(std::format(ANSI_FG_CYAN "{} " ANSI_RESET "{}[{}{}] " ANSI_RESET ANSI_FG_RGB(0, 163, 163) "({}) " ANSI_RESET "{}" ANSI_RESET "\n",
+			g_Console.Write(std::format(ANSI_FG_CYAN "{} " ANSI_RESET "{}[{}{}] " ANSI_RESET ANSI_FG_RGB(0, 163, 163) "({}) " ANSI_RESET "{}" ANSI_RESET,
 				consoleTimestamp, level.GetAnsiColor(), caller.compare("<unknown module>") ? (caller + "/").c_str() : "", level.GetLabel(), this->m_LogName, message));
 		}
 	private:

@@ -5,6 +5,7 @@
 #include "engine/iw8/DDLContext.hpp"
 #include "engine/iw8/DDLState.hpp"
 #include "engine/iw8/dvar_t.hpp"
+#include "engine/iw8/FontGlowStyle.hpp"
 #include "engine/iw8/gameTypeInfo.hpp"
 #include "engine/iw8/gentity_s.hpp"
 #include "engine/iw8/LocalUserPresenceData.hpp"
@@ -23,12 +24,16 @@
 #include "engine/iw8/enums/StatsSource.hpp"
 
 namespace Client::Game::Functions {
+	using AddBaseDrawTextCmdT = void*(const char* text, int maxChars, IW8::GfxFont* font, IW8::Material* fontMaterial, int fontHeight,
+		float x, float y, float xScale, float yScale, char tracking, float rotation, const IW8::vec4_t* color, int cursorPos, char cursor, const IW8::FontGlowStyle* glowStyle,
+		bool usePost, int allowGPadColor, int allowGPadAnySize, IW8::Material* iconsMaterial, bool requireUniqueCmd);
 	using CG_WorldPosToScreenPosRealT = bool(IW8::LocalClientNum_t localClientNum, const IW8::ScreenPlacement* scrPlace, const IW8::vec3_t* worldPos, IW8::vec2_t* outScreenPos);
 	using CL_PlayerData_GetDDLBufferT = bool(IW8::DDLContext* context, int controllerIndex, IW8::StatsSource statsSource, IW8::StatsGroup statsGroup);
 	using Com_GameInfo_GetGameTypeForInternalNameT = IW8::gameTypeInfo* (const char* gameTypeName);
 	using Com_GameInfo_GetMapInfoForLoadNameT = IW8::mapInfo* (const char* mapName);
 	using Com_ParseNavStringsT = bool(const char* pStr, const char** navStrings, int navStringMax, int* navStringCount);
 	using Com_SetErrorMessageT = void(const char* errorMessage);
+	using Content_DoWeHaveContentPackT = bool(int contentPack);
 	using DB_LoadXFileT = int(const char* zoneName, uintptr_t zoneMem, uintptr_t assetList, int zoneFlags, bool wasPaused, int failureMode, uintptr_t outSignature);
 	using DB_Zones_PerformZoneLoadT = std::int64_t(bool processingPreloadedFiles, bool isBaseMap, bool wasPaused, IW8::DB_FastFileFailureMode failureMode);
 	using DDL_GetEnumT = const char*(const IW8::DDLState* state, const IW8::DDLContext* ddlContext);
@@ -66,7 +71,8 @@ namespace Client::Game::Functions {
 	using LUI_OpenMenuT = void(IW8::LocalClientNum_t localClientNum, const char* menuName, int isPopup, int isModal, int isExclusive);
 	using PartyHost_StartPrivatePartyT = void(IW8::LocalClientNum_t localClientNum, int localControllerIndex, bool currentlyActive, IW8::PartyHostType hostType);
 	using ProcessScriptFileT = void(void* scrContext, IW8::ScriptFile* scriptFile);
-	using R_AddCmdDrawTextT = void(const char* text, int maxChars, void* font, int fontHeight, float x, float y, float xScale, float yScale, float rotation, const float* color);
+	using R_AddCmdDrawTextT = void(const char* text, int maxChars, IW8::GfxFont* font, int fontHeight, float x, float y, float xScale, float yScale, float rotation,
+		const IW8::vec4_t* color);
 	using R_EndFrameT = void();
 	using SEH_StringEd_GetStringT = const char*(const char* pszReference);
 	using SV_Cmd_ArgvT = const char*(int argIndex);

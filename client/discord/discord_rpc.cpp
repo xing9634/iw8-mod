@@ -2,6 +2,8 @@
 #include "discord/discord_rpc.hpp"
 #include "game/game.hpp"
 
+#define IS_IN_FRONTEND (g_Pointers->m_s_luaInFrontend == nullptr || *g_Pointers->m_s_luaInFrontend)
+
 namespace Client {
 	bool s_RPCInitalized = false;
 	time_t s_RPCStartTime = 0;
@@ -70,7 +72,7 @@ namespace Client {
 			rpc->button1name = "Discord";
 			rpc->button1link = "https://discord.gg/dPzJajt";
 
-			if (*g_Pointers->m_s_luaInFrontend) {
+			if (IS_IN_FRONTEND) {
 				rpc->details = rpc->largeImageText = "In Menus";
 				rpc->state = rpc->smallImageText = "Waiting";
 				rpc->largeImageKey = "mw";
@@ -102,10 +104,10 @@ namespace Client {
 			Update();
 		}
 
-		bool wasInFrontend = *g_Pointers->m_s_luaInFrontend;
+		bool wasInFrontend = IS_IN_FRONTEND;
 		while (s_RPCInitalized) {
 			std::this_thread::sleep_for(1s);
-			bool inFrontend = *g_Pointers->m_s_luaInFrontend;
+			bool inFrontend = IS_IN_FRONTEND;
 			if (wasInFrontend != inFrontend) {
 				Update();
 				wasInFrontend = inFrontend;

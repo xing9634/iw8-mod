@@ -82,6 +82,10 @@ namespace Client {
 			using HK_LUI_CoD_LuaCall_ShouldShowDebugInfo = HookPlate::LuaHook<"LUI_CoD_LuaCall_ShouldShowDebugInfo", "Debug.CHFBFDCHBA">;
 
 			// Game
+			using HK_Content_DoWeHaveContentPack = HookPlate::FastcallHook<"Content_DoWeHaveContentPack", bool,
+				int>;
+			Memory::MinHook<Game::Functions::Content_DoWeHaveContentPackT>* m_Content_DoWeHaveContentPackHK;
+
 			using HK_DB_LoadXFile = HookPlate::FastcallHook<"DB_LoadXFile", int,
 				const char*, uintptr_t, uintptr_t, int, bool, int, uintptr_t>;
 			Memory::MinHook<Game::Functions::DB_LoadXFileT>* m_DB_LoadXFileHK;

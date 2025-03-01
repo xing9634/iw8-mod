@@ -61,30 +61,36 @@ namespace Client::Hook {
 	void Hooks::PostUnpack() {
 		auto game = Common::Utility::NT::Library();
 
-		// game_dx12_ship
-#		ifdef _SHIP
-			Common::Utility::Memory::SafeMemSet(game.GetPtr() + 0x03DF4548, MysteryFunctionDetour);
-#		endif
-
-		// game_dx12_ship_replay
-#		ifdef _REPLAY
+		switch (g_GameIdentifier.m_Checksum) {
+		case GameVersion::v1_20_4_7623265_REPLAY:
 			Common::Utility::Hook::Jump(game.GetPtr() + 0x003061A0, MysteryFunctionDetour);
-#		endif
+			break;
+		case GameVersion::v1_20_4_7623265_SHIP:
+			Common::Utility::Memory::SafeMemSet(game.GetPtr() + 0x03DF4548, MysteryFunctionDetour);
+			break;
+		case GameVersion::v1_38_3_9489393:
+			//Common::Utility::Memory::SafeMemSet(game.GetPtr() + 0x202E7F55, MysteryFunctionDetour);
+			//Common::Utility::Hook::Jump(game.GetPtr() + 0x000119CF, MysteryFunctionDetour);
+			break;
+		default:
+			LOG("Hooks/PostUnpack", WARN, "Version not supported for mystery function detour!!!");
+			break;
+		}
 
 		g_Pointers = std::make_unique<Game::Pointers>();
 		LOG("MainThread", INFO, "Pointers initialized.");
 
 		CreateThread(nullptr, 0, [](PVOID _thisPtr) -> DWORD {
 			Hooks* _this = (Hooks*)_thisPtr;
-#			ifdef _SHIP
+			if (g_GameIdentifier.m_Ship) {
 				std::this_thread::sleep_for(3s);
-#			endif
+			}
 
 			_this->m_LuaHookStore.Register<HK_LuaShared_LuaCall_IsDemoBuild>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_ActivateInitialClient>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_NotifyServer>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_ShouldShowDebugInfo>();
-#			ifdef _SHIP
+			if (g_GameIdentifier.m_Ship) {
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsBattleNetAuthReady>();
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsBattleNetLanOnly>();
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsConnectedToGameServer>();
@@ -92,7 +98,10 @@ namespace Client::Hook {
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsNetworkConnected>();
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsPremiumPlayer>();
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsPremiumPlayerReady>();
-#			endif
+			}
+
+			_this->m_Content_DoWeHaveContentPackHK = new Memory::MinHook(g_Pointers->m_Content_DoWeHaveContentPack);
+			//_this->m_Content_DoWeHaveContentPackHK->Hook<HK_Content_DoWeHaveContentPack>();
 
 			_this->m_DB_LoadXFileHK = new Memory::MinHook(g_Pointers->m_DB_LoadXFile);
 			_this->m_DB_LoadXFileHK->Hook<HK_DB_LoadXFile>();
@@ -135,6 +144,23 @@ namespace Client::Hook {
 				"Lost Connection Fix #3").Get(), 5);
 			Common::Utility::Hook::Nop(Memory::SigScan("E8 ? ? ? ? 4C 8B 77 ? 48 C7 C6", g_GameModuleName,
 				"Lost Connection Fix #4").Get(), 5);
+
+			// new plan: just add console input lol
+			/*
+			while (g_Running) {
+				const auto keyPressed = [](int key) {
+					return GetAsyncKeyState(key) & 0x8000;
+				};
+
+				if (keyPressed('H')) {
+					LOG("KeyHandler", INFO, "Opening main menu by force");
+					g_Pointers->m_LUI_OpenMenu(IW8::LocalClientNum_t::LOCAL_CLIENT_0, "MainMenu", true, false, false);
+					std::this_thread::sleep_for(1s);
+				}
+
+				std::this_thread::sleep_for(100ms);
+			}
+			*/
 
 			return 0;
 		}, this, 0, nullptr);
