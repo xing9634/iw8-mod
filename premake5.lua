@@ -123,7 +123,7 @@ workspace "iw8-mod"
 startproject "client"
 filename "iw8_%{_ACTION}"
 
-configurations { "DebugShip", "ReleaseShip", "DebugReplay", "ReleaseReplay" }
+configurations { "Debug", "Release" }
 platforms { "x64" }
 
 warnings "Extra"
@@ -137,24 +137,14 @@ buildoptions { "/sdl-" }
 
 cppdialect "C++latest"
 
-filter "configurations:ReleaseShip"
-	defines { "_NDEBUG", "_SHIP" }
+filter "configurations:Release"
+	defines { "_NDEBUG" }
 	optimize "Full"
 	intrinsics "on"
 	functionlevellinking "on"
 
-filter "configurations:DebugShip"
-	defines { "_DEBUG", "_SHIP" }
-	symbols "On"
-
-filter "configurations:ReleaseReplay"
-	defines { "_NDEBUG", "_REPLAY" }
-	optimize "Full"
-	intrinsics "on"
-	functionlevellinking "on"
-
-filter "configurations:DebugReplay"
-	defines { "_DEBUG", "_REPLAY" }
+filter "configurations:Debug"
+	defines { "_DEBUG" }
 	symbols "On"
 
 filter "system:Windows"

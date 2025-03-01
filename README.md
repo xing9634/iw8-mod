@@ -37,13 +37,27 @@ liable for misuse of the software. Use responsibly.
 
 ## Usage
 
-iw8-mod is currently unusable on the newest version (v1.67)
+<!--iw8-mod is currently unusable on the newest version (v1.67)
 of Call of Duty®: Modern Warfare, you are required to have
 the Season 2 version (v1.20) with the left-over debug
 executable, `game_dx12_ship_replay.exe`. Once built, replace
 `discord_game_sdk.dll` in your game directory and run
 `game_dx12_ship_replay.exe`. Alternatively, you can build in
-`ReleaseShip` and launch `ModernWarfare.exe`.
+`ReleaseShip` and launch `ModernWarfare.exe`.-->
+
+iw8-mod supports these versions of Modern Warfare:  
+- 1.20.4.7623265 (game_dx12_ship_replay)
+- 1.20.4.7623265 (ModernWarfare)
+- 1.38.3.9489393
+- 1.44.0.10435696
+
+Support may be coming for:  
+- 0.01.2.7089334
+- 1.03.0.7209368
+
+Keep in mind that only 1.20/replay fully works "online" right now, all other versions don't get past the main menu and crash after ~2 minutes due to anti-tampering mechanisms put in place by Infinity Ward.
+
+The same `discord_game_sdk.dll` can be used for all the versions as it auto-detects the version based on the executable and calculates the signatures based on that.
 
 ## Credits
 

@@ -7,12 +7,6 @@
 #define VT_GET(ptr, idx) (*(void***)(ptr))[idx]
 #define HIGH_ORDER_LOG_HOOK 0
 
-#ifdef _SHIP
-#	define SELECT(ship, nonShip) ship
-#else
-#	define SELECT(ship, nonShip) nonShip
-#endif
-
 #define ENUM_UNDER(val) static_cast<std::underlying_type<decltype(val)>::type>(val)
 
 namespace Client {
