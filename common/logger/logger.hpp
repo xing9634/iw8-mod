@@ -14,6 +14,8 @@ namespace Common {
 
 		template <typename... Args>
 		void Print(LogLevel level, const std::string_view& format, Args const &...args) {
+			std::lock_guard lock(m_Mutex);
+
 			std::string caller = "<unknown module>";
 
 			auto message = std::vformat(format, std::make_format_args(args...));

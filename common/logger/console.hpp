@@ -19,6 +19,7 @@ namespace Common {
 		void Write(std::string text);
 
 		std::function<void(std::string)> m_OnInput{};
+		std::mutex m_Mutex{};
 	};
 
 	inline Console g_Console{};
