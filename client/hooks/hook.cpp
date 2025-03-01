@@ -80,6 +80,18 @@ namespace Client::Hook {
 		g_Pointers = std::make_unique<Game::Pointers>();
 		LOG("MainThread", INFO, "Pointers initialized.");
 
+		// I dont have the Arxan integrity signature for MW19, and the GTA one doesn't work (did occur in the binary though)
+		// so I guess I'm waiting for someone to be so kind to find that lol
+		std::vector<Memory::ScannedResult<void>> arxanChecks =
+			//Memory::VectoredSigScan("48 8D 45 ? 48 89 45 ? 48 8D 05 ? ? ? ? 48 89 45", g_GameModuleName, "Arxan Integrity Checks");
+			{};
+		std::size_t currentCheck = 0;
+		for (auto arxanCheck : arxanChecks) {
+			currentCheck++;
+			LOG("MainThread", DEBUG, "Patching Arxan Integrity Check {}/{}", currentCheck, arxanChecks.size());
+			Common::Utility::Hook::Nop(arxanCheck.Add(0x8).Get(), 7);
+		}
+
 		CreateThread(nullptr, 0, [](PVOID _thisPtr) -> DWORD {
 			Hooks* _this = (Hooks*)_thisPtr;
 			if (g_GameIdentifier.m_Ship) {
