@@ -1,5 +1,6 @@
 #include "common.hpp"
 #include "discord/discord_rpc.hpp"
+#include "game/functions.hpp"
 #include "game/game.hpp"
 #include "hooks/hook.hpp"
 #include "memory/iat.hpp"
@@ -41,10 +42,29 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 				g_ShowDebugInfo = false;
 				LOG("Console/OnInput", INFO, "Disabled debug info.");
 			}
-			else if (Common::Utility::Strings::StartsWith(input, "openmenu ")) {
-				std::string menuName = input.substr(std::string("openmenu ").size());
-				LOG("Console/OnInput", INFO, "Opening menu: {}", menuName);
-				g_Pointers->m_LUI_OpenMenu(IW8::LocalClientNum_t::LOCAL_CLIENT_0, menuName.c_str(), true, false, false);
+			else if (Common::Utility::Strings::StartsWith(input, "/")) {
+				std::string cbuf = input.substr(1);
+				std::vector<std::string> cmdParts = Common::Utility::Strings::Split(cbuf, ' ');
+				std::string baseCmd = cmdParts.at(0);
+				
+				if (baseCmd == "openmenu") {
+					if (cmdParts.size() >= 2) {
+						std::string menuName = cmdParts.at(1);
+						LOG("Console/OnInput", INFO, "Opening menu: {}", menuName);
+						g_Pointers->m_LUI_OpenMenu(IW8::LocalClientNum_t::LOCAL_CLIENT_0, menuName.c_str(), true, false, false);
+					}
+					else {
+						LOG("Console/OnInput", INFO, "openmenu: A menu name must be supplied.");
+					}
+				}
+				else if (baseCmd == "unlockall") {
+					Game::Cbuf_AddText("seta unlockAllItems 1");
+					LOG("Console/OnInput", INFO, "All items should now be unlocked.");
+				}
+				else {
+					Game::Cbuf_AddText(cbuf.c_str());
+					LOG("Console/OnInput", INFO, "Executed command in Cbuf.");
+				}
 			}
 			else {
 				LOG("Console/OnInput", INFO, "Unknown input received: {}", input);
