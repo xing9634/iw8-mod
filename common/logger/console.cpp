@@ -65,6 +65,7 @@ namespace Common {
 	}
 
 	void Console::Write(std::string text) {
+		std::lock_guard lock(m_Mutex);
 		this->SetConsoleMode(this->GetConsoleMode() | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
 
 		Vector2<int> cursorPos = this->GetCursorPos();
