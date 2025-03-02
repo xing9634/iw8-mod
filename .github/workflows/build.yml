@@ -37,11 +37,24 @@ jobs:
         name: iw8-mod
         path: build/iw8_vs2019/x64/client/discord_game_sdk.dll
 
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: iw8-mod ${{ github.ref }}
+        body: iw8-mod ${{ github.ref }} - released from GitHub Actions
+        draft: false
+        prerelease: false
+
     - name: Create Release and Upload DLL
       uses: softprops/action-gh-release@v1
       with:
-        # name: iw8-mod-${{ github.sha }}
-        tag_name: latest
+        tag_name: ${{ github.ref }}
+        name: iw8-mod ${{ github.ref }}
+        make_latest: true
         files: build/iw8_vs2019/x64/client/discord_game_sdk.dll
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
