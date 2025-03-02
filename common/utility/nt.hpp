@@ -4,6 +4,8 @@
 namespace Common::Utility::NT {
 	class Library final {
 	public:
+		using TlsCallback = void();
+
 		static Library Load(const std::string& name);
 		static Library Load(const std::filesystem::path& path);
 		static Library GetByAddress(void* address);
@@ -34,6 +36,7 @@ namespace Common::Utility::NT {
 		void Free();
 
 		HMODULE GetHandle() const;
+		std::vector<TlsCallback*> GetTlsCallbacks();
 
 		template <typename T>
 		T GetProc(const std::string& process) const {

@@ -153,6 +153,24 @@ namespace Common::Utility::NT {
 		return this->m_Module;
 	}
 
+	std::vector<Library::TlsCallback*> Library::GetTlsCallbacks() {
+		std::vector<TlsCallback*> callbacks{};
+		DWORD virtualAddr = this->GetOptionalHeader()->DataDirectory[IMAGE_DIRECTORY_ENTRY_TLS].VirtualAddress;
+
+		if (virtualAddr == 0) {
+			return callbacks;
+		}
+
+		PIMAGE_TLS_DIRECTORY tlsDir = reinterpret_cast<PIMAGE_TLS_DIRECTORY>(this->GetPtr() + virtualAddr);
+		TlsCallback** current = reinterpret_cast<TlsCallback**>(tlsDir->AddressOfCallBacks);
+		while (*current != nullptr) {
+			callbacks.push_back(*current);
+			current = reinterpret_cast<TlsCallback**>(reinterpret_cast<std::uintptr_t>(current) + sizeof(std::uintptr_t));
+		}
+
+		return callbacks;
+	}
+
 	void** Library::GetIATEntry(const std::string& moduleName, const std::string& procName) const {
 		return this->GetIATEntry(moduleName, procName.data());
 	}

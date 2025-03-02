@@ -59,7 +59,7 @@ namespace Client::Hook {
 	}
 
 	void Hooks::PostUnpack() {
-		auto game = Common::Utility::NT::Library();
+		static Common::Utility::NT::Library game{};
 
 		switch (g_GameIdentifier.m_Checksum) {
 		case GameVersion::v1_20_4_7623265_REPLAY:
@@ -96,6 +96,12 @@ namespace Client::Hook {
 			Hooks* _this = (Hooks*)_thisPtr;
 			if (g_GameIdentifier.m_Ship) {
 				std::this_thread::sleep_for(3s);
+			}
+
+			for (Common::Utility::NT::Library::TlsCallback* callback : game.GetTlsCallbacks()) {
+				void* callbackOg = nullptr;
+				(new Memory::MinHook(callback))->Hook(&MysteryFunctionDetour, &callbackOg);
+				LOG("HookThread", DEBUG, "Hooked TLS callback.");
 			}
 
 			_this->m_LuaHookStore.Register<HK_LuaShared_LuaCall_IsDemoBuild>();
