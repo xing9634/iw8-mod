@@ -3,35 +3,26 @@
 #include "game/game.hpp"
 
 namespace IW8 {
-	std::uint64_t MSG_ReadInt64(const msg_t* msg) {
-		//return reinterpret_cast<std::uint64_t(*)(const msg_t*)>(0x1412B9270_g)(msg);
-		return 0;
-	}
-
-	void MSG_WriteInt64(const msg_t* msg, const std::uint64_t value) {
-		//reinterpret_cast<void(*)(const msg_t*, const std::uint64_t)>(0x1412BA7F0_g)(msg, value);
-	}
-
 	void XUID::Deserialize(const msg_t* msg) {
-		this->m_ID = MSG_ReadInt64(msg);
+		this->m_ID = Client::g_Pointers->m_MSG_ReadInt64(msg);
 	}
 
 	void XUID::Serialize(const msg_t* msg) {
-		MSG_WriteInt64(msg, this->m_ID);
+		Client::g_Pointers->m_MSG_WriteInt64(msg, this->m_ID);
 	}
 
 	XUID* XUID::FromHexString(const char* xuidString) {
-		//this->m_ID = I_atoui64_hex(xuidString);
+		this->m_ID = Client::g_Pointers->m_I_atoui64_hex(xuidString);
 		return this;
 	}
 
 	XUID* XUID::FromMsg(const msg_t* msg) {
-		this->m_ID = MSG_ReadInt64(msg);
+		this->m_ID = Client::g_Pointers->m_MSG_ReadInt64(msg);
 		return this;
 	}
 
 	XUID* XUID::FromString(const char* xuidString) {
-		//this->m_ID = I_atoui64(xuidString);
+		this->m_ID = Client::g_Pointers->m_I_atoui64(xuidString);
 		return this;
 	}
 

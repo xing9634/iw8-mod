@@ -194,6 +194,18 @@ namespace Client::Game {
 					{ "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 8B F1 0F 29 74 24" },
 					SETUP_POINTER(GamerProfile_SetDataByName)
 				},
+				// I_atoui64
+				{
+					{ GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP, GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696 },
+					{ "E8 ? ? ? ? 48 8D 4C 24 ? 48 89 84 24", SETUP_MOD(Add(1).Rip()) },
+					SETUP_POINTER(I_atoui64)
+				},
+				// I_atoui64_hex
+				{
+					{ GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP, GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696 },
+					{ "E8 ? ? ? ? BE ? ? ? ? 48 8B E8", SETUP_MOD(Add(1).Rip()) },
+					SETUP_POINTER(I_atoui64_hex)
+				},
 				// I_irand
 				{
 					{ GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP, GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696 },
@@ -305,6 +317,18 @@ namespace Client::Game {
 					{ GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP, GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696 },
 					{ "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 41 8B F1 41 8B D8" },
 					SETUP_POINTER(LUI_OpenMenu)
+				},
+				// MSG_ReadInt64
+				{
+					{ GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP, GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696 },
+					{ "40 56 57 41 56 48 83 EC ? 8B 51 ? 48 8B F9 8B 71 ? 8B 41 ? 03 C6 44 8D 72 ? C1 E0 ? 44 3B F0 7E ? C7 01 ? ? ? ? 33 C0" },
+					SETUP_POINTER(MSG_ReadInt64)
+				},
+				// MSG_WriteInt64
+				{
+					{ GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP, GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696 },
+					{ "4C 8B C9 8B 49 ? 45 8B 41 ? 8D 41 ? 41 C1 E0 ? 41 3B C0 7E ? 41 C7 01 ? ? ? ? C3 41 83 39 ? 75 ? F6 C1 ? 74 ? 4C 8B C2" },
+					SETUP_POINTER(MSG_WriteInt64)
 				},
 				// PartyHost_StartPrivateParty
 				{

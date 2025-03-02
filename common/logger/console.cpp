@@ -36,9 +36,12 @@ namespace Common {
 			return "";
 		}
 
+		short lengthSh = static_cast<short>(length);
+		Vector2<short> posSh = pos.As<short>();
+
 		CHAR_INFO* buffer = new CHAR_INFO[length];
-		SMALL_RECT readRegion = { pos.GetX(), pos.GetY(), pos.GetX() + length - 1, pos.GetY() };
-		ReadConsoleOutputA(this->GetOutputHandle(), buffer, { static_cast<short>(length), 1 }, { 0, 0 }, &readRegion);
+		SMALL_RECT readRegion = { posSh.GetX(), posSh.GetY(), posSh.GetX() + lengthSh - 1, posSh.GetY() };
+		ReadConsoleOutputA(this->GetOutputHandle(), buffer, { lengthSh, 1 }, { 0, 0 }, &readRegion);
 
 		std::string result;
 		for (int i = 0; i < length; ++i) {

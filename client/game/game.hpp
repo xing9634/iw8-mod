@@ -99,6 +99,8 @@ namespace Client {
 			Functions::DWServicesAccess__isReadyT* m_DWServicesAccess__isReady{};
 			Functions::FS_ReadFileT* m_FS_ReadFile{};
 			Functions::GamerProfile_SetDataByNameT* m_GamerProfile_SetDataByName{};
+			Functions::I_atoui64T* m_I_atoui64{};
+			Functions::I_atoui64_hexT* m_I_atoui64_hex{};
 			Functions::I_irandT* m_I_irand{};
 			Functions::Info_ValueForKeyT* m_Info_ValueForKey{};
 			Functions::j_vaT* m_j_va{};
@@ -116,6 +118,8 @@ namespace Client {
 			Functions::LUI_BeginTableT* m_LUI_BeginTable{};
 			Functions::LUI_EndTableT* m_LUI_EndTable{};
 			Functions::LUI_OpenMenuT* m_LUI_OpenMenu{};
+			Functions::MSG_ReadInt64T* m_MSG_ReadInt64{};
+			Functions::MSG_WriteInt64T* m_MSG_WriteInt64{};
 			Functions::PartyHost_StartPrivatePartyT* m_PartyHost_StartPrivateParty{};
 			Functions::ProcessScriptFileT* m_ProcessScriptFile{};
 			Functions::R_AddCmdDrawTextT* m_R_AddCmdDrawText{};

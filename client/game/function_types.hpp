@@ -12,6 +12,7 @@
 #include "engine/iw8/lua_State.hpp"
 #include "engine/iw8/luaL_Reg.hpp"
 #include "engine/iw8/mapInfo.hpp"
+#include "engine/iw8/msg_t.hpp"
 #include "engine/iw8/ScreenPlacement.hpp"
 #include "engine/iw8/ScriptFile.hpp"
 #include "engine/iw8/vec2_t.hpp"
@@ -52,6 +53,8 @@ namespace Client::Game::Functions {
 	using DWServicesAccess__isReadyT = bool(void* _this, const int controllerIndex);
 	using FS_ReadFileT = std::int64_t(const char* qpath, void** buffer);
 	using GamerProfile_SetDataByNameT = void(int controllerIndex, const char* settingName, float settingValue);
+	using I_atoui64T = std::uint64_t(const char* str);
+	using I_atoui64_hexT = std::uint64_t(const char* str);
 	using I_irandT = std::int64_t(int min, int max);
 	using Info_ValueForKeyT = const char*(const char* s, const char* key);
 	using j_vaT = const char*(const char* fmt, ...);
@@ -69,6 +72,8 @@ namespace Client::Game::Functions {
 	using LUI_BeginTableT = void(const char* key, IW8::lua_State* luaVM);
 	using LUI_EndTableT = void(IW8::lua_State* luaVM);
 	using LUI_OpenMenuT = void(IW8::LocalClientNum_t localClientNum, const char* menuName, int isPopup, int isModal, int isExclusive);
+	using MSG_ReadInt64T = std::uint64_t(const IW8::msg_t* msg);
+	using MSG_WriteInt64T = void(const IW8::msg_t* msg, const std::uint64_t value);
 	using PartyHost_StartPrivatePartyT = void(IW8::LocalClientNum_t localClientNum, int localControllerIndex, bool currentlyActive, IW8::PartyHostType hostType);
 	using ProcessScriptFileT = void(void* scrContext, IW8::ScriptFile* scriptFile);
 	using R_AddCmdDrawTextT = void(const char* text, int maxChars, IW8::GfxFont* font, int fontHeight, float x, float y, float xScale, float yScale, float rotation,
