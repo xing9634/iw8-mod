@@ -37,6 +37,13 @@ jobs:
         name: iw8-mod
         path: build/iw8_vs2019/x64/client/discord_game_sdk.dll
 
+    - name: Create and Push Tag 'latest'
+      run: |
+        git tag latest
+        git push origin latest
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
     - name: Create Release and Upload DLL
       uses: softprops/action-gh-release@v1
       with:
