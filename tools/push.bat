@@ -1,3 +1,3 @@
 @echo off
 git push
-git clone --mirror https://github.com/xifil/iw8-mod.git
+git push --mirror https://github.com/xifil/iw8-mod.git
