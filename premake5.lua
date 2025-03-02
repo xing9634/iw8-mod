@@ -298,6 +298,9 @@ group "vendor"
 		vpaths { ["*"] = {} }
 		includedirs { "vendor/%{prj.name}/" }
 		defines { "NOMINMAX" }
+		disablewarnings {
+			"4996"	-- C4996: This function or variable may be unsafe. Consider using [...] instead.
+		}
 
 		targetdir(buildDir)
 		objdir(intBuildDir)
@@ -313,6 +316,10 @@ group "vendor"
 		vpaths { ["*"] = {} }
 		includedirs {
 			"vendor/%{prj.name}/"
+		}
+		disablewarnings {
+			"4996",	-- C4996: This function or variable may be unsafe. Consider using [...] instead.
+			"5054"	-- C5054: operator '==': deprecated between enumerations of different types
 		}
 
 		targetdir(buildDir)
@@ -349,6 +356,9 @@ group "vendor"
 		defines {
 			"ASMJIT_STATIC"
 		}
+		disablewarnings {
+			"5054"	-- C5054: operator '==': deprecated between enumerations of different types
+		}
 
 		targetdir(buildDir)
 		objdir(intBuildDir)
@@ -377,6 +387,15 @@ group "vendor"
 		includedirs {
 			"vendor/%{prj.name}/include/",
 			"vendor/%{prj.name}/src/"
+		}
+		disablewarnings {
+			"4100",	-- C4100: '[...]': unreferenced formal parameter
+			"4201",	-- C4201: nonstandard extension used: nameless struct/union
+			"4206",	-- C4206: nonstandard extension used: translation unit is empty
+			"4244",	-- C4244: '=': conversion from '[...]' to '[...]', possible loss of data
+			"4310",	-- C4310: cast truncates constant value
+			"4701",	-- C4701: potentially uninitialized local variable '[...]' used
+			"4706"	-- C4706: assignment within conditional expression
 		}
 
 		targetdir(buildDir)
