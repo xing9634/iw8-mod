@@ -40,7 +40,8 @@ jobs:
     - name: Create Release and Upload DLL
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: ${{ github.sha }}
+        name: iw8-mod: ${{ github.sha }}
+        tag_name: latest
         files: build/iw8_vs2019/x64/client/discord_game_sdk.dll
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
