@@ -46,8 +46,7 @@ executable, `game_dx12_ship_replay.exe`. Once built, replace
 `ReleaseShip` and launch `ModernWarfare.exe`.-->
 
 iw8-mod supports these versions of Modern Warfare:  
-- 1.20.4.7623265 (game_dx12_ship_replay)
-- 1.20.4.7623265 (ModernWarfare)
+- 1.20.4.7623265 (ModernWarfare & game_dx12_ship_replay) <!-- They're the same exact thing -->
 - 1.38.3.9489393
 - 1.44.0.10435696
 
