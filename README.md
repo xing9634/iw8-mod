@@ -37,6 +37,12 @@ NOTE: You must legally own [Call of Duty®: Modern Warfare](https://store.steamp
 
 <br/>-->
 
+## Download from Actions
+
+GitHub Actions automatically builds the DLL file on each 
+commit, you can find the latest build of iw8-mod 
+[here](https://xifil.github.io/iw8-redirect).
+
 ## Disclaimer
 
 This software has been created purely for the purposes of
