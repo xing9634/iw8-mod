@@ -58,6 +58,14 @@ namespace Client::Hook {
 		LOG("Game/MysteryFunction", INFO, "Function called, ignoring.");
 	}
 
+	void GeneralTLSCallbackDetour() {
+		// we don't actually do anything here or the console will be blown
+		// up with messages saying the function was called. it's fine to do
+		// that with "MysteryFunction" though, because it's only called
+		// once (i think?)
+		return;
+	}
+
 	void Hooks::PostUnpack() {
 		static Common::Utility::NT::Library game{};
 
@@ -98,11 +106,12 @@ namespace Client::Hook {
 				std::this_thread::sleep_for(3s);
 			}
 
-			for (Common::Utility::NT::Library::TlsCallback* callback : game.GetTlsCallbacks()) {
+			const auto tlsCallbacks = game.GetTlsCallbacks();
+			for (Common::Utility::NT::Library::TlsCallback* callback : tlsCallbacks) {
 				void* callbackOg = nullptr;
-				(new Memory::MinHook(callback))->Hook(&MysteryFunctionDetour, &callbackOg);
-				LOG("HookThread", DEBUG, "Hooked TLS callback.");
+				(new Memory::MinHook(callback))->Hook(&GeneralTLSCallbackDetour, &callbackOg);
 			}
+			LOG("HookThread", DEBUG, "Hooked {} TLS callbacks.", tlsCallbacks.size());
 
 			_this->m_LuaHookStore.Register<HK_LuaShared_LuaCall_IsDemoBuild>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_ActivateInitialClient>();
