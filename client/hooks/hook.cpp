@@ -14,6 +14,9 @@ namespace Client::Hook {
 		this->m_SetUnhandledExceptionFilterHK = new Memory::IAT("kernel32.dll", "SetUnhandledExceptionFilter");
 		this->m_SetUnhandledExceptionFilterHK->Hook<HK_SetUnhandledExceptionFilter>();
 
+		this->m_LoadImageAHK = new Memory::IAT("user32.dll", "LoadImageA");
+		this->m_LoadImageAHK->Hook<HK_LoadImageA>();
+
 		this->m_CloseSocketHK = new Memory::IAT("ws2_32.dll", "closesocket");
 		this->m_CloseSocketHK->Hook<HK_CloseSocket>();
 

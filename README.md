@@ -79,4 +79,4 @@ The same `discord_game_sdk.dll` can be used for all the versions as it auto-dete
 - [Donetsk](https://github.com/ProjectDonetsk/Donetsk) - documented code used throughout the project
 - [mrondllsrc](https://github.com/Ma3axucTKa/mrondllsrc) - a few hooks and patches
 - [s1x-client](https://github.com/HeartbeatingForCenturies/s1x-client) - heavy inspiration
-
+- [Alesky.](https://discord.com/users/266189430446882816) - art inspiration, the goat

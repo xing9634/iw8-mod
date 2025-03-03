@@ -15,6 +15,10 @@ namespace Client {
 			Memory::IAT* m_SetUnhandledExceptionFilterHK;
 
 			// other IAT hooks - these can be called in DllMain for example (that's early!), nothing checks them
+			using HK_LoadImageA = HookPlate::StdcallHook<"user32/LoadImageA", HANDLE,
+				HINSTANCE, LPCSTR, UINT, int, int, UINT>;
+			Memory::IAT* m_LoadImageAHK;
+
 			using HK_CloseSocket = HookPlate::StdcallHook<"ws2_32/closesocket", int,
 				SOCKET>;
 			Memory::IAT* m_CloseSocketHK;

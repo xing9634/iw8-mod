@@ -163,7 +163,8 @@ project "client"
 		"client/**.hpp",
 		"client/**.cpp",
 		"client/**.h",
-		"client/**.c"
+		"client/**.c",
+		"client/**.rc"
 	}
 	vpaths {
 		["*"] = {}
