@@ -1,6 +1,7 @@
 #include "common.hpp"
 #include "engine/iw8/XUID.hpp"
 #include "game/game.hpp"
+#include "game/map_validator.hpp"
 #include "hooks/hook.hpp"
 #include "memory/memory.hpp"
 
@@ -83,5 +84,11 @@ void Client::Hook::Hooks::HK_R_EndFrame::hkCallback() {
 			s_FramesPassed++;
 		}
 	}
+
+	if (Game::MapValidator::g_QueuedErrorMessage.size() > 0) {
+		g_Pointers->m_Com_SetErrorMessage(Game::MapValidator::g_QueuedErrorMessage.c_str());
+		Game::MapValidator::g_QueuedErrorMessage = "";
+	}
+
 	return m_Original();
 }

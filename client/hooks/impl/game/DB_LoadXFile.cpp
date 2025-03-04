@@ -1,4 +1,5 @@
 #include "common.hpp"
+#include "game/map_validator.hpp"
 #include "hooks/hook.hpp"
 
 template <>
@@ -8,5 +9,6 @@ int Client::Hook::Hooks::HK_DB_LoadXFile::hkCallback(const char* zoneName, uintp
 	if (res != 0) {
 		LOG("Game/DB_LoadXFile", WARN, "Loaded fastfile {} with non-zero code {}.", zoneName == nullptr ? "<null>" : zoneName, res);
 	}
+	Game::MapValidator::g_LoadedFastfiles.emplace(zoneName, res == 0);
 	return res;
 }
