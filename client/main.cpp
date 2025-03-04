@@ -97,7 +97,9 @@ extern "C" __declspec(dllexport) int /* EDiscordResult */ /* DISCORD_API */ Disc
 	_Unreferenced_parameter_(result);
 
 	CreateThread(nullptr, 0, Client::Discord::Thread, nullptr, 0, nullptr);
-	CreateThread(nullptr, 0, Client::Game::MapValidator::Thread, nullptr, 0, nullptr);
+	if (Client::g_GameIdentifier.m_Checksum == Client::GameVersion::v1_20_4_7623265_REPLAY) {
+		CreateThread(nullptr, 0, Client::Game::MapValidator::Thread, nullptr, 0, nullptr);
+	}
 
 	LOG("Proxy/DiscordCreate", INFO, "DiscordCreate called, returning 1 (ServiceUnavailable).");
 	return 1 /* DiscordResult_ServiceUnavailable */;

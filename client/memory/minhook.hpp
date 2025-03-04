@@ -1,6 +1,7 @@
 #pragma once
 #include "common.hpp"
 
+#include <utility/nt.hpp>
 #include <MinHook.h>
 
 namespace Client::Memory {
@@ -10,6 +11,10 @@ namespace Client::Memory {
 		MinHook(P* pointer = nullptr)
 			: m_DetourPointer(pointer)
 		{}
+
+		MinHook(const char* libName, const char* exportName) {
+			this->m_DetourPointer = Common::Utility::NT::Library(libName).GetProc<void*>(exportName);
+		}
 
 		template <typename C, typename O>
 		void Hook(C* callback, O** original) {

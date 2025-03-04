@@ -15,6 +15,14 @@ namespace Client {
 			Memory::IAT* m_SetUnhandledExceptionFilterHK;
 
 			// other IAT hooks - these can be called in DllMain for example (that's early!), nothing checks them
+			using HK_CheckRemoteDebuggerPresent = HookPlate::StdcallHook<"kernelbase/CheckRemoteDebuggerPresent", BOOL,
+				HANDLE, PBOOL>;
+			Memory::MinHook<>* m_CheckRemoteDebuggerPresentHK;
+
+			using HK_SetThreadContext = HookPlate::StdcallHook<"kernelbase/SetThreadContext", BOOL,
+				HANDLE, const CONTEXT*>;
+			Memory::MinHook<>* m_SetThreadContextHK;
+
 			using HK_LoadImageA = HookPlate::StdcallHook<"user32/LoadImageA", HANDLE,
 				HINSTANCE, LPCSTR, UINT, int, int, UINT>;
 			Memory::IAT* m_LoadImageAHK;

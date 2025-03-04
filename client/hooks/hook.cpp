@@ -14,6 +14,12 @@ namespace Client::Hook {
 		this->m_SetUnhandledExceptionFilterHK = new Memory::IAT("kernel32.dll", "SetUnhandledExceptionFilter");
 		this->m_SetUnhandledExceptionFilterHK->Hook<HK_SetUnhandledExceptionFilter>();
 
+		this->m_CheckRemoteDebuggerPresentHK = new Memory::MinHook("kernelbase.dll", "CheckRemoteDebuggerPresent");
+		this->m_CheckRemoteDebuggerPresentHK->Hook<HK_CheckRemoteDebuggerPresent>();
+
+		this->m_SetThreadContextHK = new Memory::MinHook("kernelbase.dll", "SetThreadContext");
+		this->m_SetThreadContextHK->Hook<HK_SetThreadContext>();
+
 		this->m_LoadImageAHK = new Memory::IAT("user32.dll", "LoadImageA");
 		this->m_LoadImageAHK->Hook<HK_LoadImageA>();
 
