@@ -7,6 +7,7 @@
 #include <DbgHelp.h>
 #include <ErrorRep.h>
 #include <ExDisp.h>
+#include <intrin.h>
 #include <MsHtmHst.h>
 #include <MsHTML.h>
 #include <Psapi.h>
@@ -29,6 +30,8 @@
 #include <string>
 #include <thread>
 #include <vector>
+
+#pragma intrinsic(_ReturnAddress)
 
 #pragma comment(lib, "DbgHelp.lib")
 #pragma comment(lib, "Faultrep.lib")

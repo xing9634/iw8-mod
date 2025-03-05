@@ -48,4 +48,7 @@ namespace Client {
 
 	// runtime settings
 	inline bool g_ShowDebugInfo = false;
+
+	// other things
+	std::string AndRel(std::uintptr_t address);
 }

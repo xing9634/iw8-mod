@@ -14,6 +14,9 @@ namespace Client::Hook {
 		this->m_SetUnhandledExceptionFilterHK = new Memory::IAT("kernel32.dll", "SetUnhandledExceptionFilter");
 		this->m_SetUnhandledExceptionFilterHK->Hook<HK_SetUnhandledExceptionFilter>();
 
+		this->m_AddVectoredExceptionHandlerHK = new Memory::IAT("kernel32.dll", "AddVectoredExceptionHandler");
+		this->m_AddVectoredExceptionHandlerHK->Hook<HK_AddVectoredExceptionHandler>();
+
 		this->m_CheckRemoteDebuggerPresentHK = new Memory::MinHook("kernelbase.dll", "CheckRemoteDebuggerPresent");
 		this->m_CheckRemoteDebuggerPresentHK->Hook<HK_CheckRemoteDebuggerPresent>();
 

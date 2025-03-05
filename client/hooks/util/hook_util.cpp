@@ -85,15 +85,6 @@ namespace Client::Hook {
 			break;
 		}
 
-		const auto relLoc = [](std::size_t address) {
-			Common::Utility::NT::Library assignedLib = Common::Utility::NT::Library::GetByAddress(reinterpret_cast<void*>(address));
-			if (assignedLib) {
-				return std::format(" ({}+0x{:016X})", assignedLib.GetName(), address - reinterpret_cast<std::size_t>(assignedLib.GetPtr()));
-			}
-			return std::string("");
-		};
-#		define AND_REL(a) a, relLoc(a)
-
 		Common::Utility::NT::Library gameLib = Common::Utility::NT::Library();
 		Common::Utility::NT::Library modLib = Common::Utility::NT::Library(Client::g_Module);
 
@@ -105,18 +96,18 @@ namespace Client::Hook {
 		message += "---- Exception Record ----\n";
 		message += std::format("Exception code: {} (0x{:08X})\n", exceptionCodeName, inf->ExceptionRecord->ExceptionCode);
 		message += std::format("Exception flags: 0x{:08X}\n", inf->ExceptionRecord->ExceptionFlags);
-		message += std::format("Exception address: 0x{:016X}{}\n", AND_REL(reinterpret_cast<std::size_t>(inf->ExceptionRecord->ExceptionAddress)));
+		message += std::format("Exception address: {}\n", AndRel(reinterpret_cast<std::size_t>(inf->ExceptionRecord->ExceptionAddress)));
 		message += std::format("Number of parameters: {}\n", inf->ExceptionRecord->NumberParameters);
 		for (auto x = 0ul; x < std::min(inf->ExceptionRecord->NumberParameters, 15ul /*EXCEPTION_MAXIMUM_PARAMETERS*/); x++) {
-			message += std::format(" > Parameter {}: 0x{:016X}{}\n", x, AND_REL(inf->ExceptionRecord->ExceptionInformation[x]));
+			message += std::format(" > Parameter {}: {}\n", x, AndRel(inf->ExceptionRecord->ExceptionInformation[x]));
 		}
 		message += "----- Context Record -----\n";
-		message += std::format("P1Home: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->P1Home));
-		message += std::format("P2Home: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->P2Home));
-		message += std::format("P3Home: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->P3Home));
-		message += std::format("P4Home: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->P4Home));
-		message += std::format("P5Home: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->P5Home));
-		message += std::format("P6Home: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->P6Home));
+		message += std::format("P1Home: {}\n", AndRel(inf->ContextRecord->P1Home));
+		message += std::format("P2Home: {}\n", AndRel(inf->ContextRecord->P2Home));
+		message += std::format("P3Home: {}\n", AndRel(inf->ContextRecord->P3Home));
+		message += std::format("P4Home: {}\n", AndRel(inf->ContextRecord->P4Home));
+		message += std::format("P5Home: {}\n", AndRel(inf->ContextRecord->P5Home));
+		message += std::format("P6Home: {}\n", AndRel(inf->ContextRecord->P6Home));
 
 		message += std::format("Context flags: 0x{:08X}\n", inf->ContextRecord->ContextFlags);
 		message += std::format("MxCsr: 0x{:08X}\n", inf->ContextRecord->MxCsr);
@@ -129,39 +120,39 @@ namespace Client::Hook {
 		message += std::format("SegSs: 0x{:04X}\n", inf->ContextRecord->SegSs);
 		message += std::format("EFlags: 0x{:08X}\n", inf->ContextRecord->EFlags);
 
-		message += std::format("Dr0: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->Dr0));
-		message += std::format("Dr1: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->Dr1));
-		message += std::format("Dr2: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->Dr2));
-		message += std::format("Dr3: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->Dr3));
-		message += std::format("Dr6: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->Dr6));
-		message += std::format("Dr7: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->Dr7));
+		message += std::format("Dr0: {}\n", AndRel(inf->ContextRecord->Dr0));
+		message += std::format("Dr1: {}\n", AndRel(inf->ContextRecord->Dr1));
+		message += std::format("Dr2: {}\n", AndRel(inf->ContextRecord->Dr2));
+		message += std::format("Dr3: {}\n", AndRel(inf->ContextRecord->Dr3));
+		message += std::format("Dr6: {}\n", AndRel(inf->ContextRecord->Dr6));
+		message += std::format("Dr7: {}\n", AndRel(inf->ContextRecord->Dr7));
 
-		message += std::format("Rax: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->Rax));
-		message += std::format("Rcx: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->Rcx));
-		message += std::format("Rdx: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->Rdx));
-		message += std::format("Rbx: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->Rbx));
-		message += std::format("Rsp: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->Rsp));
-		message += std::format("Rbp: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->Rbp));
-		message += std::format("Rsi: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->Rsi));
-		message += std::format("Rdi: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->Rdi));
-		message += std::format("R8: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->R8));
-		message += std::format("R9: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->R9));
-		message += std::format("R10: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->R10));
-		message += std::format("R11: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->R11));
-		message += std::format("R12: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->R12));
-		message += std::format("R13: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->R13));
-		message += std::format("R14: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->R14));
-		message += std::format("R15: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->R15));
+		message += std::format("Rax: {}\n", AndRel(inf->ContextRecord->Rax));
+		message += std::format("Rcx: {}\n", AndRel(inf->ContextRecord->Rcx));
+		message += std::format("Rdx: {}\n", AndRel(inf->ContextRecord->Rdx));
+		message += std::format("Rbx: {}\n", AndRel(inf->ContextRecord->Rbx));
+		message += std::format("Rsp: {}\n", AndRel(inf->ContextRecord->Rsp));
+		message += std::format("Rbp: {}\n", AndRel(inf->ContextRecord->Rbp));
+		message += std::format("Rsi: {}\n", AndRel(inf->ContextRecord->Rsi));
+		message += std::format("Rdi: {}\n", AndRel(inf->ContextRecord->Rdi));
+		message += std::format("R8: {}\n", AndRel(inf->ContextRecord->R8));
+		message += std::format("R9: {}\n", AndRel(inf->ContextRecord->R9));
+		message += std::format("R10: {}\n", AndRel(inf->ContextRecord->R10));
+		message += std::format("R11: {}\n", AndRel(inf->ContextRecord->R11));
+		message += std::format("R12: {}\n", AndRel(inf->ContextRecord->R12));
+		message += std::format("R13: {}\n", AndRel(inf->ContextRecord->R13));
+		message += std::format("R14: {}\n", AndRel(inf->ContextRecord->R14));
+		message += std::format("R15: {}\n", AndRel(inf->ContextRecord->R15));
 
-		message += std::format("Rip: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->Rip));
+		message += std::format("Rip: {}\n", AndRel(inf->ContextRecord->Rip));
 
-		message += std::format("VectorControl: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->VectorControl));
+		message += std::format("VectorControl: {}\n", AndRel(inf->ContextRecord->VectorControl));
 
-		message += std::format("DebugControl: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->DebugControl));
-		message += std::format("LastBranchToRip: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->LastBranchToRip));
-		message += std::format("LastBranchFromRip: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->LastBranchFromRip));
-		message += std::format("LastExceptionToRip: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->LastExceptionToRip));
-		message += std::format("LastExceptionFromRip: 0x{:016X}{}\n", AND_REL(inf->ContextRecord->LastExceptionFromRip));
+		message += std::format("DebugControl: {}\n", AndRel(inf->ContextRecord->DebugControl));
+		message += std::format("LastBranchToRip: {}\n", AndRel(inf->ContextRecord->LastBranchToRip));
+		message += std::format("LastBranchFromRip: {}\n", AndRel(inf->ContextRecord->LastBranchFromRip));
+		message += std::format("LastExceptionToRip: {}\n", AndRel(inf->ContextRecord->LastExceptionToRip));
+		message += std::format("LastExceptionFromRip: {}\n", AndRel(inf->ContextRecord->LastExceptionFromRip));
 
 		message += "------- Other Info -------\n";
 		STACKFRAME64 stackFrame = { 0 };
@@ -177,7 +168,7 @@ namespace Client::Hook {
 			&stackFrame, inf->ContextRecord, NULL, SymFunctionTableAccess64, SymGetModuleBase64, NULL))
 		{
 			functionCount++;
-			message += std::format("Function address [{}]: 0x{:016X}{}\n", functionCount, AND_REL(stackFrame.AddrPC.Offset));
+			message += std::format("Function address [{}]: {}\n", functionCount, AndRel(stackFrame.AddrPC.Offset));
 		}
 
 		MessageBoxA(nullptr, message.c_str(), "iw8-mod exception handler", MB_OK);
