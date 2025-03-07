@@ -7,6 +7,7 @@
 #include "memory/iat.hpp"
 #include "network/updater.hpp"
 
+#include <utility/flags.hpp>
 #include <utility/nt.hpp>
 #include <utility/memory.hpp>
 #include <utility/strings.hpp>
