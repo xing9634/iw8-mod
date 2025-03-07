@@ -5,6 +5,7 @@
 #include "game/map_validator.hpp"
 #include "hooks/hook.hpp"
 #include "memory/iat.hpp"
+#include "network/updater.hpp"
 
 #include <utility/nt.hpp>
 #include <utility/memory.hpp>
@@ -15,6 +16,8 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 	if (reason == DLL_PROCESS_ATTACH) {
 		DisableThreadLibraryCalls(hMod);
 		auto game = Common::Utility::NT::Library();
+
+		Network::Updater::CheckForUpdates();
 
 		g_Module = hMod;
 		std::uint32_t gameChecksum = game.GetChecksum();

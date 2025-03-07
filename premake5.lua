@@ -171,6 +171,7 @@ project "client"
 	}
 	links {
 		"backward-cpp",
+		"curl",
 		"common",
 		"discord-rpc",
 		"imgui",
@@ -181,6 +182,7 @@ project "client"
 		"common/",
 		"vendor/asmjit/src/",
 		"vendor/backward-cpp/",
+		"vendor/curl/include/",
 		"vendor/discord-rpc/",
 		"vendor/gsl/include/",
 		"vendor/imgui/",
@@ -188,7 +190,14 @@ project "client"
 		"vendor/minhook/include/"
 	}
 	defines {
-		"NOMINMAX"
+		"NOMINMAX",
+		"CURL_STRICTER",
+		"CURL_STATICLIB",
+		"CURL_DISABLE_LDAP",
+		"USE_SCHANNEL",
+		"USE_WINDOWS_SSPI",
+		"USE_THREADS_WIN32",
+		"BUILDING_LIBCURL"
 	}
 	prebuildcommands {
 		"cd .. && .\\tools\\premake\\premake5.exe generate-buildinfo"
@@ -241,53 +250,6 @@ project "common"
 	targetdir(buildDir)
 	objdir(intBuildDir)
 
---[[
-project "launcher"
-	location "launcher"
-	kind "ConsoleApp"
-	language "C++"
-	targetname "iw8-mod"
-
-	files {
-		"launcher/**.hpp",
-		"launcher/**.cpp",
-		"launcher/resource.h",
-		"launcher/resource.rc",
-		"launcher/resources/**.*"
-	}
-	vpaths {
-		["*"] = {}
-	}
-	links {
-		"backward-cpp",
-		"common",
-		"imgui",
-		"minhook"
-	}
-	dependson {
-		"client"
-	}
-	includedirs {
-		"launcher/",
-		"common/",
-		"vendor/asmjit/src/",
-		"vendor/backward-cpp/",
-		"vendor/gsl/include/",
-		"vendor/imgui/",
-		"vendor/json/single_include/",
-		"vendor/minhook/include/"
-	}
-	defines {
-		"NOMINMAX"
-	}
-	prebuildcommands {
-		"cd .. && .\\tools\\premake\\premake5.exe generate-buildinfo"
-	}
-	
-	targetdir(buildDir)
-	objdir(intBuildDir)
-]]--
-
 group "vendor"
 	-- vendor
 	project "backward-cpp"
@@ -301,6 +263,39 @@ group "vendor"
 		defines { "NOMINMAX" }
 		disablewarnings {
 			"4996"	-- C4996: This function or variable may be unsafe. Consider using [...] instead.
+		}
+
+		targetdir(buildDir)
+		objdir(intBuildDir)
+	project "curl"
+		location "vendor/%{prj.name}"
+		kind "StaticLib"
+		language "C"
+
+		files {
+			"vendor/%{prj.name}/include/**.h",
+			"vendor/%{prj.name}/lib/**.h",
+			"vendor/%{prj.name}/lib/**.c"
+		}
+		vpaths { ["*"] = {} }
+		links {
+			"Crypt32.lib"
+		}
+		includedirs {
+			"vendor/%{prj.name}/include/",
+			"vendor/%{prj.name}/lib/"
+		}
+		defines {
+			"CURL_STRICTER",
+			"CURL_STATICLIB",
+			"CURL_DISABLE_LDAP",
+			"USE_SCHANNEL",
+			"USE_WINDOWS_SSPI",
+			"USE_THREADS_WIN32",
+			"BUILDING_LIBCURL"
+		}
+		disablewarnings {
+			"4005"	-- C4005: macro redefinition
 		}
 
 		targetdir(buildDir)
