@@ -80,3 +80,4 @@ The same `discord_game_sdk.dll` can be used for all the versions as it auto-dete
 - [mrondllsrc](https://github.com/Ma3axucTKa/mrondllsrc) - a few hooks and patches
 - [s1x-client](https://github.com/HeartbeatingForCenturies/s1x-client) - heavy inspiration
 - [Alesky.](https://discord.com/users/266189430446882816) - art inspiration, the goat
+- [N1gh7m4r3](https://discord.com/users/1279980341863514134) - logical ideas, provided many useful resources
