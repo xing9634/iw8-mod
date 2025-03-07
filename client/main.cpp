@@ -17,8 +17,6 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 		DisableThreadLibraryCalls(hMod);
 		auto game = Common::Utility::NT::Library();
 
-		Network::Updater::CheckForUpdates();
-
 		g_Module = hMod;
 		std::uint32_t gameChecksum = game.GetChecksum();
 		if (g_GameVersions.contains(gameChecksum)) {
@@ -29,6 +27,10 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 		Common::WinAPI::_SetConsoleTitle(std::format("iw8-mod: " GIT_DESCRIBE " - Call of Duty: Modern Warfare v{}", g_GameIdentifier.m_Version));
 		g_GameModuleName = game.GetName();
 		LOG("MainThread", INFO, "IW8-Mod injected. (base: 0x{:016X})", reinterpret_cast<std::size_t>(game.GetPtr()));
+
+		if (Common::Utility::Flags::HasFlag("updatecheck")) {
+			Network::Updater::CheckForUpdates();
+		}
 
 		if (remove("Data/data/CASCRepair.mrk") == 0) {
 			LOG("MainThread", INFO, "Prevented TACT error E_REPAIR (28) by deleting CASCRepair.mrk.");
