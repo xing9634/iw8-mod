@@ -7,71 +7,7 @@ namespace Client {
 	namespace Game {
 		class Pointers {
 		public:
-			class SignatureCalculator {
-			public:
-				using Res = Memory::ScannedResult<void>;
-
-				SignatureCalculator(const std::string& signature, std::function<Res(Res)> mod)
-					: m_Signature(signature)
-					, m_Mod(std::move(mod))
-				{}
-
-				SignatureCalculator(const std::string& signature)
-					: SignatureCalculator(signature, [](Res r) { return r; })
-				{}
-
-				std::string m_Signature;
-				std::function<Res(Res)> m_Mod;
-			};
-
-			class PointerCalculator {
-			public:
-				PointerCalculator(std::vector<GameVersion> targetVersions, SignatureCalculator calculator, std::string name, void** pointer)
-					: m_TargetVersions(targetVersions)
-					, m_Calculator(calculator)
-					, m_Name(name)
-					, m_Pointer(pointer)
-				{}
-
-				PointerCalculator(SignatureCalculator calculator, std::string name, void** pointer)
-					: PointerCalculator({}, calculator, name, pointer)
-				{}
-
-				bool TargetsVersion(GameVersion version) {
-					if (this->m_TargetVersions.empty()) {
-						return true;
-					}
-
-					for (const auto& targetVersion : this->m_TargetVersions) {
-						if (targetVersion == version) {
-							return true;
-						}
-					}
-
-					return false;
-				}
-
-				std::vector<GameVersion> m_TargetVersions;
-				SignatureCalculator m_Calculator;
-				std::string m_Name;
-				void** m_Pointer;
-			};
-
-			class PointerList {
-			public:
-				PointerList(std::string _module, std::vector<PointerCalculator> pointers) {
-					this->m_Module = _module;
-					this->m_Pointers = pointers;
-				}
-
-				std::string m_Module{};
-				std::vector<PointerCalculator> m_Pointers{};
-
-				void Apply();
-			};
-
 			explicit Pointers();
-			PointerList GetPointerList();
 
 			Functions::AddBaseDrawTextCmdT* m_AddBaseDrawTextCmd{};
 			Functions::CG_WorldPosToScreenPosRealT* m_CG_WorldPosToScreenPosReal{};
@@ -98,6 +34,7 @@ namespace Client {
 			Functions::dwGetLogOnStatusT* m_dwGetLogOnStatus{};
 			Functions::DWServicesAccess__isReadyT* m_DWServicesAccess__isReady{};
 			Functions::FS_ReadFileT* m_FS_ReadFile{};
+			Functions::GamerProfile_IsProfileLoggedInT* m_GamerProfile_IsProfileLoggedIn{};
 			Functions::GamerProfile_SetDataByNameT* m_GamerProfile_SetDataByName{};
 			Functions::I_atoui64T* m_I_atoui64{};
 			Functions::I_atoui64_hexT* m_I_atoui64_hex{};

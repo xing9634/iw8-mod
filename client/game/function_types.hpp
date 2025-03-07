@@ -52,6 +52,7 @@ namespace Client::Game::Functions {
 	using dwGetLogOnStatusT = std::int64_t(int controllerIndex);
 	using DWServicesAccess__isReadyT = bool(void* _this, const int controllerIndex);
 	using FS_ReadFileT = std::int64_t(const char* qpath, void** buffer);
+	using GamerProfile_IsProfileLoggedInT = bool(int controllerIndex);
 	using GamerProfile_SetDataByNameT = void(int controllerIndex, const char* settingName, float settingValue);
 	using I_atoui64T = std::uint64_t(const char* str);
 	using I_atoui64_hexT = std::uint64_t(const char* str);

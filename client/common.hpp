@@ -46,6 +46,11 @@ namespace Client {
 
 	inline GameIdentifier g_GameIdentifier{};
 
+	template<typename... Args>
+	bool GameVersionIsAny(Args... args) {
+		return ((args == g_GameIdentifier.m_Checksum) || ...);
+	}
+
 	// runtime settings
 	inline bool g_ShowDebugInfo = false;
 
