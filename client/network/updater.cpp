@@ -6,16 +6,22 @@
 
 namespace Client::Network {
 	void Updater::CheckForUpdates() {
+		LOG("Updater", DEBUG, "hi");
 		std::string apiUrl = "https://api.github.com/repos/xifil/iw8-mod/actions/runs?event=push";
 		std::optional<nlohmann::json> responseOpt = GetContentAsJson(apiUrl);
 		if (!responseOpt.has_value()) {
+			LOG("Updater", DEBUG, "content = no");
 			return;
 		}
+		LOG("Updater", DEBUG, "content!");
+		LOG("Updater", DEBUG, responseOpt.value().dump(1, '\t'));
 
 		nlohmann::json response = responseOpt.value();
 		if (!response.contains("workflow_runs")) {
+			LOG("Updater", DEBUG, "no wr");
 			return;
 		}
+		LOG("Updater", DEBUG, "wr!");
 
 		nlohmann::json workflowRuns = response["workflow_runs"];
 		std::string currentCommit = GIT_HASH;
@@ -24,6 +30,7 @@ namespace Client::Network {
 		std::size_t versionsOutOfDate = 0;
 		std::string newReleaseUrl = "";
 
+		LOG("Updater", DEBUG, "iterate");
 		for (const auto& run : workflowRuns) {
 			if (newReleaseUrl.empty()) {
 				newReleaseUrl = run["html_url"].get<std::string>();
@@ -37,9 +44,11 @@ namespace Client::Network {
 			versionsOutOfDate++;
 		}
 
+		LOG("Updater", DEBUG, "goodbye?");
 		if (!foundCurrentVersion || versionsOutOfDate == 0) {
 			return;
 		}
+		LOG("Updater", DEBUG, "nope.");
 
 		// not everyone wants to sign in to GitHub
 		newReleaseUrl = Common::Utility::Strings::Replace(newReleaseUrl, "github.com", "nightly.link");
