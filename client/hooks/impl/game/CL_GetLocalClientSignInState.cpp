@@ -10,7 +10,15 @@ int Client::Hook::Hooks::HK_CL_GetLocalClientSignInState::hkCallback(int control
 		std::uintptr_t addrRel = 0;
 		int arrElemSize = 0;
 
-		if (GameVersionIsAny(GameVersion::v1_38_3_9489393)) {
+		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY)) {
+			addrRel = 0xE5C0730;
+			arrElemSize = 0x3A;
+		}
+		else if (GameVersionIsAny(GameVersion::v1_20_4_7623265_SHIP)) {
+			addrRel = 0xFAF2B00;
+			arrElemSize = 0x3A;
+		}
+		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393)) {
 			addrRel = 0x16AB3220;
 			arrElemSize = 0x46;
 		}
@@ -25,8 +33,6 @@ int Client::Hook::Hooks::HK_CL_GetLocalClientSignInState::hkCallback(int control
 
 			arr[arrElemSize * controllerIndex] = 2;
 		}
-
-		return 2;
 	}
 
 	return m_Original(controllerIndex);

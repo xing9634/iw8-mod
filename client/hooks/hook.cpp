@@ -1,5 +1,6 @@
 #include "common.hpp"
 #include "hooks/hook.hpp"
+#include "hooks/util/hook_util.hpp"
 #include "memory/memory.hpp"
 #include "game/game.hpp"
 
@@ -193,22 +194,7 @@ namespace Client::Hook {
 			Common::Utility::Hook::Nop(Memory::SigScan("E8 ? ? ? ? 4C 8B 77 ? 48 C7 C6", g_GameModuleName,
 				"Lost Connection Fix #4").Get(), 5);
 
-			// new plan: just add console input lol
-			/*
-			while (g_Running) {
-				const auto keyPressed = [](int key) {
-					return GetAsyncKeyState(key) & 0x8000;
-				};
-
-				if (keyPressed('H')) {
-					LOG("KeyHandler", INFO, "Opening main menu by force");
-					g_Pointers->m_LUI_OpenMenu(IW8::LocalClientNum_t::LOCAL_CLIENT_0, "MainMenu", true, false, false);
-					std::this_thread::sleep_for(1s);
-				}
-
-				std::this_thread::sleep_for(100ms);
-			}
-			*/
+			Hook::Util::g_HooksInitialised = true;
 
 			return 0;
 		}, this, 0, nullptr);

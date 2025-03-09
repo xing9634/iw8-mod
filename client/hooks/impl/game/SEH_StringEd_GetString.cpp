@@ -1,9 +1,10 @@
 #include "common.hpp"
 #include "game/game.hpp"
 #include "hooks/hook.hpp"
+#include "hooks/util/hook_util.hpp"
 
 #define STRINGS_IGNORE_TRANSLATION FALSE
-#define STRINGS_COMBINE_TRANSLATION_KEY TRUE
+#define STRINGS_COMBINE_TRANSLATION_KEY FALSE
 
 template <>
 const char* Client::Hook::Hooks::HK_SEH_StringEd_GetString::hkCallback(const char* pszReference) {
@@ -16,8 +17,22 @@ const char* Client::Hook::Hooks::HK_SEH_StringEd_GetString::hkCallback(const cha
 		return pszReference;
 	}
 
+	static bool forcedSignInState = false;
+
 	g_Pointers->m_GamerProfile_SetDataByName(0, "acceptedEULA", 1);
 	g_Pointers->m_GamerProfile_SetDataByName(0, "hasEverPlayed_MainMenu", 1);
+	if (!forcedSignInState) {
+		// wait until we're at the main menu
+		if (strcmp(pszReference, "MENU/STATUS") == 0) {
+			std::thread thr([]() {
+				std::this_thread::sleep_for(1s);
+				Hook::Util::g_ForceSignInState = true;
+				LOG("Authentication", INFO, "Sign in state now 2.");
+			});
+			thr.detach();
+			forcedSignInState = true;
+		}
+	}
 
 	static std::map<std::string, std::function<std::string(std::string)>> replacements;
 	static std::map<GameVersion, std::vector<std::string>> unavailableMaps;

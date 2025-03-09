@@ -50,19 +50,11 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 				g_ShowDebugInfo = false;
 				LOG("Console/OnInput", INFO, "Disabled debug info.");
 			}
-			else if (input == "glcsis-") {
-				Hook::Util::g_ForceSignInState = false;
-				LOG("Console/OnInput", INFO, "Not forcing sign in state.");
-			}
-			else if (input == "glcsis2") {
-				Hook::Util::g_ForceSignInState = true;
-				LOG("Console/OnInput", INFO, "Forcing sign in state.");
-			}
 			else if (Common::Utility::Strings::StartsWith(input, "/")) {
 				std::string cbuf = input.substr(1);
 				std::vector<std::string> cmdParts = Common::Utility::Strings::Split(cbuf, ' ');
 				std::string baseCmd = cmdParts.at(0);
-				
+
 				if (baseCmd == "openmenu") {
 					if (cmdParts.size() >= 2) {
 						std::string menuName = cmdParts.at(1);
@@ -85,7 +77,19 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 					}
 				}
 				else if (baseCmd == "glcsis") {
-					LOG("Console/OnInput", INFO, "CL_GetLocalClientSignInState(0) = {}", g_Pointers->m_CL_GetLocalClientSignInState(0));
+					if (cmdParts.size() >= 2) {
+						if (cmdParts.at(1) == "true") {
+							Hook::Util::g_ForceSignInState = true;
+							LOG("Console/OnInput", INFO, "Forcing sign in state.");
+						}
+						else {
+							Hook::Util::g_ForceSignInState = false;
+							LOG("Console/OnInput", INFO, "Not forcing sign in state.");
+						}
+					}
+					else {
+						LOG("Console/OnInput", INFO, "CL_GetLocalClientSignInState(0) = {}", g_Pointers->m_CL_GetLocalClientSignInState(0));
+					}
 				}
 				else if (baseCmd == "name") {
 					if (cmdParts.size() >= 2) {

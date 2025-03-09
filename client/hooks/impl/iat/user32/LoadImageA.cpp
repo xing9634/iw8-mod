@@ -1,11 +1,16 @@
 #include "common.hpp"
 #include "hooks/hook.hpp"
+#include "hooks/util/hook_util.hpp"
 
 #include "resource.h"
 
 template <>
 HANDLE WINAPI Client::Hook::Hooks::HK_LoadImageA::hkCallback(HINSTANCE hInst, LPCSTR name, UINT type, int cx, int cy, UINT fuLoad) {
 	if (reinterpret_cast<std::uintptr_t>(name) == 0x64) {
+		while (!Hook::Util::g_HooksInitialised) {
+			Sleep(100);
+		}
+
 		int id;
 		switch (g_GameIdentifier.m_Checksum) {
 		case GameVersion::v1_44_0_10435696:

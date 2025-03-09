@@ -74,11 +74,10 @@ namespace Client {
 			IW8::gentity_s** m_g_entities{};
 			std::uint32_t* m_holdrand{};
 			IW8::lua_State** m_LUI_luaVM{};
+			bool* m_s_isContentEnumerationFinished{};
 			bool* m_s_luaInFrontend{};
 			IW8::LocalUserPresenceData(*m_s_presenceData)[8] {};
 			IW8::CachedAssets_t* m_sharedUiInfo_assets{};
-			int* m_Unk_AuthCheck1{};
-			int* m_Unk_AuthCheck2{};
 			std::uint64_t* m_Unk_XUIDCheck1{};
 			std::uint64_t* m_Unk_XUIDCheck2{};
 			IW8::BNetClass* m_Unk_BNetClass{};

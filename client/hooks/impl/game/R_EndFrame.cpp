@@ -42,9 +42,7 @@ void Client::Hook::Hooks::HK_R_EndFrame::hkCallback() {
 
 			(*g_Pointers->m_s_presenceData)[0].m_Current.m_CrossTitlePresenceData.m_PlatformID = xuidMagic | xuidId / 6;
 
-			if (g_Pointers->m_Unk_AuthCheck1 != nullptr) {
-				*g_Pointers->m_Unk_AuthCheck1 = 1;
-			}
+			*g_Pointers->m_s_isContentEnumerationFinished = true;
 			g_Pointers->m_Unk_BNetClass->m_State = 2;
 			g_Pointers->m_Unk_BNetClass->m_FinishedAuth = true;
 
@@ -70,10 +68,7 @@ void Client::Hook::Hooks::HK_R_EndFrame::hkCallback() {
 				*/
 			}
 
-			//utils::hook::set(0x14E5C0730_g, 2);
-			if (g_Pointers->m_Unk_AuthCheck2 != nullptr) {
-				*g_Pointers->m_Unk_AuthCheck2 = 2;
-			}
+			//Hook::Util::g_ForceSignInState = true;
 			g_Pointers->m_Unk_BNetClass->m_Var3 = 0x795230F0;
 			g_Pointers->m_Unk_BNetClass->m_Var4 = 0x1F;
 			g_Pointers->m_Unk_BNetClass->m_Var5 = 0x00000000;

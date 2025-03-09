@@ -12,7 +12,10 @@ namespace Client::Game {
 	Pointers::Pointers() {
 		SignatureStore batch;
 
-		if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
+		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_SHIP)) {
+			batch.Add(SETUP_POINTER(AddBaseDrawTextCmd), "E8 ? ? ? ? 48 8B D0 48 85 C0 74 ? 48 8B 8C 24", SETUP_MOD(Add(1).Rip()));
+		}
+		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
 			batch.Add(SETUP_POINTER(AddBaseDrawTextCmd), "E8 ? ? ? ? 48 8B D0 48 85 C0 0F 84 ? ? ? ? 48 8B 8C 24", SETUP_MOD(Add(1).Rip()));
 		}
 
@@ -113,7 +116,7 @@ namespace Client::Game {
 
 		batch.Add(SETUP_POINTER(Live_GetLocalClientName), "E8 ? ? ? ? 4C 8B 4B ? 48 8D 0D", SETUP_MOD(Add(1).Rip()));
 
-		if (GameVersionIsAny(GameVersion::v1_38_3_9489393)) {
+		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_SHIP, GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
 			batch.Add(SETUP_POINTER(Live_IsInSystemlinkLobby), "E8 ? ? ? ? 84 C0 75 ? 45 84 FF", SETUP_MOD(Add(1).Rip()));
 		}
 
@@ -164,7 +167,7 @@ namespace Client::Game {
 
 		batch.Add(SETUP_POINTER(ProcessScriptFile), "48 89 5C 24 ? 48 89 74 24 ? 55 57 41 54 41 56 41 57 48 8B EC 48 83 EC ? 8B 5A");
 
-		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP)) {
+		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY)) {
 			batch.Add(SETUP_POINTER(R_AddCmdDrawText), "E8 ? ? ? ? 48 8B 05 ? ? ? ? 0F 28 DF", SETUP_MOD(Add(1).Rip()));
 		}
 
@@ -212,6 +215,8 @@ namespace Client::Game {
 			batch.Add(SETUP_POINTER(LUI_luaVM), "48 8B 05 ? ? ? ? 45 33 C0 44 8B 4C 24 ? 48 89 44 24 ? 48 8B 5C 24", SETUP_MOD(Add(3).Rip()));
 		}
 
+		batch.Add(SETUP_POINTER(s_isContentEnumerationFinished), "80 3D ? ? ? ? ? 74 ? 48 89 7C 24", SETUP_MOD(Add(2).Rip().Add(1)));
+
 		batch.Add(SETUP_POINTER(s_luaInFrontend), "0F B6 05 ? ? ? ? 75", SETUP_MOD(Add(3).Rip()));
 
 		batch.Add(SETUP_POINTER(s_presenceData), "48 8D 05 ? ? ? ? 4C 8D 05 ? ? ? ? 48 39 08 74 ? FF C2 48 05", SETUP_MOD(Add(3).Rip()));
@@ -225,17 +230,12 @@ namespace Client::Game {
 				SETUP_MOD(Add(3).Rip()));
 		}
 
-		batch.Add(SETUP_POINTER(Unk_AuthCheck1), "80 3D ? ? ? ? ? 74 ? 48 89 7C 24", SETUP_MOD(Add(2).Rip().Add(1)));
-
-		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY)) {
-			batch.Add(SETUP_POINTER(Unk_AuthCheck2), "48 8D 2D ? ? ? ? 84 C0 74 ? 48 69 C7", SETUP_MOD(Add(3).Rip()));
-		}
-		else if (GameVersionIsAny(GameVersion::v1_20_4_7623265_SHIP)) {
-			batch.Add(SETUP_POINTER(Unk_AuthCheck2), "83 3D ? ? ? ? ? 7E ? 33 C9", SETUP_MOD(Add(2).Rip()));
-		}
-		
+		// 1-game_test -> xenonUserData.m_guardedUserData[0].xuid
 		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP)) {
 			batch.Add(SETUP_POINTER(Unk_XUIDCheck1), "48 8D 3D ? ? ? ? 0F 1F 44 00 ? 48 63 C3", SETUP_MOD(Add(3).Rip()));
+		}
+		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393)) {
+			batch.Add(SETUP_POINTER(Unk_XUIDCheck1), "48 8D 15 ? ? ? ? 48 FF C6 81 FF", SETUP_MOD(Add(3).Rip()));
 		}
 		else if (GameVersionIsAny(GameVersion::v1_44_0_10435696)) {
 			batch.Add(SETUP_POINTER(Unk_XUIDCheck1), "48 8D 1D ? ? ? ? 40 88 35", SETUP_MOD(Add(3).Rip()));
