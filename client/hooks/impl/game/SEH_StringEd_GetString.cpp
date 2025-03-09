@@ -3,7 +3,7 @@
 #include "hooks/hook.hpp"
 
 #define STRINGS_IGNORE_TRANSLATION FALSE
-#define STRINGS_COMBINE_TRANSLATION_KEY FALSE
+#define STRINGS_COMBINE_TRANSLATION_KEY TRUE
 
 template <>
 const char* Client::Hook::Hooks::HK_SEH_StringEd_GetString::hkCallback(const char* pszReference) {

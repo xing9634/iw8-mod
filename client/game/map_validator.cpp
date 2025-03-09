@@ -1,6 +1,7 @@
 #include "common.hpp"
 #include "game/game.hpp"
 #include "game/map_validator.hpp"
+#include "hooks/util/hook_util.hpp"
 
 namespace Client::Game {
 	std::string s_CurrentMapName{};
@@ -32,7 +33,11 @@ namespace Client::Game {
 				ui_mapname->m_Current.m_String = "mp_shipment";
 				if (!firstTime) {
 					//g_Pointers->m_Com_SetErrorMessage(g_Pointers->m_j_va("[iw8-mod] Unavailable map: %s", s_CurrentMapName.c_str()));
-					g_QueuedErrorMessage = std::format("[iw8-mod] Unavailable map: {}", s_CurrentMapName.c_str());
+					//g_QueuedErrorMessage = std::format("[iw8-mod] Unavailable map: {}", s_CurrentMapName.c_str());
+
+					Hook::Util::g_GameThreadQueue.push_back([=]() {
+						g_Pointers->m_Com_SetErrorMessage(g_Pointers->m_j_va("[iw8-mod] Unavailable map: %s", s_CurrentMapName.c_str()));
+					});
 				}
 				s_CurrentMapName = ui_mapname->m_Current.m_String;
 			}

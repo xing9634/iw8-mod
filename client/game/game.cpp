@@ -18,6 +18,8 @@ namespace Client::Game {
 
 		batch.Add(SETUP_POINTER(CG_WorldPosToScreenPosReal), "E8 ? ? ? ? 4C 8D 4D ? 49 8B D6 4C 8D 45 E7", SETUP_MOD(Add(1).Rip()));
 
+		batch.Add(SETUP_POINTER(CL_GetLocalClientSignInState), "E8 ? ? ? ? 85 C0 7F ? 8B CB", SETUP_MOD(Add(1).Rip()));
+
 		batch.Add(SETUP_POINTER(CL_PlayerData_GetDDLBuffer), "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC ? 48 8B E9 49 63 F8");
 
 		batch.Add(SETUP_POINTER(Com_GameInfo_GetGameTypeForInternalName), "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 56 8B 35 ? ? ? ? 45 33 DB"
@@ -191,6 +193,8 @@ namespace Client::Game {
 		batch.Add(SETUP_POINTER(SV_UpdateUserinfo_f), "40 53 48 83 EC ? 48 8B D9 B9 ? ? ? ? E8 ? ? ? ? 48 8D 8B");
 
 		batch.Add(SETUP_POINTER(Sys_Microseconds), "83 3D ? ? ? ? ? 49 B8 ? ? ? ? ? ? ? ? F2 0F 10 15");
+
+		batch.Add(SETUP_POINTER(UI_ShowKeyboard), "48 8B 44 24 ? 48 89 05 ? ? ? ? 0F B6 44 24");
 
 		batch.Add(SETUP_POINTER(clientUIActives), "48 8D 15 ? ? ? ? 8B 4C 10", SETUP_MOD(Add(3).Rip()));
 

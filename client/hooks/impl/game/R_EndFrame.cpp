@@ -3,6 +3,7 @@
 #include "game/game.hpp"
 #include "game/map_validator.hpp"
 #include "hooks/hook.hpp"
+#include "hooks/util/hook_util.hpp"
 #include "memory/memory.hpp"
 
 bool s_PatchedAuth = false;
@@ -85,9 +86,11 @@ void Client::Hook::Hooks::HK_R_EndFrame::hkCallback() {
 		}
 	}
 
-	if (Game::MapValidator::g_QueuedErrorMessage.size() > 0) {
-		g_Pointers->m_Com_SetErrorMessage(Game::MapValidator::g_QueuedErrorMessage.c_str());
-		Game::MapValidator::g_QueuedErrorMessage = "";
+	if (Hook::Util::g_GameThreadQueue.size() > 0) {
+		for (auto func : Hook::Util::g_GameThreadQueue) {
+			func();
+		}
+		Hook::Util::g_GameThreadQueue.clear();
 	}
 
 	if (g_GameIdentifier.m_Ship && g_Pointers->m_Live_IsInSystemlinkLobby) {

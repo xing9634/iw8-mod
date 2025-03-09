@@ -23,12 +23,15 @@
 #include "engine/iw8/enums/PartyHostType.hpp"
 #include "engine/iw8/enums/StatsGroup.hpp"
 #include "engine/iw8/enums/StatsSource.hpp"
+#include "engine/iw8/enums/UI_KEYBOARD_TYPE.hpp"
+#include "engine/iw8/enums/UI_KEYBOARD_RESULT.hpp"
 
 namespace Client::Game::Functions {
 	using AddBaseDrawTextCmdT = void*(const char* text, int maxChars, IW8::GfxFont* font, IW8::Material* fontMaterial, int fontHeight,
 		float x, float y, float xScale, float yScale, char tracking, float rotation, const IW8::vec4_t* color, int cursorPos, char cursor, const IW8::FontGlowStyle* glowStyle,
 		bool usePost, int allowGPadColor, int allowGPadAnySize, IW8::Material* iconsMaterial, bool requireUniqueCmd);
 	using CG_WorldPosToScreenPosRealT = bool(IW8::LocalClientNum_t localClientNum, const IW8::ScreenPlacement* scrPlace, const IW8::vec3_t* worldPos, IW8::vec2_t* outScreenPos);
+	using CL_GetLocalClientSignInStateT = int(int controllerIndex);
 	using CL_PlayerData_GetDDLBufferT = bool(IW8::DDLContext* context, int controllerIndex, IW8::StatsSource statsSource, IW8::StatsGroup statsGroup);
 	using Com_GameInfo_GetGameTypeForInternalNameT = IW8::gameTypeInfo* (const char* gameTypeName);
 	using Com_GameInfo_GetMapInfoForLoadNameT = IW8::mapInfo* (const char* mapName);
@@ -85,4 +88,7 @@ namespace Client::Game::Functions {
 	using SV_Cmd_ArgvT = const char*(int argIndex);
 	using SV_UpdateUserinfo_fT = void(void* cl);
 	using Sys_MicrosecondsT = std::uint64_t();
+	using UI_ShowKeyboardT = void(int controllerIndex, const char* title, const char* defaultText, int maxlen, bool verifyString, bool checkProfanity,
+		bool allowEmpty, IW8::UI_KEYBOARD_TYPE type, void(__fastcall* callback)(IW8::LocalClientNum_t, IW8::UI_KEYBOARD_RESULT, const char*), bool openAsModal,
+		bool useAutoAlign);
 }

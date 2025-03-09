@@ -98,6 +98,10 @@ namespace Client {
 			using HK_LUI_CoD_LuaCall_ShouldShowDebugInfo = HookPlate::LuaHook<"LUI_CoD_LuaCall_ShouldShowDebugInfo", "Debug.CHFBFDCHBA">;
 
 			// Game
+			using HK_CL_GetLocalClientSignInState = HookPlate::FastcallHook<"CL_GetLocalClientSignInState", int,
+				int>;
+			Memory::MinHook<Game::Functions::CL_GetLocalClientSignInStateT>* m_CL_GetLocalClientSignInStateHK;
+
 			using HK_Content_DoWeHaveContentPack = HookPlate::FastcallHook<"Content_DoWeHaveContentPack", bool,
 				int>;
 			Memory::MinHook<Game::Functions::Content_DoWeHaveContentPackT>* m_Content_DoWeHaveContentPackHK;

@@ -174,4 +174,13 @@ namespace Client::Hook {
 		MessageBoxA(nullptr, message.c_str(), "iw8-mod exception handler", MB_OK);
 		return EXCEPTION_EXECUTE_HANDLER;
 	}
+
+	void Util::OnPlayerNameInput(IW8::LocalClientNum_t localClientNum, IW8::UI_KEYBOARD_RESULT res, const char* text) {
+		if (text == nullptr) {
+			LOG("OnPlayerNameInput", DEBUG, "Text was null, cancelling.");
+			return;
+		}
+
+		g_PlayerName = text;
+	}
 }

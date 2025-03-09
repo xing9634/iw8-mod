@@ -4,6 +4,7 @@
 #include "game/game.hpp"
 #include "game/map_validator.hpp"
 #include "hooks/hook.hpp"
+#include "hooks/util/hook_util.hpp"
 #include "memory/iat.hpp"
 #include "network/updater.hpp"
 
@@ -49,6 +50,14 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 				g_ShowDebugInfo = false;
 				LOG("Console/OnInput", INFO, "Disabled debug info.");
 			}
+			else if (input == "glcsis-") {
+				Hook::Util::g_ForceSignInState = false;
+				LOG("Console/OnInput", INFO, "Not forcing sign in state.");
+			}
+			else if (input == "glcsis2") {
+				Hook::Util::g_ForceSignInState = true;
+				LOG("Console/OnInput", INFO, "Forcing sign in state.");
+			}
 			else if (Common::Utility::Strings::StartsWith(input, "/")) {
 				std::string cbuf = input.substr(1);
 				std::vector<std::string> cmdParts = Common::Utility::Strings::Split(cbuf, ' ');
@@ -58,7 +67,9 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 					if (cmdParts.size() >= 2) {
 						std::string menuName = cmdParts.at(1);
 						LOG("Console/OnInput", INFO, "Opening menu: {}", menuName);
-						g_Pointers->m_LUI_OpenMenu(IW8::LocalClientNum_t::LOCAL_CLIENT_0, menuName.c_str(), true, false, false);
+						Hook::Util::g_GameThreadQueue.push_back([=]() {
+							g_Pointers->m_LUI_OpenMenu(IW8::LocalClientNum_t::LOCAL_CLIENT_0, menuName.c_str(), true, false, false);
+						});
 					}
 					else {
 						LOG("Console/OnInput", INFO, "openmenu: A menu name must be supplied.");
@@ -72,6 +83,25 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 					else {
 						LOG("Console/OnInput", INFO, "getdvarstring: A dvar name must be supplied.");
 					}
+				}
+				else if (baseCmd == "glcsis") {
+					LOG("Console/OnInput", INFO, "CL_GetLocalClientSignInState(0) = {}", g_Pointers->m_CL_GetLocalClientSignInState(0));
+				}
+				else if (baseCmd == "name") {
+					if (cmdParts.size() >= 2) {
+						std::string newName = cbuf.substr(baseCmd.size() + 1);
+						LOG("Console/OnInput", INFO, "Setting name to \"{}\"", newName);
+						Hook::Util::g_PlayerName = newName;
+					}
+					else {
+						LOG("Console/OnInput", INFO, "name: A name must be supplied.");
+					}
+				}
+				else if (baseCmd == "namesel") {
+					Hook::Util::g_GameThreadQueue.push_back([=]() {
+						g_Pointers->m_UI_ShowKeyboard(0, "Name", Hook::Util::g_PlayerName.c_str(), 64, false, false, true, 
+							IW8::UI_KEYBOARD_TYPE::UI_KEYBOARD_TYPE_NORMAL, Hook::Util::OnPlayerNameInput, true, true);
+					});
 				}
 				else if (baseCmd == "unlockall") {
 					Game::Cbuf_AddText("seta unlockAllItems 1");

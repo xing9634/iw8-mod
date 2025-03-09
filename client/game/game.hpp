@@ -11,6 +11,7 @@ namespace Client {
 
 			Functions::AddBaseDrawTextCmdT* m_AddBaseDrawTextCmd{};
 			Functions::CG_WorldPosToScreenPosRealT* m_CG_WorldPosToScreenPosReal{};
+			Functions::CL_GetLocalClientSignInStateT* m_CL_GetLocalClientSignInState{};
 			Functions::CL_PlayerData_GetDDLBufferT* m_CL_PlayerData_GetDDLBuffer{};
 			Functions::Com_GameInfo_GetGameTypeForInternalNameT* m_Com_GameInfo_GetGameTypeForInternalName{};
 			Functions::Com_GameInfo_GetMapInfoForLoadNameT* m_Com_GameInfo_GetMapInfoForLoadName{};
@@ -66,6 +67,7 @@ namespace Client {
 			Functions::SV_Cmd_ArgvT* m_SV_Cmd_Argv{};
 			Functions::SV_UpdateUserinfo_fT* m_SV_UpdateUserinfo_f{};
 			Functions::Sys_MicrosecondsT* m_Sys_Microseconds{};
+			Functions::UI_ShowKeyboardT* m_UI_ShowKeyboard{};
 
 			IW8::clientUIActive_t* m_clientUIActives{};
 			IW8::CmdArgs* m_cmd_args{};

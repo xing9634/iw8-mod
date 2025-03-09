@@ -139,6 +139,9 @@ namespace Client::Hook {
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsPremiumPlayerReady>();
 			}
 
+			_this->m_CL_GetLocalClientSignInStateHK = new Memory::MinHook(g_Pointers->m_CL_GetLocalClientSignInState);
+			_this->m_CL_GetLocalClientSignInStateHK->Hook<HK_CL_GetLocalClientSignInState>();
+
 			_this->m_Content_DoWeHaveContentPackHK = new Memory::MinHook(g_Pointers->m_Content_DoWeHaveContentPack);
 			//_this->m_Content_DoWeHaveContentPackHK->Hook<HK_Content_DoWeHaveContentPack>();
 
