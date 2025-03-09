@@ -90,7 +90,10 @@ namespace Client::Game {
 
 		batch.Add(SETUP_POINTER(FS_ReadFile), "40 53 57 41 57 48 83 EC ? 48 8B FA");
 
-		if (GameVersionIsAny(GameVersion::v1_38_3_9489393)) {
+		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY)) {
+			batch.Add(SETUP_POINTER(GamerProfile_IsProfileLoggedIn), "E8 ? ? ? ? 84 C0 75 ? E8 ? ? ? ? 84 C0 75 ? 33 C0 48 83 C4", SETUP_MOD(Add(1).Rip()));
+		}
+		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393)) {
 			batch.Add(SETUP_POINTER(GamerProfile_IsProfileLoggedIn), "E8 ? ? ? ? 84 C0 0F 84 ? ? ? ? 38 1D ? ? ? ? 4C 89 A4 24", SETUP_MOD(Add(1).Rip()));
 		}
 
@@ -107,6 +110,10 @@ namespace Client::Game {
 		batch.Add(SETUP_POINTER(j_va), "48 89 4C 24 ? 48 89 54 24 ? 4C 89 44 24 ? 4C 89 4C 24 ? 53 48 83 EC ? B9");
 
 		batch.Add(SETUP_POINTER(Live_GetLocalClientName), "E8 ? ? ? ? 4C 8B 4B ? 48 8D 0D", SETUP_MOD(Add(1).Rip()));
+
+		if (GameVersionIsAny(GameVersion::v1_38_3_9489393)) {
+			batch.Add(SETUP_POINTER(Live_IsInSystemlinkLobby), "E8 ? ? ? ? 84 C0 75 ? 45 84 FF", SETUP_MOD(Add(1).Rip()));
+		}
 
 		batch.Add(SETUP_POINTER(Live_IsUserSignedInToDemonware), "E8 ? ? ? ? 84 C0 74 ? 4C 8D 43 ? 8B D7", SETUP_MOD(Add(1).Rip()));
 

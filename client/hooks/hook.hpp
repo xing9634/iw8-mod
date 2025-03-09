@@ -118,8 +118,15 @@ namespace Client {
 				void*, const int>;
 			Memory::MinHook<Game::Functions::DWServicesAccess__isReadyT>* m_DWServicesAccess__isReadyHK;
 
+			using HK_GamerProfile_IsProfileLoggedIn = HookPlate::FastcallHook<"GamerProfile_IsProfileLoggedIn", bool,
+				int>;
+			Memory::MinHook<Game::Functions::GamerProfile_IsProfileLoggedInT>* m_GamerProfile_IsProfileLoggedInHK;
+
 			using HK_Live_GetLocalClientName = HookPlate::FastcallHook<"Live_GetLocalClientName", const char*>;
 			Memory::MinHook<Game::Functions::Live_GetLocalClientNameT>* m_Live_GetLocalClientNameHK;
+
+			using HK_Live_IsInSystemlinkLobby = HookPlate::FastcallHook<"Live_IsInSystemlinkLobby", bool>;
+			Memory::MinHook<Game::Functions::Live_IsInSystemlinkLobbyT>* m_Live_IsInSystemlinkLobbyHK;
 
 			using HK_Live_IsUserSignedInToDemonware = HookPlate::FastcallHook<"Live_IsUserSignedInToDemonware", bool,
 				int>;

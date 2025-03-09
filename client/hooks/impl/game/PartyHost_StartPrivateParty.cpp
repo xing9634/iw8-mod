@@ -6,6 +6,7 @@
 
 template <>
 void Client::Hook::Hooks::HK_PartyHost_StartPrivateParty::hkCallback(int localClientNum, int localControllerIndex, bool currentlyActive, int hostType) {
+	LOG("Game/PartyHost_StartPrivateParty", DEBUG, "hello");
 	m_Original(localClientNum, localControllerIndex, currentlyActive, hostType);
 
 	static bool autoExec = false;

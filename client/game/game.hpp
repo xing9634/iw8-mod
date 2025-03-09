@@ -42,6 +42,7 @@ namespace Client {
 			Functions::Info_ValueForKeyT* m_Info_ValueForKey{};
 			Functions::j_vaT* m_j_va{};
 			Functions::Live_GetLocalClientNameT* m_Live_GetLocalClientName{};
+			Functions::Live_IsInSystemlinkLobbyT* m_Live_IsInSystemlinkLobby{};
 			Functions::Live_IsUserSignedInToDemonwareT* m_Live_IsUserSignedInToDemonware{};
 			Functions::lua_getfieldT* m_lua_getfield{};
 			Functions::lua_pushbooleanT* m_lua_pushboolean{};

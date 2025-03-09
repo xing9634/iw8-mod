@@ -90,5 +90,27 @@ void Client::Hook::Hooks::HK_R_EndFrame::hkCallback() {
 		Game::MapValidator::g_QueuedErrorMessage = "";
 	}
 
+	if (g_GameIdentifier.m_Ship && g_Pointers->m_Live_IsInSystemlinkLobby) {
+		IW8::dvar_t* systemlink = g_Pointers->m_Dvar_FindVarByName("LPSPMQSNPQ");
+		std::uintptr_t funcAddr = reinterpret_cast<std::uintptr_t>(g_Pointers->m_Live_IsInSystemlinkLobby);
+
+		static bool wasSystemlink = false;
+		bool isSystemlink = systemlink && systemlink->m_Current.m_Enabled;
+
+		if (isSystemlink) {
+			*reinterpret_cast<char*>(funcAddr + 0) = '\xB0';
+			*reinterpret_cast<char*>(funcAddr + 1) = '\x01';
+		}
+		else {
+			*reinterpret_cast<char*>(funcAddr + 0) = '\x32';
+			*reinterpret_cast<char*>(funcAddr + 1) = '\xC0';
+		}
+
+		if (wasSystemlink != isSystemlink) {
+			LOG("Game/R_EndFrame", DEBUG, "systemlink = {}", isSystemlink ? "yes" : "no");
+			wasSystemlink = isSystemlink;
+		}
+	}
+
 	return m_Original();
 }

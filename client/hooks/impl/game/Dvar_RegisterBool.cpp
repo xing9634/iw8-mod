@@ -26,6 +26,7 @@ std::map<std::pair<const char*, const char*>, bool> s_PatchedBooleanDvars = {
 template <>
 IW8::dvar_t* Client::Hook::Hooks::HK_Dvar_RegisterBool::hkCallback(const char* dvarName, bool value, std::uint32_t flags, const char* description) {
 	bool valuePatched = value;
+	std::uint32_t flagsPatched = flags;
 	for (const auto& [names, val] : s_PatchedBooleanDvars) {
 		if (strcmp(dvarName, names.second) == 0) {
 			const char* disclaimer = "";
@@ -36,5 +37,9 @@ IW8::dvar_t* Client::Hook::Hooks::HK_Dvar_RegisterBool::hkCallback(const char* d
 			valuePatched = val;
 		}
 	}
-	return m_Original(dvarName, valuePatched, flags, description);
+	if (strcmp(dvarName, "LPSPMQSNPQ") == 0) {
+		LOG("Game/Dvar_RegisterBool", INFO, "Patched systemlink");
+		flagsPatched = 0x80;
+	}
+	return m_Original(dvarName, valuePatched, flagsPatched, description);
 }

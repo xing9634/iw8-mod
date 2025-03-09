@@ -154,8 +154,14 @@ namespace Client::Hook {
 			_this->m_DWServicesAccess__isReadyHK = new Memory::MinHook(g_Pointers->m_DWServicesAccess__isReady);
 			_this->m_DWServicesAccess__isReadyHK->Hook<HK_DWServicesAccess__isReady>();
 
+			_this->m_GamerProfile_IsProfileLoggedInHK = new Memory::MinHook(g_Pointers->m_GamerProfile_IsProfileLoggedIn);
+			//_this->m_GamerProfile_IsProfileLoggedInHK->Hook<HK_GamerProfile_IsProfileLoggedIn>();
+
 			_this->m_Live_GetLocalClientNameHK = new Memory::MinHook(g_Pointers->m_Live_GetLocalClientName);
 			_this->m_Live_GetLocalClientNameHK->Hook<HK_Live_GetLocalClientName>();
+
+			_this->m_Live_IsInSystemlinkLobbyHK = new Memory::MinHook(g_Pointers->m_Live_IsInSystemlinkLobby);
+			//_this->m_Live_IsInSystemlinkLobbyHK->Hook<HK_Live_IsInSystemlinkLobby>();
 
 			_this->m_Live_IsUserSignedInToDemonwareHK = new Memory::MinHook(g_Pointers->m_Live_IsUserSignedInToDemonware);
 			_this->m_Live_IsUserSignedInToDemonwareHK->Hook<HK_Live_IsUserSignedInToDemonware>();

@@ -60,6 +60,7 @@ namespace Client::Game::Functions {
 	using Info_ValueForKeyT = const char*(const char* s, const char* key);
 	using j_vaT = const char*(const char* fmt, ...);
 	using Live_GetLocalClientNameT = const char*();
+	using Live_IsInSystemlinkLobbyT = bool();
 	using Live_IsUserSignedInToDemonwareT = bool(int controllerIndex);
 	using lua_getfieldT = void(IW8::lua_State* L, int idx, const char* k);
 	using lua_pushbooleanT = void(IW8::lua_State* L, int b);
