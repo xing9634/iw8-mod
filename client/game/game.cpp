@@ -230,6 +230,8 @@ namespace Client::Game {
 				SETUP_MOD(Add(3).Rip()));
 		}
 
+		batch.Add(SETUP_POINTER(Unk_SignInState), "83 3D ? ? ? ? ? 7E ? 33 C9", SETUP_MOD(Add(2).Rip().Add(1)));
+
 		// 1-game_test -> xenonUserData.m_guardedUserData[0].xuid
 		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP)) {
 			batch.Add(SETUP_POINTER(Unk_XUIDCheck1), "48 8D 3D ? ? ? ? 0F 1F 44 00 ? 48 63 C3", SETUP_MOD(Add(3).Rip()));

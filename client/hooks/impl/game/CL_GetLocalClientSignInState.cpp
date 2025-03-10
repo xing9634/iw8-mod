@@ -1,37 +1,24 @@
 #include "common.hpp"
+#include "game/game.hpp"
 #include "hooks/hook.hpp"
 #include "hooks/util/hook_util.hpp"
 
 template <>
 int Client::Hook::Hooks::HK_CL_GetLocalClientSignInState::hkCallback(int controllerIndex) {
-	if (Hook::Util::g_ForceSignInState) {
-		static Common::Utility::NT::Library game{};
-
-		std::uintptr_t addrRel = 0;
+	static bool signedIn = false;
+	if (Hook::Util::g_ForceSignInState && !signedIn) {
 		int arrElemSize = 0;
 
-		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY)) {
-			addrRel = 0xE5C0730;
+		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP)) {
 			arrElemSize = 0x3A;
 		}
-		else if (GameVersionIsAny(GameVersion::v1_20_4_7623265_SHIP)) {
-			addrRel = 0xFAF2B00;
-			arrElemSize = 0x3A;
-		}
-		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393)) {
-			addrRel = 0x16AB3220;
-			arrElemSize = 0x46;
-		}
-		else if (GameVersionIsAny(GameVersion::v1_44_0_10435696)) {
-			addrRel = 0x17AF98A0;
+		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
 			arrElemSize = 0x46;
 		}
 
-		if (addrRel != 0) {
-			std::uintptr_t addr = reinterpret_cast<std::uintptr_t>(game.GetPtr()) + addrRel;
-			int* arr = reinterpret_cast<int*>(addr);
-
-			arr[arrElemSize * controllerIndex] = 2;
+		if (arrElemSize != 0) {
+			g_Pointers->m_Unk_SignInState[arrElemSize * controllerIndex] = 2;
+			signedIn = true;
 		}
 	}
 

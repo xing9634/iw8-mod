@@ -78,6 +78,7 @@ namespace Client {
 			bool* m_s_luaInFrontend{};
 			IW8::LocalUserPresenceData(*m_s_presenceData)[8] {};
 			IW8::CachedAssets_t* m_sharedUiInfo_assets{};
+			int* m_Unk_SignInState{};
 			std::uint64_t* m_Unk_XUIDCheck1{};
 			std::uint64_t* m_Unk_XUIDCheck2{};
 			IW8::BNetClass* m_Unk_BNetClass{};
