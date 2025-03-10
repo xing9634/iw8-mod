@@ -176,6 +176,9 @@ namespace Client::Hook {
 	}
 
 	void Util::OnPlayerNameInput(IW8::LocalClientNum_t localClientNum, IW8::UI_KEYBOARD_RESULT res, const char* text) {
+		_Unreferenced_parameter_(localClientNum);
+		_Unreferenced_parameter_(res);
+
 		if (text == nullptr) {
 			LOG("OnPlayerNameInput", DEBUG, "Text was null, cancelling.");
 			return;

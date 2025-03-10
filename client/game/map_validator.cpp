@@ -30,16 +30,13 @@ namespace Client::Game {
 
 			auto it = g_LoadedFastfiles.find(s_CurrentMapName);
 			if (it != g_LoadedFastfiles.end() && !it->second) {
-				ui_mapname->m_Current.m_String = "mp_shipment";
-				if (!firstTime) {
-					//g_Pointers->m_Com_SetErrorMessage(g_Pointers->m_j_va("[iw8-mod] Unavailable map: %s", s_CurrentMapName.c_str()));
-					//g_QueuedErrorMessage = std::format("[iw8-mod] Unavailable map: {}", s_CurrentMapName.c_str());
-
-					Hook::Util::g_GameThreadQueue.push_back([=]() {
+				Hook::Util::g_GameThreadQueue.push_back([=]() {
+					ui_mapname->m_Current.m_String = "mp_shipment";
+					if (!firstTime) {
 						g_Pointers->m_Com_SetErrorMessage(g_Pointers->m_j_va("[iw8-mod] Unavailable map: %s", s_CurrentMapName.c_str()));
-					});
-				}
-				s_CurrentMapName = ui_mapname->m_Current.m_String;
+					}
+					s_CurrentMapName = ui_mapname->m_Current.m_String;
+				});
 			}
 
 			std::this_thread::sleep_for(500ms);

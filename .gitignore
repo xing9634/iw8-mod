@@ -155,3 +155,5 @@ user*.bat
 #premake5.exe
 
 common/version.hpp
+
+tools/game/directories.json

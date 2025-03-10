@@ -15,10 +15,11 @@ LONG WINAPI VectoredExceptionHandlerStub(EXCEPTION_POINTERS* inf) {
 
 template <>
 PVOID WINAPI Client::Hook::Hooks::HK_AddVectoredExceptionHandler::hkCallback(ULONG first, PVECTORED_EXCEPTION_HANDLER handler) {
+	// pro tip you cannot hook handlers oops
+	/*
 	auto res = AddVectoredExceptionHandler(first, handler);
 
-	// pro tip you cannot hook handlers oops
-	/*if (handler == nullptr || Common::Utility::NT::Library::GetByAddress(handler) != Common::Utility::NT::Library()) {
+	if (handler == nullptr || Common::Utility::NT::Library::GetByAddress(handler) != Common::Utility::NT::Library()) {
 		return res;
 	}
 	
@@ -28,7 +29,16 @@ PVOID WINAPI Client::Hook::Hooks::HK_AddVectoredExceptionHandler::hkCallback(ULO
 		LOG("Game/AddVectoredExceptionHandler", DEBUG, "Patched vectored exception handler #{} @ 0x{:016X}",
 			s_RegisteredExceptionHandlers.size() + 1, handlerPtr);
 		s_RegisteredExceptionHandlers.push_back(handlerPtr);
-	}*/
+	}
 
 	return res;
+	*/
+
+	// what happens if we don't register the handler?
+	// update: the game crashes
+	/*
+	return handler;
+	*/
+
+	return AddVectoredExceptionHandler(first, handler);
 }

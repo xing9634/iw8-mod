@@ -53,7 +53,7 @@ namespace Client::Network {
 
 			va_list args;
 			va_start(args, postData);
-			int length = vsnprintf(buffer, bufferSize, postData, args);
+			vsnprintf(buffer, bufferSize, postData, args);
 			va_end(args);
 
 			Ext::WinHttpClient client(url);
