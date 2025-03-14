@@ -16,6 +16,7 @@ namespace Client {
 			Functions::Com_GameInfo_GetGameTypeForInternalNameT* m_Com_GameInfo_GetGameTypeForInternalName{};
 			Functions::Com_GameInfo_GetMapInfoForLoadNameT* m_Com_GameInfo_GetMapInfoForLoadName{};
 			Functions::Com_ParseNavStringsT* m_Com_ParseNavStrings{};
+			Functions::Com_PrintMessageInternalT* m_Com_PrintMessageInternal{};
 			Functions::Com_SetErrorMessageT* m_Com_SetErrorMessage{};
 			Functions::Content_DoWeHaveContentPackT* m_Content_DoWeHaveContentPack{};
 			Functions::DB_LoadXFileT* m_DB_LoadXFile{};
@@ -74,10 +75,13 @@ namespace Client {
 			IW8::gentity_s** m_g_entities{};
 			std::uint32_t* m_holdrand{};
 			IW8::lua_State** m_LUI_luaVM{};
+			IW8::cmd_function_s** m_s_cmd_functions{};
 			bool* m_s_isContentEnumerationFinished{};
 			bool* m_s_luaInFrontend{};
 			IW8::LocalUserPresenceData(*m_s_presenceData)[8] {};
 			IW8::CachedAssets_t* m_sharedUiInfo_assets{};
+			ID3D12CommandQueue** m_Unk_D3D12_CommandQueue{};
+			IDXGISwapChain1** m_Unk_D3D12_SwapChain{};
 			int* m_Unk_SignInState{};
 			std::uint64_t* m_Unk_XUIDCheck1{};
 			std::uint64_t* m_Unk_XUIDCheck2{};

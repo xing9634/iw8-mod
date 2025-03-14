@@ -91,6 +91,35 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 						LOG("Console/OnInput", INFO, "CL_GetLocalClientSignInState(0) = {}", g_Pointers->m_CL_GetLocalClientSignInState(0));
 					}
 				}
+				else if (baseCmd == "cmdaddr") {
+					if (cmdParts.size() >= 2) {
+						std::string commandName = cbuf.substr(baseCmd.size() + 1);
+
+						bool foundCmd = false;
+						IW8::cmd_function_s* cmd = (*g_Pointers->m_s_cmd_functions);
+						while (cmd) {
+							if (cmd->m_Name) {
+								std::string name = Common::Utility::Strings::ToLower(cmd->m_Name);
+								if (name == Common::Utility::Strings::ToLower(commandName)) {
+									foundCmd = true;
+									break;
+								}
+							}
+
+							cmd = cmd->m_Next;
+						}
+
+						if (foundCmd) {
+							LOG("Console/OnInput", INFO, "Address of \"{}\" -> {}", commandName, AndRel(reinterpret_cast<std::uintptr_t>(cmd->m_Function)));
+						}
+						else {
+							LOG("Console/OnInput", INFO, "cmdaddr: Couldn't find command.");
+						}
+					}
+					else {
+						LOG("Console/OnInput", INFO, "cmdaddr: A command name must be supplied.");
+					}
+				}
 				else if (baseCmd == "name") {
 					if (cmdParts.size() >= 2) {
 						std::string newName = cbuf.substr(baseCmd.size() + 1);
@@ -105,6 +134,24 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 					Hook::Util::g_GameThreadQueue.push_back([=]() {
 						g_Pointers->m_UI_ShowKeyboard(0, "Name", Hook::Util::g_PlayerName.c_str(), 64, false, false, true, 
 							IW8::UI_KEYBOARD_TYPE::UI_KEYBOARD_TYPE_NORMAL, Hook::Util::OnPlayerNameInput, true, true);
+					});
+				}
+				else if (baseCmd == "syslinktest") {
+					LOG("Console/OnInput", INFO, "> SysLink test");
+
+					Hook::Util::g_GameThreadQueue.push_back([=]() {
+						Game::LuaShared_LuaCall_SetDvarBool(*g_Pointers->m_LUI_luaVM, "splitscreen", false);
+
+						// start Lobby.SetupSystemLinkDvars()
+						Game::LuaShared_LuaCall_SetDvarBool(*g_Pointers->m_LUI_luaVM, "LTSNLQNRKO" /* onlinegame */, false);
+						Game::LuaShared_LuaCall_SetDvarBool(*g_Pointers->m_LUI_luaVM, "LSTLQTSSRM" /* xblive_privatematch */, false);
+						Game::LuaShared_LuaCall_SetDvarBool(*g_Pointers->m_LUI_luaVM, "MQNNLTKNTS" /* ui_opensummary */, false);
+						Game::LuaShared_LuaCall_SetDvarBool(*g_Pointers->m_LUI_luaVM, "LPSPMQSNPQ" /* systemlink */, true);
+						// end Lobby.SetupSystemLinkDvars()
+
+						Game::LUI_CoD_LuaCall_ExecNow(*g_Pointers->m_LUI_luaVM, "xstartprivateparty");
+
+						g_Pointers->m_LUI_OpenMenu(IW8::LocalClientNum_t::LOCAL_CLIENT_0, "MPSystemLinkMenu", FALSE, FALSE, FALSE);
 					});
 				}
 				else if (baseCmd == "unlockall") {

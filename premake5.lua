@@ -328,8 +328,8 @@ group "vendor"
 		files {
 			"vendor/%{prj.name}/*.h",
 			"vendor/%{prj.name}/*.cpp",
-			"vendor/%{prj.name}/backends/imgui_impl_dx11.h",
-			"vendor/%{prj.name}/backends/imgui_impl_dx11.cpp",
+			"vendor/%{prj.name}/backends/imgui_impl_dx12.h",
+			"vendor/%{prj.name}/backends/imgui_impl_dx12.cpp",
 			"vendor/%{prj.name}/backends/imgui_impl_win32.h",
 			"vendor/%{prj.name}/backends/imgui_impl_win32.cpp"
 		}

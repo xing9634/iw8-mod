@@ -1,6 +1,7 @@
 #pragma once
 #include "engine/iw8/CachedAssets_t.hpp"
 #include "engine/iw8/clientUIActive_t.hpp"
+#include "engine/iw8/cmd_function_s.hpp"
 #include "engine/iw8/CmdArgs.hpp"
 #include "engine/iw8/DDLContext.hpp"
 #include "engine/iw8/DDLState.hpp"
@@ -19,6 +20,7 @@
 #include "engine/iw8/vec3_t.hpp"
 #include "engine/iw8/unknown/BNetClass.hpp"
 #include "engine/iw8/enums/DB_FastFileFailureMode.hpp"
+#include "engine/iw8/enums/DWOnlineStatus.hpp"
 #include "engine/iw8/enums/LocalClientNum_t.hpp"
 #include "engine/iw8/enums/PartyHostType.hpp"
 #include "engine/iw8/enums/StatsGroup.hpp"
@@ -36,6 +38,7 @@ namespace Client::Game::Functions {
 	using Com_GameInfo_GetGameTypeForInternalNameT = IW8::gameTypeInfo* (const char* gameTypeName);
 	using Com_GameInfo_GetMapInfoForLoadNameT = IW8::mapInfo* (const char* mapName);
 	using Com_ParseNavStringsT = bool(const char* pStr, const char** navStrings, int navStringMax, int* navStringCount);
+	using Com_PrintMessageInternalT = void(const int channelAndFlags, const char* msg, char error);
 	using Com_SetErrorMessageT = void(const char* errorMessage);
 	using Content_DoWeHaveContentPackT = bool(int contentPack);
 	using DB_LoadXFileT = int(const char* zoneName, uintptr_t zoneMem, uintptr_t assetList, int zoneFlags, bool wasPaused, int failureMode, uintptr_t outSignature);
@@ -52,7 +55,7 @@ namespace Client::Game::Functions {
 	using Dvar_GetIntSafeT = int(const char* dvarName);
 	using Dvar_GetStringSafeT = const char*(const char* dvarName);
 	using Dvar_RegisterBoolT = IW8::dvar_t*(const char* dvarName, bool value, std::uint32_t flags, const char* description);
-	using dwGetLogOnStatusT = std::int64_t(int controllerIndex);
+	using dwGetLogOnStatusT = IW8::DWOnlineStatus(int controllerIndex);
 	using DWServicesAccess__isReadyT = bool(void* _this, const int controllerIndex);
 	using FS_ReadFileT = std::int64_t(const char* qpath, void** buffer);
 	using GamerProfile_IsProfileLoggedInT = bool(int controllerIndex);

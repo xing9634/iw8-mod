@@ -102,6 +102,10 @@ namespace Client {
 				int>;
 			Memory::MinHook<Game::Functions::CL_GetLocalClientSignInStateT>* m_CL_GetLocalClientSignInStateHK;
 
+			using HK_Com_PrintMessageInternal = HookPlate::FastcallHook<"Com_PrintMessageInternal", void,
+				const int, const char*, char>;
+			Memory::MinHook<Game::Functions::Com_PrintMessageInternalT>* m_Com_PrintMessageInternalHK;
+
 			using HK_Content_DoWeHaveContentPack = HookPlate::FastcallHook<"Content_DoWeHaveContentPack", bool,
 				int>;
 			Memory::MinHook<Game::Functions::Content_DoWeHaveContentPackT>* m_Content_DoWeHaveContentPackHK;
@@ -114,7 +118,7 @@ namespace Client {
 				const char*, bool, std::uint32_t, const char*>;
 			Memory::MinHook<Game::Functions::Dvar_RegisterBoolT>* m_Dvar_RegisterBoolHK;
 
-			using HK_dwGetLogOnStatus = HookPlate::FastcallHook<"dwGetLogOnStatus", std::int64_t,
+			using HK_dwGetLogOnStatus = HookPlate::FastcallHook<"dwGetLogOnStatus", IW8::DWOnlineStatus,
 				int>;
 			Memory::MinHook<Game::Functions::dwGetLogOnStatusT>* m_dwGetLogOnStatusHK;
 
@@ -154,6 +158,13 @@ namespace Client {
 			using HK_SV_UpdateUserinfo_f = HookPlate::FastcallHook<"SV_UpdateUserinfo_f", void,
 				void*>;
 			Memory::MinHook<Game::Functions::SV_UpdateUserinfo_fT>* m_SV_UpdateUserinfo_fHK;
+
+			// DirectX 12
+			using HK_SwapChainPresent = HookPlate::FastcallHook<"SwapChain::Present", HRESULT,
+				IDXGISwapChain1*, UINT, UINT>;
+			using HK_SwapChainResizeBuffers = HookPlate::FastcallHook<"SwapChain::ResizeBuffers", HRESULT,
+				IDXGISwapChain1*, UINT, UINT, UINT, DXGI_FORMAT, UINT>;
+			Memory::MinHook<IDXGISwapChain1>* m_SwapChainHK;
 
 			explicit Hooks();
 			void PostUnpack();

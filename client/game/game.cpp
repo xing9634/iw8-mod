@@ -33,6 +33,10 @@ namespace Client::Game {
 
 		batch.Add(SETUP_POINTER(Com_ParseNavStrings), "E8 ? ? ? ? 44 8B 44 24 ? 33 F6 45 85 C0 7E", SETUP_MOD(Add(1).Rip()));
 
+		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY)) {
+			batch.Add(SETUP_POINTER(Com_PrintMessageInternal), "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 41 8B F0 0F B7 F9");
+		}
+
 		batch.Add(SETUP_POINTER(Com_SetErrorMessage), "E8 ? ? ? ? EB ? 40 38 2D", SETUP_MOD(Add(1).Rip()));
 
 		if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
@@ -215,6 +219,8 @@ namespace Client::Game {
 			batch.Add(SETUP_POINTER(LUI_luaVM), "48 8B 05 ? ? ? ? 45 33 C0 44 8B 4C 24 ? 48 89 44 24 ? 48 8B 5C 24", SETUP_MOD(Add(3).Rip()));
 		}
 
+		batch.Add(SETUP_POINTER(s_cmd_functions), "48 89 0D ? ? ? ? 48 8B 53", SETUP_MOD(Add(3).Rip()));
+
 		batch.Add(SETUP_POINTER(s_isContentEnumerationFinished), "80 3D ? ? ? ? ? 74 ? 48 89 7C 24", SETUP_MOD(Add(2).Rip().Add(1)));
 
 		batch.Add(SETUP_POINTER(s_luaInFrontend), "0F B6 05 ? ? ? ? 75", SETUP_MOD(Add(3).Rip()));
@@ -229,6 +235,10 @@ namespace Client::Game {
 			batch.Add(SETUP_POINTER(sharedUiInfo_assets), "48 89 05 ? ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? B2 ? 48 89 05 ? ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? 80 3D",
 				SETUP_MOD(Add(3).Rip()));
 		}
+
+		batch.Add(SETUP_POINTER(Unk_D3D12_CommandQueue), "48 8B 0D ? ? ? ? 4C 8B 44 24", SETUP_MOD(Add(3).Rip()));
+
+		batch.Add(SETUP_POINTER(Unk_D3D12_SwapChain), "48 8B 1D ? ? ? ? 44 8B C7", SETUP_MOD(Add(3).Rip()));
 
 		batch.Add(SETUP_POINTER(Unk_SignInState), "83 3D ? ? ? ? ? 7E ? 33 C9", SETUP_MOD(Add(2).Rip().Add(1)));
 

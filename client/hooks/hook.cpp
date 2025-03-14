@@ -3,6 +3,7 @@
 #include "hooks/util/hook_util.hpp"
 #include "memory/memory.hpp"
 #include "game/game.hpp"
+#include "ui/renderer.hpp"
 
 #include <utility/hook.hpp>
 #include <utility/memory.hpp>
@@ -116,6 +117,7 @@ namespace Client::Hook {
 		CreateThread(nullptr, 0, [](PVOID _thisPtr) -> DWORD {
 			Hooks* _this = (Hooks*)_thisPtr;
 			if (g_GameIdentifier.m_Ship) {
+				// todo: wait for some function to be called, one that calls the safe mode message box? seems to be the best time to hook
 				std::this_thread::sleep_for(3s);
 			}
 
@@ -142,6 +144,9 @@ namespace Client::Hook {
 
 			_this->m_CL_GetLocalClientSignInStateHK = new Memory::MinHook(g_Pointers->m_CL_GetLocalClientSignInState);
 			_this->m_CL_GetLocalClientSignInStateHK->Hook<HK_CL_GetLocalClientSignInState>();
+
+			_this->m_Com_PrintMessageInternalHK = new Memory::MinHook(g_Pointers->m_Com_PrintMessageInternal);
+			_this->m_Com_PrintMessageInternalHK->Hook<HK_Com_PrintMessageInternal>();
 
 			_this->m_Content_DoWeHaveContentPackHK = new Memory::MinHook(g_Pointers->m_Content_DoWeHaveContentPack);
 			//_this->m_Content_DoWeHaveContentPackHK->Hook<HK_Content_DoWeHaveContentPack>();
@@ -195,6 +200,43 @@ namespace Client::Hook {
 				"Lost Connection Fix #4").Get(), 5);
 
 			Hook::Util::g_HooksInitialised = true;
+
+#			define FIX_THE_AMD_GPU_BUG FALSE
+
+#			if FIX_THE_AMD_GPU_BUG
+				if (!UI::Renderer::Init()) {
+					LOG("HookThread", WARN, "DirectX 12 Renderer failed to initialise.");
+					return 0;
+				}
+
+				_this->m_SwapChainHK = new Memory::MinHook(*g_Pointers->m_Unk_D3D12_SwapChain);
+				_this->m_SwapChainHK->Hook<HK_SwapChainPresent>(8);
+				_this->m_SwapChainHK->Hook<HK_SwapChainResizeBuffers>(13);
+
+				UI::Renderer::AddRendererCallBack([] {
+					// use for a console?
+					// TODO: fix amd gpu bug or else this is unusable because i use an amd gpu because i have a severe skill issue if you are reading this you i
+					//       am going mentally insane if you think you can help me become un skill issue then that would be greatly appreciated because as of writing
+					//       this my gpu is already failing but i already know this is to do with imgui/hooking but i dont know how to fix it also coloured text is broken
+					//       i know this because i tried making a console (ported from H1) in imgui and it failed horribly because of the amd gpu bug the amd gpu bug is
+					//       going to drive me to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug
+					//       to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug
+					//       to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug
+					//       to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug
+					//       to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug
+					//       to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug
+					//       to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug
+					//       to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug to amd gpu bug
+					//       FIX THE AMD GPU BUG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					/*ImGui::SetNextWindowSize({ 200.f, 200.f });
+					if (ImGui::Begin("hi")) {
+						ImGui::Text("hello from ImGui in DirectX 12!");
+						ImGui::Text("res: %g x %g", ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y);
+						ImGui::Text("fps: %g", ImGui::GetIO().Framerate);
+					}
+					ImGui::End();*/
+				}, 0);
+#			endif
 
 			return 0;
 		}, this, 0, nullptr);
