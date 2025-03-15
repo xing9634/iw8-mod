@@ -4,11 +4,11 @@
 namespace IW8 {
 	class BNetClass {
 	public:
-		int m_State;				// 0x0000
+		int m_State;			// 0x0000
 	private:
 		char pad_0004[0x02CC];	// 0x0004
 	public:
-		bool m_FinishedAuth;			// 0x02D0
+		bool m_FinishedAuth;	// 0x02D0
 	private:
 		char pad_02D1[0x0023];	// 0x02D1
 	public:

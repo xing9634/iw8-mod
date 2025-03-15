@@ -168,6 +168,30 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 							IW8::UI_KEYBOARD_TYPE::UI_KEYBOARD_TYPE_NORMAL, Hook::Util::OnPlayerNameInput, true, true);
 					});
 				}
+				else if (baseCmd == "bnetauthtest") {
+					auto bn = g_Pointers->m_Unk_BNetClass;
+
+					if (bn && bn->m_FinishedAuth) {
+						std::uint8_t bn8 = reinterpret_cast<std::uint8_t>(bn);
+						std::uint16_t bn16 = reinterpret_cast<std::uint16_t>(bn);
+
+						auto v4 = bn->m_Var5;
+
+						std::uint8_t v5_0 = (((bn8 - 12) ^ *((std::uint8_t*)bn + 764)) * (((bn8 - 12) ^ *((std::uint8_t*)bn + 764)) + 2)) ^ *((std::uint8_t*)bn + 756) ^ ((unsigned __int16)((((std::uint16_t)bn + 756) ^ *((std::uint16_t*)bn + 382)) * ((((std::uint16_t)bn + 756) ^ *((std::uint16_t*)bn + 382)) + 2)) >> 8);
+						std::uint8_t v5_1 = (((bn8 - 11) ^ v4) * (((bn8 - 11) ^ v4) + 2)) ^ *((std::uint8_t*)bn + 757) ^ ((unsigned __int16)((((std::uint16_t)bn + 757) ^ v4) * ((((std::uint16_t)bn + 757) ^ v4) + 2)) >> 8);
+						std::uint8_t v5_2 = (((bn8 - 10) ^ v4) * (((bn8 - 10) ^ v4) + 2)) ^ *((std::uint8_t*)bn + 758) ^ ((unsigned __int16)((((std::uint16_t)bn + 758) ^ v4) * ((((std::uint16_t)bn + 758) ^ v4) + 2)) >> 8);
+						std::uint8_t v5_3 = (((bn8 - 12 + 3) ^ v4) * (((bn8 - 12 + 3) ^ v4) + 2)) ^ *((std::uint8_t*)bn + 759) ^ ((unsigned __int16)((((std::uint16_t)bn + 759) ^ v4) * ((((std::uint16_t)bn + 759) ^ v4) + 2)) >> 8);
+
+						std::uint32_t v5 = static_cast<std::uint32_t>(v5_0 + (v5_1 << 8) + (v5_2 << 16) + (v5_3 << 24));
+
+						LOG("Console/OnInput", INFO, "[prefix] v5 [{}] >> bn->m_Var4 [{}] == 1 = {} -> {}", v5, (int)bn->m_Var4, v5 >> bn->m_Var4, v5 >> bn->m_Var4 == 1 ? "true" : "false");
+						bn->m_Var4 = std::bit_width(v5) - 1;
+						LOG("Console/OnInput", INFO, "[postfix] v5 [{}] >> bn->m_Var4 [{}] == 1 = {} -> {}", v5, (int)bn->m_Var4, v5 >> bn->m_Var4, v5 >> bn->m_Var4 == 1 ? "true" : "false");
+					}
+					else {
+						LOG("Console/OnInput", INFO, "bnetauthtest: Cross-auth needs to be finished before calling.");
+					}
+				}
 				else if (baseCmd == "syslinktest") {
 					LOG("Console/OnInput", INFO, "> SysLink test");
 
