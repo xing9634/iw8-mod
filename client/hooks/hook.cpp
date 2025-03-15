@@ -5,6 +5,7 @@
 #include "game/game.hpp"
 #include "ui/renderer.hpp"
 
+#include <utility/flags.hpp>
 #include <utility/hook.hpp>
 #include <utility/memory.hpp>
 #include <utility/nt.hpp>
@@ -149,7 +150,9 @@ namespace Client::Hook {
 			_this->m_CL_GetLocalClientSignInStateHK->Hook<HK_CL_GetLocalClientSignInState>();
 
 			_this->m_Com_PrintMessageInternalHK = new Memory::MinHook(g_Pointers->m_Com_PrintMessageInternal);
-			_this->m_Com_PrintMessageInternalHK->Hook<HK_Com_PrintMessageInternal>();
+			if (Common::Utility::Flags::HasFlag("dbg")) {
+				_this->m_Com_PrintMessageInternalHK->Hook<HK_Com_PrintMessageInternal>();
+			}
 
 			_this->m_Content_DoWeHaveContentPackHK = new Memory::MinHook(g_Pointers->m_Content_DoWeHaveContentPack);
 			//_this->m_Content_DoWeHaveContentPackHK->Hook<HK_Content_DoWeHaveContentPack>();
