@@ -1,8 +1,11 @@
 #include "common.hpp"
+#include "game/config.hpp"
 #include "hooks/hook.hpp"
-#include "hooks/util/hook_util.hpp"
 
 template <>
 const char* Client::Hook::Hooks::HK_Live_GetLocalClientName::hkCallback() {
-	return Hook::Util::g_PlayerName.c_str();
+	static std::string playerName = "Unknown Soldier";
+	playerName = g_Config.GetPlayerName();
+
+	return playerName.c_str();
 }

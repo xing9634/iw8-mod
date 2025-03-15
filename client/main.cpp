@@ -1,5 +1,6 @@
 #include "common.hpp"
 #include "discord/discord_rpc.hpp"
+#include "game/config.hpp"
 #include "game/functions.hpp"
 #include "game/game.hpp"
 #include "game/map_validator.hpp"
@@ -40,6 +41,8 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 
 		g_Hooks = std::make_unique<Hook::Hooks>();
 		LOG("MainThread", INFO, "Hooks initialized.");
+
+		g_Config.Load();
 
 		Common::g_Console.m_OnInput = [](std::string input) {
 			if (input == "enable debug info") {
@@ -153,7 +156,7 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 					if (cmdParts.size() >= 2) {
 						std::string newName = cbuf.substr(baseCmd.size() + 1);
 						LOG("Console/OnInput", INFO, "Setting name to \"{}\"", newName);
-						Hook::Util::g_PlayerName = newName;
+						g_Config.SetPlayerName(newName);
 					}
 					else {
 						LOG("Console/OnInput", INFO, "name: A name must be supplied.");
@@ -161,7 +164,7 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 				}
 				else if (baseCmd == "namesel") {
 					Hook::Util::g_GameThreadQueue.push_back([=]() {
-						g_Pointers->m_UI_ShowKeyboard(0, "Name", Hook::Util::g_PlayerName.c_str(), 64, false, false, true, 
+						g_Pointers->m_UI_ShowKeyboard(0, "Name", g_Config.GetPlayerName().c_str(), 64, false, false, true,
 							IW8::UI_KEYBOARD_TYPE::UI_KEYBOARD_TYPE_NORMAL, Hook::Util::OnPlayerNameInput, true, true);
 					});
 				}

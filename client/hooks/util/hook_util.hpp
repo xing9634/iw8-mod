@@ -9,7 +9,6 @@ namespace Client::Hook::Util {
 
 	void OnPlayerNameInput(IW8::LocalClientNum_t localClientNum, IW8::UI_KEYBOARD_RESULT res, const char* text);
 
-	inline std::string g_PlayerName = "Travailleur Scooter";
 	inline std::vector<std::function<void()>> g_GameThreadQueue{};
 	inline bool g_ForceSignInState = false;
 	inline bool g_WaitingToHook = true;

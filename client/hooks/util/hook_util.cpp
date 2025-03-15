@@ -1,4 +1,5 @@
 #include "common.hpp"
+#include "game/config.hpp"
 #include "hooks/util/hook_util.hpp"
 
 #include <utility/nt.hpp>
@@ -184,6 +185,6 @@ namespace Client::Hook {
 			return;
 		}
 
-		g_PlayerName = text;
+		g_Config.SetPlayerName(text);
 	}
 }
