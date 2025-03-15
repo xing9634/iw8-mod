@@ -12,6 +12,7 @@
 #include "engine/iw8/LocalUserPresenceData.hpp"
 #include "engine/iw8/lua_State.hpp"
 #include "engine/iw8/luaL_Reg.hpp"
+#include "engine/iw8/LUIMethod.hpp"
 #include "engine/iw8/mapInfo.hpp"
 #include "engine/iw8/msg_t.hpp"
 #include "engine/iw8/ScreenPlacement.hpp"

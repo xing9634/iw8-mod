@@ -19,6 +19,9 @@ namespace Client::Hook {
 		this->m_AddVectoredExceptionHandlerHK = new Memory::IAT("kernel32.dll", "AddVectoredExceptionHandler");
 		this->m_AddVectoredExceptionHandlerHK->Hook<HK_AddVectoredExceptionHandler>();
 
+		this->m_CreateFileAHK = new Memory::IAT("kernel32.dll", "CreateFileA");
+		this->m_CreateFileAHK->Hook<HK_CreateFileA>();
+
 		this->m_CheckRemoteDebuggerPresentHK = new Memory::MinHook("kernelbase.dll", "CheckRemoteDebuggerPresent");
 		this->m_CheckRemoteDebuggerPresentHK->Hook<HK_CheckRemoteDebuggerPresent>();
 
@@ -116,9 +119,9 @@ namespace Client::Hook {
 
 		CreateThread(nullptr, 0, [](PVOID _thisPtr) -> DWORD {
 			Hooks* _this = (Hooks*)_thisPtr;
-			if (g_GameIdentifier.m_Ship) {
-				// todo: wait for some function to be called, one that calls the safe mode message box? seems to be the best time to hook
-				std::this_thread::sleep_for(3s);
+
+			while (Hook::Util::g_WaitingToHook) {
+				std::this_thread::sleep_for(100ms);
 			}
 
 			const auto tlsCallbacks = game.GetTlsCallbacks();

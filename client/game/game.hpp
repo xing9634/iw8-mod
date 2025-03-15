@@ -75,6 +75,7 @@ namespace Client {
 			IW8::gentity_s** m_g_entities{};
 			std::uint32_t* m_holdrand{};
 			IW8::lua_State** m_LUI_luaVM{};
+			IW8::LUIMethod** m_LUIMethod_LUIGlobalPackage_list{};
 			IW8::cmd_function_s** m_s_cmd_functions{};
 			bool* m_s_isContentEnumerationFinished{};
 			bool* m_s_luaInFrontend{};

@@ -219,6 +219,13 @@ namespace Client::Game {
 			batch.Add(SETUP_POINTER(LUI_luaVM), "48 8B 05 ? ? ? ? 45 33 C0 44 8B 4C 24 ? 48 89 44 24 ? 48 8B 5C 24", SETUP_MOD(Add(3).Rip()));
 		}
 
+		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY)) {
+			batch.Add(SETUP_POINTER(LUIMethod_LUIGlobalPackage_list), "48 8B 1D ? ? ? ? 48 8B 3D ? ? ? ? 48 85 DB", SETUP_MOD(Add(3).Rip()));
+		}
+		else if (GameVersionIsAny(GameVersion::v1_20_4_7623265_SHIP, GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
+			batch.Add(SETUP_POINTER(LUIMethod_LUIGlobalPackage_list), "48 8B 1D ? ? ? ? 48 8B 3D ? ? ? ? 89 05", SETUP_MOD(Add(3).Rip()));
+		}
+
 		batch.Add(SETUP_POINTER(s_cmd_functions), "48 89 0D ? ? ? ? 48 8B 53", SETUP_MOD(Add(3).Rip()));
 
 		batch.Add(SETUP_POINTER(s_isContentEnumerationFinished), "80 3D ? ? ? ? ? 74 ? 48 89 7C 24", SETUP_MOD(Add(2).Rip().Add(1)));

@@ -120,6 +120,35 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 						LOG("Console/OnInput", INFO, "cmdaddr: A command name must be supplied.");
 					}
 				}
+				else if (baseCmd == "luiglobaladdr") {
+					if (cmdParts.size() >= 2) {
+						std::string functionName = cbuf.substr(baseCmd.size() + 1);
+
+						bool foundFunc = false;
+						IW8::LUIMethod* cmd = (*g_Pointers->m_LUIMethod_LUIGlobalPackage_list);
+						while (cmd) {
+							if (cmd->m_Name) {
+								std::string name = Common::Utility::Strings::ToLower(cmd->m_Name);
+								if (name == Common::Utility::Strings::ToLower(functionName)) {
+									foundFunc = true;
+									break;
+								}
+							}
+
+							cmd = cmd->m_Next;
+						}
+
+						if (foundFunc) {
+							LOG("Console/OnInput", INFO, "Address of \"{}\" -> {}", functionName, AndRel(reinterpret_cast<std::uintptr_t>(cmd->m_Function)));
+						}
+						else {
+							LOG("Console/OnInput", INFO, "luiglobaladdr: Couldn't find function.");
+						}
+					}
+					else {
+						LOG("Console/OnInput", INFO, "luiglobaladdr: A function name must be supplied.");
+					}
+				}
 				else if (baseCmd == "name") {
 					if (cmdParts.size() >= 2) {
 						std::string newName = cbuf.substr(baseCmd.size() + 1);

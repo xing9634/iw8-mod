@@ -19,6 +19,10 @@ namespace Client {
 				ULONG, PVECTORED_EXCEPTION_HANDLER>;
 			Memory::IAT* m_AddVectoredExceptionHandlerHK;
 
+			using HK_CreateFileA = HookPlate::StdcallHook<"kernel32/CreateFileA", HANDLE,
+				LPCSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES, DWORD, DWORD, HANDLE>;
+			Memory::IAT* m_CreateFileAHK;
+
 			using HK_CheckRemoteDebuggerPresent = HookPlate::StdcallHook<"kernelbase/CheckRemoteDebuggerPresent", BOOL,
 				HANDLE, PBOOL>;
 			Memory::MinHook<>* m_CheckRemoteDebuggerPresentHK;

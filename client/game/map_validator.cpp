@@ -33,7 +33,8 @@ namespace Client::Game {
 				Hook::Util::g_GameThreadQueue.push_back([=]() {
 					ui_mapname->m_Current.m_String = "mp_shipment";
 					if (!firstTime) {
-						g_Pointers->m_Com_SetErrorMessage(g_Pointers->m_j_va("[iw8-mod] Unavailable map: %s", s_CurrentMapName.c_str()));
+						// this can bug out horribly
+						//g_Pointers->m_Com_SetErrorMessage(g_Pointers->m_j_va("[iw8-mod] Unavailable map: %s", s_CurrentMapName.c_str()));
 					}
 					s_CurrentMapName = ui_mapname->m_Current.m_String;
 				});

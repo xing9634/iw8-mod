@@ -12,5 +12,6 @@ namespace Client::Hook::Util {
 	inline std::string g_PlayerName = "Travailleur Scooter";
 	inline std::vector<std::function<void()>> g_GameThreadQueue{};
 	inline bool g_ForceSignInState = false;
+	inline bool g_WaitingToHook = true;
 	inline bool g_HooksInitialised = false;
 }
