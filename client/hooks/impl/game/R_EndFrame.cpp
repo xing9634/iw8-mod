@@ -74,6 +74,7 @@ void Client::Hook::Hooks::HK_R_EndFrame::hkCallback() {
 			g_Pointers->m_Unk_BNetClass->m_Var5 = 0x00000000;
 
 			LOG("Game/R_EndFrame", INFO, "Patched auth.");
+			Hook::Util::InitialiseCRM();
 			s_PatchedAuth = true;
 		}
 		else {

@@ -14,6 +14,10 @@
 #include <utility/memory.hpp>
 #include <utility/strings.hpp>
 
+#pragma warning(disable : 4189)
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4302)
+
 BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 	using namespace Client;
 	if (reason == DLL_PROCESS_ATTACH) {

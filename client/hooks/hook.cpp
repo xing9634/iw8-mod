@@ -134,6 +134,7 @@ namespace Client::Hook {
 
 			_this->m_LuaHookStore.Register<HK_LuaShared_LuaCall_IsDemoBuild>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_ActivateInitialClient>();
+			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_CRMGetMessageContent>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsBattleNetLanOnly>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_NotifyServer>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_ShouldShowDebugInfo>();
@@ -183,6 +184,9 @@ namespace Client::Hook {
 
 			_this->m_luaL_openlibHK = new Memory::MinHook(g_Pointers->m_luaL_openlib);
 			_this->m_luaL_openlibHK->Hook<HK_luaL_openlib>();
+
+			_this->m_MarketingCommsManager__GetMessageToDisplayCountHK = new Memory::MinHook(g_Pointers->m_MarketingCommsManager__GetMessageToDisplayCount);
+			_this->m_MarketingCommsManager__GetMessageToDisplayCountHK->Hook<HK_MarketingCommsManager__GetMessageToDisplayCount>();
 
 			_this->m_PartyHost_StartPrivatePartyHK = new Memory::MinHook(g_Pointers->m_PartyHost_StartPrivateParty);
 			_this->m_PartyHost_StartPrivatePartyHK->Hook<HK_PartyHost_StartPrivateParty>();

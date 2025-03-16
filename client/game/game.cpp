@@ -126,10 +126,14 @@ namespace Client::Game {
 
 		batch.Add(SETUP_POINTER(Live_IsUserSignedInToDemonware), "E8 ? ? ? ? 84 C0 74 ? 4C 8D 43 ? 8B D7", SETUP_MOD(Add(1).Rip()));
 
+		batch.Add(SETUP_POINTER(lua_createtable), "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 4C 8B 49 ? 41 8B F8");
+
 		batch.Add(SETUP_POINTER(lua_getfield), "48 89 5C 24 ? 57 48 83 EC ? 4D 8B D0 48 8B D9 E8 ? ? ? ? 48 8B F8 49 C7 C0 ? ? ? ? 90 49 FF C0 43 80 3C 02"
 			" ? 75 ? 49 8B D2 48 8B CB E8 ? ? ? ? 48 B9 ? ? ? ? ? ? ? ? 4C 8D 44 24 ? 48 0B C1 48 8B D7 48 8B CB 48 89 44 24 ? E8 ? ? ? ? 48 85 C0");
 
 		batch.Add(SETUP_POINTER(lua_pushboolean), "E8 ? ? ? ? EB ? 85 D2 78", SETUP_MOD(Add(1).Rip()));
+
+		batch.Add(SETUP_POINTER(lua_pushnil), "48 8B 41 ? 48 C7 00");
 
 		batch.Add(SETUP_POINTER(lua_pushstring), "48 89 5C 24 ? 57 48 83 EC ? 48 8B FA 48 8B D9 48 85 D2 75 ? 48 8B 41");
 
@@ -141,6 +145,8 @@ namespace Client::Game {
 
 		batch.Add(SETUP_POINTER(lua_tolstring), "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 49 8B F8 8B DA 48 8B F1");
 
+		batch.Add(SETUP_POINTER(lua_tonumber32), "40 53 48 83 EC ? 0F 29 74 24 ? 48 8B D9 E8 ? ? ? ? 48 8D 4C 24");
+
 		batch.Add(SETUP_POINTER(luaL_openlib), "48 89 5C 24 ? 55 56 41 56 48 83 EC ? 48 8B 41");
 
 		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP)) {
@@ -149,6 +155,10 @@ namespace Client::Game {
 		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
 			batch.Add(SETUP_POINTER(LuaShared_PCall), "E8 ? ? ? ? 8B F8 85 C0 74 ? 4C 8D 44 24", SETUP_MOD(Add(1).Rip()));
 		}
+
+		batch.Add(SETUP_POINTER(LuaShared_SetTableInt), "E8 ? ? ? ? 45 85 F6 74 ? 4C 8B C3", SETUP_MOD(Add(1).Rip()));
+
+		batch.Add(SETUP_POINTER(LuaShared_SetTableString), "E8 ? ? ? ? B0 ? EB ? BA", SETUP_MOD(Add(1).Rip()));
 
 		batch.Add(SETUP_POINTER(LUI_BeginTable), "E8 ? ? ? ? 85 ED 74 ? BB", SETUP_MOD(Add(1).Rip()));
 
@@ -160,6 +170,8 @@ namespace Client::Game {
 		}
 
 		batch.Add(SETUP_POINTER(LUI_OpenMenu), "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 41 8B F1 41 8B D8");
+
+		batch.Add(SETUP_POINTER(MarketingCommsManager__GetMessageToDisplayCount), "40 57 4C 8B 91");
 
 		batch.Add(SETUP_POINTER(MSG_ReadInt64), "40 56 57 41 56 48 83 EC ? 8B 51 ? 48 8B F9 8B 71 ? 8B 41 ? 03 C6 44 8D 72 ? C1 E0 ? 44 3B F0 7E ? C7 01 ?"
 			" ? ? ? 33 C0");

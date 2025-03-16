@@ -91,6 +91,7 @@ namespace Client {
 			HookPlate::LuaHookStore m_LuaHookStore{};
 			using HK_LuaShared_LuaCall_IsDemoBuild = HookPlate::LuaHook<"LuaShared_LuaCall_IsDemoBuild", "Engine.BGAAHHAGAC">;
 			using HK_LUI_CoD_LuaCall_ActivateInitialClient = HookPlate::LuaHook<"LUI_CoD_LuaCall_ActivateInitialClient", "Engine.CDGCBCBAJ">;
+			using HK_LUI_CoD_LuaCall_CRMGetMessageContent = HookPlate::LuaHook<"LUI_CoD_LuaCall_CRMGetMessageContent", "Engine.CEGFGEGBEH">;
 			using HK_LUI_CoD_LuaCall_IsBattleNetAuthReady = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsBattleNetAuthReady", "Engine.JBIHDJBH">;
 			using HK_LUI_CoD_LuaCall_IsBattleNetLanOnly = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsBattleNetLanOnly", "Engine.BJGAADIDFH">;
 			using HK_LUI_CoD_LuaCall_IsConnectedToGameServer = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsConnectedToGameServer", "Engine.DHEJECBEE">;
@@ -126,7 +127,7 @@ namespace Client {
 				int>;
 			Memory::MinHook<Game::Functions::dwGetLogOnStatusT>* m_dwGetLogOnStatusHK;
 
-			using HK_DWServicesAccess__isReady = HookPlate::FastcallHook<"DWServicesAccess__isReady", bool,
+			using HK_DWServicesAccess__isReady = HookPlate::FastcallHook<"DWServicesAccess::isReady", bool,
 				void*, const int>;
 			Memory::MinHook<Game::Functions::DWServicesAccess__isReadyT>* m_DWServicesAccess__isReadyHK;
 
@@ -147,6 +148,10 @@ namespace Client {
 			using HK_luaL_openlib = HookPlate::FastcallHook<"luaL_openlib", void,
 				IW8::lua_State*, const char*, const IW8::luaL_Reg*, std::uint32_t>;
 			Memory::MinHook<Game::Functions::luaL_openlibT>* m_luaL_openlibHK;
+
+			using HK_MarketingCommsManager__GetMessageToDisplayCount = HookPlate::FastcallHook<"MarketingCommsManager::GetMessageToDisplayCount", std::uint64_t,
+				void*, int>;
+			Memory::MinHook<Game::Functions::MarketingCommsManager__GetMessageToDisplayCountT>* m_MarketingCommsManager__GetMessageToDisplayCountHK;
 
 			using HK_PartyHost_StartPrivateParty = HookPlate::FastcallHook<"PartyHost_StartPrivateParty", void,
 				int, int, bool, int>;

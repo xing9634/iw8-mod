@@ -1,5 +1,6 @@
 #include "common.hpp"
 #include "game/config.hpp"
+#include "game/game.hpp"
 #include "hooks/util/hook_util.hpp"
 
 #include <utility/nt.hpp>
@@ -186,5 +187,202 @@ namespace Client::Hook {
 		}
 
 		g_Config.SetPlayerName(text);
+	}
+
+	void Util::InitialiseCRM() {
+		g_PatchedCRM[IW8::Lua::CRMLocation::MP_MOTD] = {
+			IW8::Lua::CRMContent()
+			.SetTitle("^1Welcome to iw8-mod!^7")
+			.SetContentLong("This mod is a work-in-progress and should not be demonstrated as a finished product.\\n"
+				"\\n"
+				"Any bugs or errors found should be reported to ^4@lifix^7 or ^4@xifil^7 on Discord.\\n"
+				"\\n"
+				"^7https://discord.gg/dPzJajt")
+			.SetLayoutType(0)
+			.SetLocationID(1)
+		};
+		
+		g_PatchedCRM[IW8::Lua::CRMLocation::MP_MSGS] = {
+			IW8::Lua::CRMContent()
+			.SetTitle("Connecting with friends")
+			.SetContentLong("Radmin VPN or Hamachi is still currently required as there is no working server browser or master server."
+				" After connecting with other players through this software, you will see their lobbies in your server list.")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("Help wanted")
+			.SetContentLong("iw8-mod is mainly developed by one developer - me, @lifix. If you have any knowledge in C++/Reverse Engineering then "
+				"please contribute on GitHub or GitLab, it would help not only me but the greater community too.")
+			.SetLayoutType(0)
+			.SetLocationID(1)
+		};
+
+		g_PatchedCRM[IW8::Lua::CRMLocation::PATCH_NOTES] = {
+			IW8::Lua::CRMContent()
+			.SetTitle("16/03/25 Changelog")
+			.SetContentShort("- added CRM hooks (patch notes, motd, messages, etc.)\\n"
+				"^1- known issue: patch notes duplicate")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("15/03/25 Changelog")
+			.SetContentShort("- removed invalid map message (it was buggy)\\n"
+				"- add /luiglobaladdr to get address of global LUI functions (doesn't work on 1.38 and 1.44 curiously?????)\\n"
+				"- removed arbitrary hooking wait\\n"
+				"- player name now saved to game directory\\n"
+				"- only hook Com_PrintMessageInternal if the -dbg flag is set (can crash the game and only useful sometimes so yea)\\n"
+				"- never show \"Go Online\" button in main menu (it was still appearing on replay)\\n"
+				"- added /bnetauthtest for testing purposes")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("14/03/25 Changelog")
+			.SetContentShort("- added /cmdaddr to get address of commands\\n"
+				"- tried to add a dx12 renderer, doesn't work because of AMD GPU bug (someone fix please)\\n"
+				"- add logging on replay (Com_PrintMessageInternal)")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("10/03/25 Changelog")
+			.SetContentShort("- fixed warnings\\n"
+				"- fixed map validator\\n"
+				"- added auto copy+launch scripts (iw8-mod/tools/game/)")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("09/03/25 Changelog")
+			.SetContentShort("- added watermark to ship builds\\n"
+				"- fixed ForceSignInState\\n"
+				"- added name input\\n"
+				"- trying to connect to online services now doesn't say you aren't signed in\\n"
+				"- fixed github workflow\\n"
+				"- named some auth pointers")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("08/03/25 Changelog")
+			.SetContentShort("- failed to add an auto-updater (again)")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("07/03/25 Changelog")
+			.SetContentShort("- improved signature scan speed by over 4x\\n"
+				"- failed to add an auto-updater")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("06/03/25 Changelog")
+			.SetContentShort("- added -luidump launch flag, this gets the address of every LUI function and throws them into a file called \"luidump.txt\""
+				" in your game directory")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("05/03/25 Changelog")
+			.SetContentShort("- add _ReturnAddress intrinsic to fix build issues\\n"
+				"- standardised AndRel for relative locations\\n"
+				"- started work on -luidump launch flag")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("04/03/25 Changelog")
+			.SetContentShort("- failed to add an anti-anti-debug\\n"
+				"- added a map validator (now doesn't let you launch on an invalid map, autodetected)")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("03/03/25 Changelog")
+			.SetContentShort("- add splash screens to 1.38 and 1.44 (1.20 is literally mspaint lol)\\n")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("02/03/25 Changelog")
+			.SetContentShort("- add github/gitlab crossover helper scripts\\n"
+				"- fix compiler warnings\\n"
+				"- remove logging on TLS function calling\\n"
+				"- fix translation overrides\\n"
+				"- github actions now automatically builds the client")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("01/03/25 Changelog")
+			.SetContentShort("^1happy new years! (been a while...)\\n"
+				"\\n"
+				"- base support for 1.38 and 1.44 (they can now get into the main menu)\\n"
+				"- remove Replay/Ship build configs, dll now has multiversion support\\n"
+				"- pro tip: you can't patch Arxan by using a GTA 5 signature (idot)\\n"
+				"- added mutex to log so it doesn't bug out anymore\\n"
+				"- added input in the external console for cbuf (prefixed with /, like minecraft)")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("28/12/24 Changelog")
+			.SetContentShort("- added template ws2_32.dll IAT hooks")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("27/12/24 Changelog")
+			.SetContentShort("- add bytebuffer from S1")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("23/12/24 Changelog")
+			.SetContentShort("- main menu status text fixed\\n"
+				"- figured out that hooking DWServicesAccess::isReady gives the player an epileptic seizure")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("22/12/24 Changelog")
+			.SetContentShort("- client now renders debug info\\n"
+				"- fixed discord rpc player count")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("21/12/24 Changelog")
+			.SetContentShort("- add lua hooks by string\\n"
+				"- improved load times by hooking IsBattleNetAuthReady and IsPremiumPlayerReady\\n"
+				"- now able to get to main menu of 1.20/ship\\n"
+				"- ship doesn't crash when trying to go in syslink (it kicks you out)\\n"
+				"- added log to ActivateInitialClient\\n"
+				"- fix auth on replay\\n"
+				"- removed \"[TAB] Go Online\" in main menu\\n"
+				"- removed unnecessary hooks that broke 1.20/replay")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("15/12/24 Changelog")
+			.SetContentShort("- rebased to new code format\\n"
+				"- can now host local games on 1.20/replay\\n"
+				"- now able to get to main menu of 1.20/ship\\n"
+				"- added inventory loading\\n"
+				"- added button to discord rpc\\n"
+				"- unlocked ship main menu (can't access anything though)\\n"
+				"- added iw8-mod watermark\\n"
+				"- added lost connection fix")
+			.SetLayoutType(0)
+			.SetLocationID(1),
+			IW8::Lua::CRMContent()
+			.SetTitle("16/11/24 Changelog")
+			.SetContentShort("- forked iw8-mod from t9-mod")
+			.SetLayoutType(0)
+			.SetLocationID(1)
+		};
+
+		std::size_t idx = 0;
+		for (auto& [key, val] : g_PatchedCRM) {
+			IW8::Lua::CRMContent::AutoFillIndexes(&val, idx);
+			idx++;
+		}
+
+		IW8::dvar_t* crm_max_message_count = g_Pointers->m_Dvar_FindVarByName("NSKOMKOSLO");
+		if (crm_max_message_count != nullptr) {
+			crm_max_message_count->m_Domain.m_Integer.m_Max = 0x7FFFFFFF;
+			crm_max_message_count->m_Current.m_Integer = 0x7FFFFFFF;
+		}
+
+		IW8::dvar_t* crm_max_patch_note_count = g_Pointers->m_Dvar_FindVarByName("NNNSQLQO");
+		if (crm_max_patch_note_count != nullptr) {
+			crm_max_patch_note_count->m_Domain.m_Integer.m_Max = 0x7FFFFFFF;
+			crm_max_patch_note_count->m_Current.m_Integer = 0x7FFFFFFF;
+		}
 	}
 }
