@@ -2,6 +2,8 @@
 #include "common.hpp"
 #include "memory/memory.hpp"
 
+#include <utility/concurrency.hpp>
+
 namespace Client {
 	class SignatureStore {
 		using Res = Memory::ScannedResult<void>;
@@ -15,15 +17,11 @@ namespace Client {
 				, m_Mod(std::move(mod))
 			{}
 
-			void Scan(std::size_t* countPtr) const {
+			void Scan() const {
 				Res scTemp = Memory::SigScan(this->m_Signature, g_GameModuleName, this->m_Name);
 				if (scTemp.As<void*>() != nullptr) {
 					scTemp = this->m_Mod(scTemp);
 					*this->m_Pointer = scTemp.As<void*>();
-				}
-				
-				if (countPtr != nullptr) {
-					(*countPtr)++;
 				}
 			}
 
@@ -43,25 +41,9 @@ namespace Client {
 		}
 
 		void ScanAll() {
-			std::size_t targetCount = this->m_Signatures.size();
-			std::size_t currentCount = 0;
-
-			std::size_t* currentCountPtr = &currentCount;
-
-			for (const auto& signature : this->m_Signatures) {
-				std::thread t([=]() {
-					signature.Scan(currentCountPtr);
-				});
-				t.detach();
-			}
-
-			while (currentCount < targetCount) {
-				Sleep(100);
-			}
-
-			// is this a racist condition? yes.
-			// do i care? no.
-			Sleep(1000);
+			Common::Utility::Concurrency::AsyncForEach<Signature>(this->m_Signatures, [](auto& sig) {
+				sig.Scan();
+			});
 		}
 	private:
 		std::vector<Signature> m_Signatures{};
