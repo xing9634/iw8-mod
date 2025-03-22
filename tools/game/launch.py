@@ -17,6 +17,7 @@ supported_game_versions = [
 	"1.38.3.9489393",
 	"1.44.0.10435696"
 ]
+mod_dll_name = "XInput9_1_0.dll"
 
 directories = {}
 directories_path = os.path.join(os.path.dirname(__file__), "directories.json")
@@ -65,11 +66,11 @@ if not os.path.isfile(arg_custom_exe_absolute):
 	tkinter.messagebox.showinfo("iw8-mod", f"Couldn't find executable \"{arg_custom_exe_absolute}\".")
 	exit()
 
-iw8_mod_dll = os.path.join(os.path.dirname(__file__), "..", "..", "build", "iw8_vs2019", "x64", "client", "discord_game_sdk.dll")
+iw8_mod_dll = os.path.join(os.path.dirname(__file__), "..", "..", "build", "iw8_vs2019", "x64", "client", mod_dll_name)
 try:
-	shutil.copy(iw8_mod_dll, os.path.join(selected_directory, "discord_game_sdk.dll"))
+	shutil.copy(iw8_mod_dll, os.path.join(selected_directory, mod_dll_name))
 except FileNotFoundError:
-	tkinter.messagebox.showinfo("iw8-mod", "Couldn't find new discord_game_sdk.dll, not updating.")
+	tkinter.messagebox.showinfo("iw8-mod", f"Couldn't find new {mod_dll_name}, not updating.")
 except Exception as e:
 	tkinter.messagebox.showinfo("iw8-mod", f"Caught an unknown exception: {e}")
 

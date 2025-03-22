@@ -215,6 +215,10 @@ namespace Client::Game {
 
 		batch.Add(SETUP_POINTER(UI_ShowKeyboard), "48 8B 44 24 ? 48 89 05 ? ? ? ? 0F B6 44 24");
 
+		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP)) {
+			batch.Add(SETUP_POINTER(Unk_IsUnsupportedGPU), "48 83 EC ? 0F B6 05 ? ? ? ? 85 C0 75");
+		}
+
 		batch.Add(SETUP_POINTER(clientUIActives), "48 8D 15 ? ? ? ? 8B 4C 10", SETUP_MOD(Add(3).Rip()));
 
 		batch.Add(SETUP_POINTER(cmd_args), "48 63 05 ? ? ? ? 33 C9 41 89 AC 87", SETUP_MOD(Add(3).Rip()));

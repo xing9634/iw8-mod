@@ -1,8 +1,10 @@
 #include "common.hpp"
+#include "discord/discord_rpc.hpp"
 #include "hooks/hook.hpp"
 #include "hooks/util/hook_util.hpp"
 #include "memory/memory.hpp"
 #include "game/game.hpp"
+#include "game/map_validator.hpp"
 #include "ui/renderer.hpp"
 
 #include <utility/flags.hpp>
@@ -90,6 +92,7 @@ namespace Client::Hook {
 		switch (g_GameIdentifier.m_Checksum) {
 		case GameVersion::v1_20_4_7623265_REPLAY:
 			Common::Utility::Hook::Jump(game.GetPtr() + 0x003061A0, MysteryFunctionDetour);
+			Common::Utility::Hook::Nop(game.GetPtr() + 0x01504374, 5); // kill "Services aren't ready yet"
 			break;
 		case GameVersion::v1_20_4_7623265_SHIP:
 			Common::Utility::Memory::SafeMemSet(game.GetPtr() + 0x03DF4548, MysteryFunctionDetour);
@@ -117,6 +120,13 @@ namespace Client::Hook {
 			LOG("MainThread", DEBUG, "Patching Arxan Integrity Check {}/{}", currentCheck, arxanChecks.size());
 			Common::Utility::Hook::Nop(arxanCheck.Add(0x8).Get(), 7);
 		}
+
+		/*
+		CreateThread(nullptr, 0, Client::Discord::Thread, nullptr, 0, nullptr);
+		if (Client::g_GameIdentifier.m_Checksum == Client::GameVersion::v1_20_4_7623265_REPLAY) {
+			CreateThread(nullptr, 0, Client::Game::MapValidator::Thread, nullptr, 0, nullptr);
+		}
+		*/
 
 		CreateThread(nullptr, 0, [](PVOID _thisPtr) -> DWORD {
 			Hooks* _this = (Hooks*)_thisPtr;
@@ -199,6 +209,9 @@ namespace Client::Hook {
 
 			_this->m_SV_UpdateUserinfo_fHK = new Memory::MinHook(g_Pointers->m_SV_UpdateUserinfo_f);
 			_this->m_SV_UpdateUserinfo_fHK->Hook<HK_SV_UpdateUserinfo_f>();
+
+			_this->m_Unk_IsUnsupportedGPUHK = new Memory::MinHook(g_Pointers->m_Unk_IsUnsupportedGPU);
+			_this->m_Unk_IsUnsupportedGPUHK->Hook<HK_Unk_IsUnsupportedGPU>();
 
 			Common::Utility::Hook::Nop(Memory::SigScan("E8 ? ? ? ? 8B 0D ? ? ? ? 8B 15", g_GameModuleName,
 				"Lost Connection Fix #1").Get(), 5);

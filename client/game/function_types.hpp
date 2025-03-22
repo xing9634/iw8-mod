@@ -101,4 +101,5 @@ namespace Client::Game::Functions {
 	using UI_ShowKeyboardT = void(int controllerIndex, const char* title, const char* defaultText, int maxlen, bool verifyString, bool checkProfanity,
 		bool allowEmpty, IW8::UI_KEYBOARD_TYPE type, void(__fastcall* callback)(IW8::LocalClientNum_t, IW8::UI_KEYBOARD_RESULT, const char*), bool openAsModal,
 		bool useAutoAlign);
+	using Unk_IsUnsupportedGPUT = bool();
 }

@@ -168,6 +168,9 @@ namespace Client {
 				void*>;
 			Memory::MinHook<Game::Functions::SV_UpdateUserinfo_fT>* m_SV_UpdateUserinfo_fHK;
 
+			using HK_Unk_IsUnsupportedGPU = HookPlate::FastcallHook<"Unk_IsUnsupportedGPU", bool>;
+			Memory::MinHook<Game::Functions::Unk_IsUnsupportedGPUT>* m_Unk_IsUnsupportedGPUHK;
+
 			// DirectX 12
 			using HK_SwapChainPresent = HookPlate::FastcallHook<"SwapChain::Present", HRESULT,
 				IDXGISwapChain1*, UINT, UINT>;

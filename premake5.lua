@@ -157,7 +157,7 @@ project "client"
 	location "client"
 	kind "SharedLib"
 	language "C++"
-	targetname "discord_game_sdk"
+	targetname "XInput9_1_0"
 
 	files {
 		"client/**.hpp",

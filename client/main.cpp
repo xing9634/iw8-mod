@@ -238,16 +238,19 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 	return TRUE;
 }
 
-extern "C" __declspec(dllexport) int /* EDiscordResult */ /* DISCORD_API */ DiscordCreate(int /* DiscordVersion */ version, struct DiscordCreateParams* params, struct IDiscordCore** result) {
-	_Unreferenced_parameter_(version);
-	_Unreferenced_parameter_(params);
-	_Unreferenced_parameter_(result);
-
-	CreateThread(nullptr, 0, Client::Discord::Thread, nullptr, 0, nullptr);
-	if (Client::g_GameIdentifier.m_Checksum == Client::GameVersion::v1_20_4_7623265_REPLAY) {
-		CreateThread(nullptr, 0, Client::Game::MapValidator::Thread, nullptr, 0, nullptr);
+extern "C" {
+	__declspec(dllexport) DWORD XInputGetCapabilities(DWORD dwUserIndex, DWORD dwFlags, struct XINPUT_CAPABILITIES* pCapabilities) {
+		static auto func = Client::GetProxyExport<decltype(&XInputGetCapabilities)>("XInput9_1_0.dll", "XInputGetCapabilities");
+		return func(dwUserIndex, dwFlags, pCapabilities);
 	}
 
-	LOG("Proxy/DiscordCreate", INFO, "DiscordCreate called, returning 1 (ServiceUnavailable).");
-	return 1 /* DiscordResult_ServiceUnavailable */;
+	__declspec(dllexport) DWORD XInputSetState(DWORD dwUserIndex, struct XINPUT_VIBRATION* pVibration) {
+		static auto func = Client::GetProxyExport<decltype(&XInputSetState)>("XInput9_1_0.dll", "XInputSetState");
+		return func(dwUserIndex, pVibration);
+	}
+
+	__declspec(dllexport) DWORD XInputGetState(DWORD dwUserIndex, struct XINPUT_STATE* pState) {
+		static auto func = Client::GetProxyExport<decltype(&XInputGetState)>("XInput9_1_0.dll", "XInputGetState");
+		return func(dwUserIndex, pState);
+	}
 }

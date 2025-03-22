@@ -1,8 +1,8 @@
 #pragma once
 #include <common_core.hpp>
 #include <logger/log_service.hpp>
+#include <utility/nt.hpp>
 #include <utility/winapi.hpp>
-//#include "resource.h"
 
 #define VT_GET(ptr, idx) (*(void***)(ptr))[idx]
 #define HIGH_ORDER_LOG_HOOK 0
@@ -56,4 +56,13 @@ namespace Client {
 
 	// other things
 	std::string AndRel(std::uintptr_t address);
+
+	template <typename T>
+	inline T GetProxyExport(const std::string& libName, const std::string& exportName) {
+		char dir[MAX_PATH]{ 0 };
+		GetSystemDirectoryA(dir, sizeof(dir));
+
+		const auto lib = Common::Utility::NT::Library::Load(dir + "/"s + libName);
+		return lib.GetProc<T>(exportName.c_str());
+	}
 }

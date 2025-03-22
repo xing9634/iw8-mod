@@ -71,7 +71,7 @@ Support may be coming for:
 
 Keep in mind that only 1.20/replay fully works "online" right now, all other versions don't get past the main menu and crash after ~2 minutes due to anti-tampering mechanisms put in place by Infinity Ward.
 
-The same `discord_game_sdk.dll` can be used for all the versions as it auto-detects the version based on the executable and calculates the signatures based on that.
+The same `XInput9_1_0.dll` can be used for all the versions as it auto-detects the version based on the executable and calculates the signatures based on that.
 
 ## Credits
 
