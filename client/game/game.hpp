@@ -19,6 +19,7 @@ namespace Client {
 			Functions::Com_PrintMessageInternalT* m_Com_PrintMessageInternal{};
 			Functions::Com_SetErrorMessageT* m_Com_SetErrorMessage{};
 			Functions::Content_DoWeHaveContentPackT* m_Content_DoWeHaveContentPack{};
+			Functions::DB_FindXAssetHeaderT* m_DB_FindXAssetHeader{};
 			Functions::DB_LoadXFileT* m_DB_LoadXFile{};
 			Functions::DB_Zones_PerformZoneLoadT* m_DB_Zones_PerformZoneLoad{};
 			Functions::DDL_GetEnumT* m_DDL_GetEnum{};

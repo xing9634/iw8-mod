@@ -19,6 +19,7 @@
 #include "engine/iw8/ScriptFile.hpp"
 #include "engine/iw8/vec2_t.hpp"
 #include "engine/iw8/vec3_t.hpp"
+#include "engine/iw8/XAssetHeader.hpp"
 #include "engine/iw8/unknown/BNetClass.hpp"
 #include "engine/iw8/enums/DB_FastFileFailureMode.hpp"
 #include "engine/iw8/enums/DWOnlineStatus.hpp"
@@ -28,6 +29,7 @@
 #include "engine/iw8/enums/StatsSource.hpp"
 #include "engine/iw8/enums/UI_KEYBOARD_TYPE.hpp"
 #include "engine/iw8/enums/UI_KEYBOARD_RESULT.hpp"
+#include "engine/iw8/enums/XAssetType.hpp"
 
 namespace Client::Game::Functions {
 	using AddBaseDrawTextCmdT = void*(const char* text, int maxChars, IW8::GfxFont* font, IW8::Material* fontMaterial, int fontHeight,
@@ -42,6 +44,7 @@ namespace Client::Game::Functions {
 	using Com_PrintMessageInternalT = void(const int channelAndFlags, const char* msg, char error);
 	using Com_SetErrorMessageT = void(const char* errorMessage);
 	using Content_DoWeHaveContentPackT = bool(int contentPack);
+	using DB_FindXAssetHeaderT = IW8::XAssetHeader(IW8::XAssetType type, const char* givenName, int allowCreateDefault);
 	using DB_LoadXFileT = int(const char* zoneName, uintptr_t zoneMem, uintptr_t assetList, int zoneFlags, bool wasPaused, int failureMode, uintptr_t outSignature);
 	using DB_Zones_PerformZoneLoadT = std::int64_t(bool processingPreloadedFiles, bool isBaseMap, bool wasPaused, IW8::DB_FastFileFailureMode failureMode);
 	using DDL_GetEnumT = const char*(const IW8::DDLState* state, const IW8::DDLContext* ddlContext);

@@ -115,6 +115,10 @@ namespace Client {
 				int>;
 			Memory::MinHook<Game::Functions::Content_DoWeHaveContentPackT>* m_Content_DoWeHaveContentPackHK;
 
+			using HK_DB_FindXAssetHeader = HookPlate::FastcallHook<"DB_FindXAssetHeader", IW8::XAssetHeader,
+				IW8::XAssetType, const char*, int>;
+			Memory::MinHook<Game::Functions::DB_FindXAssetHeaderT>* m_DB_FindXAssetHeaderHK;
+
 			using HK_DB_LoadXFile = HookPlate::FastcallHook<"DB_LoadXFile", int,
 				const char*, uintptr_t, uintptr_t, int, bool, int, uintptr_t>;
 			Memory::MinHook<Game::Functions::DB_LoadXFileT>* m_DB_LoadXFileHK;

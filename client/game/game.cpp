@@ -43,6 +43,8 @@ namespace Client::Game {
 			batch.Add(SETUP_POINTER(Content_DoWeHaveContentPack), "8B D1 83 F9 ? 75");
 		}
 
+		batch.Add(SETUP_POINTER(DB_FindXAssetHeader), "E8 ? ? ? ? 44 8B C5 8D 4D", SETUP_MOD(Add(1).Rip()));
+
 		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP)) {
 			batch.Add(SETUP_POINTER(DB_LoadXFile), "E8 ? ? ? ? 8B F8 44 38 AB", SETUP_MOD(Add(1).Rip()));
 		}

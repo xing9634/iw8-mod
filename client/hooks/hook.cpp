@@ -166,6 +166,9 @@ namespace Client::Hook {
 			_this->m_Content_DoWeHaveContentPackHK = new Memory::MinHook(g_Pointers->m_Content_DoWeHaveContentPack);
 			//_this->m_Content_DoWeHaveContentPackHK->Hook<HK_Content_DoWeHaveContentPack>();
 
+			_this->m_DB_FindXAssetHeaderHK = new Memory::MinHook(g_Pointers->m_DB_FindXAssetHeader);
+			_this->m_DB_FindXAssetHeaderHK->Hook<HK_DB_FindXAssetHeader>();
+
 			_this->m_DB_LoadXFileHK = new Memory::MinHook(g_Pointers->m_DB_LoadXFile);
 			_this->m_DB_LoadXFileHK->Hook<HK_DB_LoadXFile>();
 
@@ -270,17 +273,46 @@ namespace Client::Hook {
 	}
 
 	Hooks::~Hooks() {
+		this->DeleteHook(&this->m_SwapChainHK, { 8, 13 });
+		this->DeleteHook(&this->m_Unk_IsUserSignedInToBnetHK);
+		this->DeleteHook(&this->m_Unk_IsUnsupportedGPUHK);
+		this->DeleteHook(&this->m_UI_ShowKeyboardHK);
 		this->DeleteHook(&this->m_SV_UpdateUserinfo_fHK);
 		this->DeleteHook(&this->m_SEH_StringEd_GetStringHK);
 		this->DeleteHook(&this->m_R_EndFrameHK);
 		this->DeleteHook(&this->m_PartyHost_StartPrivatePartyHK);
+		this->DeleteHook(&this->m_MarketingCommsManager__GetMessageToDisplayCountHK);
 		this->DeleteHook(&this->m_luaL_openlibHK);
 		this->DeleteHook(&this->m_Live_IsUserSignedInToDemonwareHK);
+		this->DeleteHook(&this->m_Live_IsInSystemlinkLobbyHK);
 		this->DeleteHook(&this->m_Live_GetLocalClientNameHK);
+		this->DeleteHook(&this->m_GamerProfile_IsProfileLoggedInHK);
 		this->DeleteHook(&this->m_DWServicesAccess__isReadyHK);
 		this->DeleteHook(&this->m_dwGetLogOnStatusHK);
 		this->DeleteHook(&this->m_Dvar_RegisterBoolHK);
 		this->DeleteHook(&this->m_DB_LoadXFileHK);
+		this->DeleteHook(&this->m_DB_FindXAssetHeaderHK);
+		this->DeleteHook(&this->m_Content_DoWeHaveContentPackHK);
+		this->DeleteHook(&this->m_Com_PrintMessageInternalHK);
+		this->DeleteHook(&this->m_CL_GetLocalClientSignInStateHK);
+		this->DeleteHook(&this->m_SendToHK);
+		this->DeleteHook(&this->m_SendHK);
+		this->DeleteHook(&this->m_SelectHK);
+		this->DeleteHook(&this->m_RecvFromHK);
+		this->DeleteHook(&this->m_RecvHK);
+		this->DeleteHook(&this->m_IoctlSocketHK);
+		this->DeleteHook(&this->m_GetSockNameHK);
+		this->DeleteHook(&this->m_GetPeerNameHK);
+		this->DeleteHook(&this->m_GetHostByNameHK);
+		this->DeleteHook(&this->m_GetAddrInfoHK);
+		this->DeleteHook(&this->m_FreeAddrInfoHK);
+		this->DeleteHook(&this->m_ConnectHK);
+		this->DeleteHook(&this->m_CloseSocketHK);
+		this->DeleteHook(&this->m_LoadImageAHK);
+		this->DeleteHook(&this->m_SetThreadContextHK);
+		this->DeleteHook(&this->m_CheckRemoteDebuggerPresentHK);
+		this->DeleteHook(&this->m_CreateFileAHK);
+		this->DeleteHook(&this->m_AddVectoredExceptionHandlerHK);
 		this->DeleteHook(&this->m_SetUnhandledExceptionFilterHK);
 
 		g_Pointers.reset();
