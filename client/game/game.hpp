@@ -76,6 +76,7 @@ namespace Client {
 			Functions::Sys_MicrosecondsT* m_Sys_Microseconds{};
 			Functions::UI_ShowKeyboardT* m_UI_ShowKeyboard{};
 			Functions::Unk_IsUnsupportedGPUT* m_Unk_IsUnsupportedGPU{};
+			Functions::Unk_IsUserSignedInToBnetT* m_Unk_IsUserSignedInToBnet{};
 
 			IW8::clientUIActive_t* m_clientUIActives{};
 			IW8::CmdArgs* m_cmd_args{};

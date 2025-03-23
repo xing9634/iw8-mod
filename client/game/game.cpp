@@ -219,6 +219,10 @@ namespace Client::Game {
 			batch.Add(SETUP_POINTER(Unk_IsUnsupportedGPU), "48 83 EC ? 0F B6 05 ? ? ? ? 85 C0 75");
 		}
 
+		if (GameVersionIsAny(GameVersion::v1_44_0_10435696)) {
+			batch.Add(SETUP_POINTER(Unk_IsUserSignedInToBnet), "40 53 48 83 EC ? 48 8B DA E8 ? ? ? ? 83 38 ? 75 ? E8 ? ? ? ? 84 C0");
+		}
+
 		batch.Add(SETUP_POINTER(clientUIActives), "48 8D 15 ? ? ? ? 8B 4C 10", SETUP_MOD(Add(3).Rip()));
 
 		batch.Add(SETUP_POINTER(cmd_args), "48 63 05 ? ? ? ? 33 C9 41 89 AC 87", SETUP_MOD(Add(3).Rip()));

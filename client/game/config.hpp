@@ -4,55 +4,93 @@
 #include <nlohmann/json.hpp>
 #include <lmcons.h>
 
+#define JSON_FILE_DEF_PROPERTY(type, name) \
+	type Get##name() const { \
+		return this->m_JsonData[#name].get<type>(); \
+	} \
+	\
+	void Set##name(const type& v) { \
+		this->m_JsonData[#name] = v; \
+		this->Save(); \
+	}
+
 namespace Client {
 	namespace Game {
-		class Config {
+		inline std::filesystem::path GetJsonFilePath(const std::string& name) {
+			std::filesystem::path cd = "."s;
+			return cd / "iw8-mod" / name;
+		}
+
+		class JsonFile {
 		public:
-			Config(const std::string& configFile)
-				: m_ConfigFile(configFile)
-			{
-				this->Load();
+			JsonFile(const std::string& path)
+				: m_Path(GetJsonFilePath(path))
+			{}
+
+			virtual nlohmann::json GetDefault() {
+				return {};
 			}
 
 			void Load() {
-				if (!std::filesystem::exists(this->m_ConfigFile)) {
-					this->m_JsonData["PlayerName"] = GetDefaultPlayerName();
+				std::filesystem::path dir = this->m_Path.parent_path();
+				if (!std::filesystem::exists(dir)) {
+					std::filesystem::create_directories(dir);
+				}
+
+				if (!std::filesystem::exists(this->m_Path)) {
+					this->m_JsonData = this->GetDefault();
 					this->Save();
 					return;
 				}
 
-				std::ifstream file(this->m_ConfigFile);
+				std::ifstream file(this->m_Path);
 
 				if (file.is_open()) {
 					try {
 						file >> this->m_JsonData;
 					}
 					catch (const nlohmann::json::parse_error& e) {
-						LOG("Config", ERROR, "Parsing error: {}", e.what());
+						LOG("JsonFile", ERROR, "Parsing error: {}", e.what());
 					}
 					file.close();
 				}
+
+				nlohmann::json def = this->GetDefault();
+				for (const auto& [key, val] : def.items()) {
+					if (!this->m_JsonData.contains(key)) {
+						this->m_JsonData[key] = val;
+					}
+				}
+				this->Save();
 			}
 
 			void Save() const {
-				std::ofstream file(this->m_ConfigFile);
+				std::ofstream file(this->m_Path);
 				if (file.is_open()) {
 					file << this->m_JsonData.dump(4);
 					file.close();
 				}
 			}
 
-			std::string GetPlayerName() const {
-				return this->m_JsonData["PlayerName"].get<std::string>();
+		protected:
+			std::filesystem::path m_Path;
+			nlohmann::json m_JsonData;
+		};
+
+		class Config : public JsonFile {
+		public:
+			Config(const std::string& path)
+				: JsonFile(path)
+			{}
+
+			nlohmann::json GetDefault() override {
+				return {
+					{ "PlayerName", GetDefaultPlayerName() }
+				};
 			}
 
-			void SetPlayerName(const std::string& name) {
-				this->m_JsonData["PlayerName"] = name;
-				this->Save();
-			}
-
+			JSON_FILE_DEF_PROPERTY(std::string, PlayerName)
 		private:
-
 			std::string GetDefaultPlayerName() {
 				char username[UNLEN + 1];
 				DWORD usernameLen = UNLEN + 1;
@@ -60,15 +98,28 @@ namespace Client {
 				if (GetUserNameA(username, &usernameLen)) {
 					return std::string(username);
 				}
-				else {
-					return "UnnamedPlayer";
-				}
+
+				return "UnnamedPlayer";
+			}
+		};
+
+		class Inventory : public JsonFile {
+		public:
+			Inventory(const std::string& path)
+				: JsonFile(path)
+			{}
+
+			nlohmann::json GetDefault() override {
+				return {};
 			}
 
-			std::string m_ConfigFile;
-			nlohmann::json m_JsonData;
+			void AccessJsonData(std::function<void(nlohmann::json&)> callback) {
+				callback(this->m_JsonData);
+				this->Save();
+			}
 		};
 	}
 
-	inline Game::Config g_Config{ "iw8-mod-config.json" };
+	inline Game::Config g_Config{ "config.json" };
+	inline Game::Inventory g_Inventory{ "inventory.json" };
 }

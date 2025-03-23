@@ -168,8 +168,16 @@ namespace Client {
 				void*>;
 			Memory::MinHook<Game::Functions::SV_UpdateUserinfo_fT>* m_SV_UpdateUserinfo_fHK;
 
+			using HK_UI_ShowKeyboard = HookPlate::FastcallHook<"UI_ShowKeyboard", void,
+				int, const char*, const char*, int, bool, bool, bool, IW8::UI_KEYBOARD_TYPE,
+				void(__fastcall*)(IW8::LocalClientNum_t, IW8::UI_KEYBOARD_RESULT, const char*), bool, bool>;
+			Memory::MinHook<Game::Functions::UI_ShowKeyboardT>* m_UI_ShowKeyboardHK;
+
 			using HK_Unk_IsUnsupportedGPU = HookPlate::FastcallHook<"Unk_IsUnsupportedGPU", bool>;
 			Memory::MinHook<Game::Functions::Unk_IsUnsupportedGPUT>* m_Unk_IsUnsupportedGPUHK;
+
+			using HK_Unk_IsUserSignedInToBnet = HookPlate::FastcallHook<"Unk_IsUserSignedInToBnet", bool>;
+			Memory::MinHook<Game::Functions::Unk_IsUserSignedInToBnetT>* m_Unk_IsUserSignedInToBnetHK;
 
 			// DirectX 12
 			using HK_SwapChainPresent = HookPlate::FastcallHook<"SwapChain::Present", HRESULT,

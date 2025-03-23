@@ -161,9 +161,7 @@ namespace Client::Hook {
 			_this->m_CL_GetLocalClientSignInStateHK->Hook<HK_CL_GetLocalClientSignInState>();
 
 			_this->m_Com_PrintMessageInternalHK = new Memory::MinHook(g_Pointers->m_Com_PrintMessageInternal);
-			if (Common::Utility::Flags::HasFlag("dbg")) {
-				_this->m_Com_PrintMessageInternalHK->Hook<HK_Com_PrintMessageInternal>();
-			}
+			_this->m_Com_PrintMessageInternalHK->Hook<HK_Com_PrintMessageInternal>();
 
 			_this->m_Content_DoWeHaveContentPackHK = new Memory::MinHook(g_Pointers->m_Content_DoWeHaveContentPack);
 			//_this->m_Content_DoWeHaveContentPackHK->Hook<HK_Content_DoWeHaveContentPack>();
@@ -210,8 +208,14 @@ namespace Client::Hook {
 			_this->m_SV_UpdateUserinfo_fHK = new Memory::MinHook(g_Pointers->m_SV_UpdateUserinfo_f);
 			_this->m_SV_UpdateUserinfo_fHK->Hook<HK_SV_UpdateUserinfo_f>();
 
+			_this->m_UI_ShowKeyboardHK = new Memory::MinHook(g_Pointers->m_UI_ShowKeyboard);
+			_this->m_UI_ShowKeyboardHK->Hook<HK_UI_ShowKeyboard>();
+
 			_this->m_Unk_IsUnsupportedGPUHK = new Memory::MinHook(g_Pointers->m_Unk_IsUnsupportedGPU);
 			_this->m_Unk_IsUnsupportedGPUHK->Hook<HK_Unk_IsUnsupportedGPU>();
+
+			_this->m_Unk_IsUserSignedInToBnetHK = new Memory::MinHook(g_Pointers->m_Unk_IsUserSignedInToBnet);
+			_this->m_Unk_IsUserSignedInToBnetHK->Hook<HK_Unk_IsUserSignedInToBnet>();
 
 			Common::Utility::Hook::Nop(Memory::SigScan("E8 ? ? ? ? 8B 0D ? ? ? ? 8B 15", g_GameModuleName,
 				"Lost Connection Fix #1").Get(), 5);
