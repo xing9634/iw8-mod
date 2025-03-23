@@ -13,6 +13,10 @@ HANDLE WINAPI Client::Hook::Hooks::HK_LoadImageA::hkCallback(HINSTANCE hInst, LP
 
 		int id;
 		switch (g_GameIdentifier.m_Checksum) {
+		case GameVersion::v1_20_4_7623265_REPLAY:
+		case GameVersion::v1_20_4_7623265_SHIP:
+			id = IMAGE_SPLASH_v1_20;
+			break;
 		case GameVersion::v1_44_0_10435696:
 			id = IMAGE_SPLASH_v1_44;
 			break;
