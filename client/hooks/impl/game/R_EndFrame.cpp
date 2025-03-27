@@ -16,9 +16,11 @@ void Client::Hook::Hooks::HK_R_EndFrame::hkCallback() {
 
 	if (g_Pointers->m_sharedUiInfo_assets) {
 		IW8::GfxFont* font = g_Pointers->m_sharedUiInfo_assets->m_SubtitleFont;
-		IW8::vec4_t color = { .666f, .666f, .666f, .666f };
-		g_Pointers->R_AddCmdDrawText(watermarkText.c_str(),
-			0x7FFFFFFF, font, font->m_PixelHeight, 4.f, 4.f + static_cast<float>(font->m_PixelHeight), 1.f, 1.f, 0.f, &color);
+		if (font) {
+			IW8::vec4_t color = { .666f, .666f, .666f, .666f };
+			g_Pointers->R_AddCmdDrawText(watermarkText.c_str(),
+				0x7FFFFFFF, font, font->m_PixelHeight, 4.f, 4.f + static_cast<float>(font->m_PixelHeight), 1.f, 1.f, 0.f, &color);
+		}
 	}
 
 	if (!s_PatchedAuth) {

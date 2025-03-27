@@ -151,7 +151,6 @@ namespace Client::Hook {
 			LOG("HookThread", DEBUG, "Hooked {} TLS callbacks.", tlsCallbacks.size());
 
 			// test hook base+0x19CBDB0 (replay) / base+0x33239C0 (ship)
-			Common::Utility::NT::Library game{};
 			if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY)) {
 				(new Memory::MinHook(game.GetPtr() + 0x19CBDB0))->Hook(Unk_DebugPrint_Det, &Unk_DebugPrint_og);
 			}

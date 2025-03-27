@@ -118,7 +118,7 @@ namespace Client::UI {
 
 		const auto RTVDescriptorSize{ this->m_Device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV) };
 		D3D12_CPU_DESCRIPTOR_HANDLE RTVHandle{ this->m_BackbufferDescriptorHeap->GetCPUDescriptorHandleForHeapStart() };
-		for (size_t i{}; i != this->m_SwapChainDesc.BufferCount; ++i) {
+		for (UINT i{}; i != this->m_SwapChainDesc.BufferCount; ++i) {
 			ComPtr<ID3D12Resource> BackBuffer{};
 			this->m_FrameContext[i].m_Descriptor = RTVHandle;
 			this->m_SwapChain->GetBuffer(i, IID_PPV_ARGS(BackBuffer.GetAddressOf()));
@@ -205,7 +205,7 @@ namespace Client::UI {
 	}
 
 	void Renderer::WaitForNextFrame() {
-		UINT nextFrameIndex = GetInstance().m_FrameIndex + 1;
+		UINT64 nextFrameIndex = GetInstance().m_FrameIndex + 1;
 		GetInstance().m_FrameIndex = nextFrameIndex;
 
 		HANDLE waitableObjects[] = { GetInstance().m_SwapChainWaitableObject, nullptr };
@@ -239,7 +239,7 @@ namespace Client::UI {
 		const auto rtvDescriptorSize{ GetInstance().m_Device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV) };
 		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle{ GetInstance().m_BackbufferDescriptorHeap->GetCPUDescriptorHandleForHeapStart() };
 
-		for (size_t i{}; i != GetInstance().m_SwapChainDesc.BufferCount; ++i) {
+		for (UINT i{}; i != GetInstance().m_SwapChainDesc.BufferCount; ++i) {
 			ComPtr<ID3D12Resource> backBuffer{};
 			GetInstance().m_FrameContext[i].m_Descriptor = rtvHandle;
 			GetInstance().m_SwapChain->GetBuffer(i, IID_PPV_ARGS(backBuffer.GetAddressOf()));
