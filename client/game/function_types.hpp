@@ -7,6 +7,8 @@
 #include "engine/iw8/DDLState.hpp"
 #include "engine/iw8/dvar_t.hpp"
 #include "engine/iw8/FontGlowStyle.hpp"
+#include "engine/iw8/GamerProfileData.hpp"
+#include "engine/iw8/GamerProfileDataField.hpp"
 #include "engine/iw8/gameTypeInfo.hpp"
 #include "engine/iw8/gentity_s.hpp"
 #include "engine/iw8/LocalUserPresenceData.hpp"
@@ -63,6 +65,7 @@ namespace Client::Game::Functions {
 	using DWServicesAccess__isReadyT = bool(void* _this, const int controllerIndex);
 	using FS_ReadFileT = std::int64_t(const char* qpath, void** buffer);
 	using GamerProfile_IsProfileLoggedInT = bool(int controllerIndex);
+	using GamerProfile_GetDataByNameT = IW8::GamerProfileData*(IW8::GamerProfileData* result, int controllerIndex, const char* settingName);
 	using GamerProfile_SetDataByNameT = void(int controllerIndex, const char* settingName, float settingValue);
 	using I_atoui64T = std::uint64_t(const char* str);
 	using I_atoui64_hexT = std::uint64_t(const char* str);
@@ -72,6 +75,8 @@ namespace Client::Game::Functions {
 	using Live_GetLocalClientNameT = const char*();
 	using Live_IsInSystemlinkLobbyT = bool();
 	using Live_IsUserSignedInToDemonwareT = bool(int controllerIndex);
+	using LiveStorage_AreStatsFetchedT = bool(int controllerIndex, IW8::StatsSource statsSource);
+	using LiveStorage_ReadStatsT = void(int controllerIndex);
 	using lua_createtableT = void(IW8::lua_State* L, int narray, int nrec);
 	using lua_getfieldT = void(IW8::lua_State* L, int idx, const char* k);
 	using lua_pushbooleanT = void(IW8::lua_State* L, int b);

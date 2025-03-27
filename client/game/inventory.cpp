@@ -258,8 +258,7 @@ namespace Client {
 	void Inventory::Load() {
 		g_Inventory.Load();
 		g_Inventory.AccessJsonData([](nlohmann::json& json) {
-			if (!json.contains("Loadouts")) {
-				// it hasn't been properly saved yet.
+			if (json.size() == 0) {
 				return;
 			}
 

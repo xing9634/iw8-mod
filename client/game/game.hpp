@@ -38,6 +38,7 @@ namespace Client {
 			Functions::DWServicesAccess__isReadyT* m_DWServicesAccess__isReady{};
 			Functions::FS_ReadFileT* m_FS_ReadFile{};
 			Functions::GamerProfile_IsProfileLoggedInT* m_GamerProfile_IsProfileLoggedIn{};
+			Functions::GamerProfile_GetDataByNameT* m_GamerProfile_GetDataByName{};
 			Functions::GamerProfile_SetDataByNameT* m_GamerProfile_SetDataByName{};
 			Functions::I_atoui64T* m_I_atoui64{};
 			Functions::I_atoui64_hexT* m_I_atoui64_hex{};
@@ -47,6 +48,8 @@ namespace Client {
 			Functions::Live_GetLocalClientNameT* m_Live_GetLocalClientName{};
 			Functions::Live_IsInSystemlinkLobbyT* m_Live_IsInSystemlinkLobby{};
 			Functions::Live_IsUserSignedInToDemonwareT* m_Live_IsUserSignedInToDemonware{};
+			Functions::LiveStorage_AreStatsFetchedT* m_LiveStorage_AreStatsFetched{};
+			Functions::LiveStorage_ReadStatsT* m_LiveStorage_ReadStats{};
 			Functions::lua_createtableT* m_lua_createtable{};
 			Functions::lua_getfieldT* m_lua_getfield{};
 			Functions::lua_pushbooleanT* m_lua_pushboolean{};
@@ -85,6 +88,7 @@ namespace Client {
 			std::uint32_t* m_holdrand{};
 			IW8::lua_State** m_LUI_luaVM{};
 			IW8::LUIMethod** m_LUIMethod_LUIGlobalPackage_list{};
+			IW8::GamerProfileDataField* m_PROFILE_DATA_FIELDS{};
 			IW8::cmd_function_s** m_s_cmd_functions{};
 			bool* m_s_isContentEnumerationFinished{};
 			bool* m_s_luaInFrontend{};

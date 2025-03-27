@@ -4,6 +4,7 @@
 #include "game/functions.hpp"
 #include "game/game.hpp"
 #include "game/map_validator.hpp"
+#include "game/settings.hpp"
 #include "hooks/hook.hpp"
 #include "hooks/util/hook_util.hpp"
 #include "memory/iat.hpp"
@@ -73,6 +74,9 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD reason, PVOID) {
 					else {
 						LOG("Console/OnInput", INFO, "openmenu: A menu name must be supplied.");
 					}
+				}
+				else if (baseCmd == "savesettings") {
+					Settings::Save();
 				}
 				else if (baseCmd == "getdvarstring") {
 					if (cmdParts.size() >= 2) {

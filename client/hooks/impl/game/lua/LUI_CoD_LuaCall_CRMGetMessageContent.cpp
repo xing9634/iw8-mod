@@ -8,9 +8,9 @@
 #include <utility/strings.hpp>
 
 int Client::Hook::Hooks::HK_LUI_CoD_LuaCall_CRMGetMessageContent::hkCallback(IW8::lua_State* luaVM) {
-	int controllerIndex = g_Pointers->m_lua_tointeger32(luaVM, 1);
-	int locationID = g_Pointers->m_lua_tointeger32(luaVM, 2);
-	int messageIndex = g_Pointers->m_lua_tointeger32(luaVM, 3);
+	int controllerIndex = g_Pointers->m_lua_tointeger32(luaVM, 1) & 0xFFFFFFFF;
+	int locationID = g_Pointers->m_lua_tointeger32(luaVM, 2) & 0xFFFFFFFF;
+	int messageIndex = g_Pointers->m_lua_tointeger32(luaVM, 3) & 0xFFFFFFFF;
 
 	LOG("Game/LUI_CoD_LuaCall_CRMGetMessageContent", DEBUG, "controller: {}, location: {}, messageIndex: {}", controllerIndex, locationID, messageIndex);
 

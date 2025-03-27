@@ -108,6 +108,8 @@ namespace Client::Game {
 			batch.Add(SETUP_POINTER(GamerProfile_IsProfileLoggedIn), "E8 ? ? ? ? 84 C0 0F 84 ? ? ? ? 38 1D ? ? ? ? 4C 89 A4 24", SETUP_MOD(Add(1).Rip()));
 		}
 
+		batch.Add(SETUP_POINTER(GamerProfile_GetDataByName), "40 53 48 83 EC ? 48 63 C2 48 8B D9");
+
 		batch.Add(SETUP_POINTER(GamerProfile_SetDataByName), "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 8B F1 0F 29 74 24");
 
 		batch.Add(SETUP_POINTER(I_atoui64), "E8 ? ? ? ? 48 8D 4C 24 ? 48 89 84 24", SETUP_MOD(Add(1).Rip()));
@@ -127,6 +129,14 @@ namespace Client::Game {
 		}
 
 		batch.Add(SETUP_POINTER(Live_IsUserSignedInToDemonware), "E8 ? ? ? ? 84 C0 74 ? 4C 8D 43 ? 8B D7", SETUP_MOD(Add(1).Rip()));
+
+		batch.Add(SETUP_POINTER(LiveStorage_AreStatsFetched), "E8 ? ? ? ? 84 C0 75 ? 8B CB E8 ? ? ? ? 8B CB E8 ? ? ? ? 84 C0 74", SETUP_MOD(Add(1).Rip()));
+
+		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY)) {
+			// this is an offline only function
+			// todo: reimplement this entire function
+			batch.Add(SETUP_POINTER(LiveStorage_ReadStats), "40 53 48 83 EC ? 48 63 D9 8B CB E8 ? ? ? ? B9");
+		}
 
 		batch.Add(SETUP_POINTER(lua_createtable), "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 4C 8B 49 ? 41 8B F8");
 
@@ -247,6 +257,8 @@ namespace Client::Game {
 		else if (GameVersionIsAny(GameVersion::v1_20_4_7623265_SHIP, GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
 			batch.Add(SETUP_POINTER(LUIMethod_LUIGlobalPackage_list), "48 8B 1D ? ? ? ? 48 8B 3D ? ? ? ? 89 05", SETUP_MOD(Add(3).Rip()));
 		}
+
+		batch.Add(SETUP_POINTER(PROFILE_DATA_FIELDS), "48 8D 0D ? ? ? ? 80 7C D1", SETUP_MOD(Add(3).Rip()));
 
 		batch.Add(SETUP_POINTER(s_cmd_functions), "48 89 0D ? ? ? ? 48 8B 53", SETUP_MOD(Add(3).Rip()));
 

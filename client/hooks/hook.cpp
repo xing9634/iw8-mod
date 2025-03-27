@@ -86,6 +86,14 @@ namespace Client::Hook {
 		return;
 	}
 
+	void* Unk_DebugPrint_og = nullptr;
+	__int64 Unk_DebugPrint_Det(IW8::lua_State* a1) {
+		std::size_t strSz = 0;
+		const char* str = g_Pointers->m_lua_tolstring(a1, 1, &strSz);
+		LOG("Game/DebugPrint", DEBUG, "-> {}", std::string(str, strSz));
+		return reinterpret_cast<decltype(&Unk_DebugPrint_Det)>(Unk_DebugPrint_og)(a1);
+	}
+
 	void Hooks::PostUnpack() {
 		static Common::Utility::NT::Library game{};
 
@@ -142,6 +150,15 @@ namespace Client::Hook {
 			}
 			LOG("HookThread", DEBUG, "Hooked {} TLS callbacks.", tlsCallbacks.size());
 
+			// test hook base+0x19CBDB0 (replay) / base+0x33239C0 (ship)
+			Common::Utility::NT::Library game{};
+			if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY)) {
+				(new Memory::MinHook(game.GetPtr() + 0x19CBDB0))->Hook(Unk_DebugPrint_Det, &Unk_DebugPrint_og);
+			}
+			else if (GameVersionIsAny(GameVersion::v1_20_4_7623265_SHIP)) {
+				(new Memory::MinHook(game.GetPtr() + 0x33239C0))->Hook(Unk_DebugPrint_Det, &Unk_DebugPrint_og);
+			}
+
 			_this->m_LuaHookStore.Register<HK_LuaShared_LuaCall_IsDemoBuild>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_ActivateInitialClient>();
 			_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_CRMGetMessageContent>();
@@ -155,6 +172,10 @@ namespace Client::Hook {
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsNetworkConnected>();
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsPremiumPlayer>();
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsPremiumPlayerReady>();
+				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_OfflineDataFetched>();
+			}
+			if (GameVersionIsAny(GameVersion::v1_38_3_9489393)) {
+				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsGameModeAvailable>();
 			}
 
 			_this->m_CL_GetLocalClientSignInStateHK = new Memory::MinHook(g_Pointers->m_CL_GetLocalClientSignInState);

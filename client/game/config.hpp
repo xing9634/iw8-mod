@@ -103,9 +103,9 @@ namespace Client {
 			}
 		};
 
-		class Inventory : public JsonFile {
+		class GenericJsonFile : public JsonFile {
 		public:
-			Inventory(const std::string& path)
+			GenericJsonFile(const std::string& path)
 				: JsonFile(path)
 			{}
 
@@ -121,5 +121,6 @@ namespace Client {
 	}
 
 	inline Game::Config g_Config{ "config.json" };
-	inline Game::Inventory g_Inventory{ "inventory.json" };
+	inline Game::GenericJsonFile g_Inventory{ "inventory.json" };
+	inline Game::GenericJsonFile g_Settings{ "settings.json" };
 }

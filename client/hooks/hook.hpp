@@ -96,10 +96,12 @@ namespace Client {
 			using HK_LUI_CoD_LuaCall_IsBattleNetLanOnly = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsBattleNetLanOnly", "Engine.BJGAADIDFH">;
 			using HK_LUI_CoD_LuaCall_IsConnectedToGameServer = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsConnectedToGameServer", "Engine.DHEJECBEE">;
 			using HK_LUI_CoD_LuaCall_IsGameModeAllowed = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsGameModeAllowed", "Engine.CEGDBDIIIE">;
+			using HK_LUI_CoD_LuaCall_IsGameModeAvailable = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsGameModeAvailable", "Engine.DBEGJIECGB">;
 			using HK_LUI_CoD_LuaCall_IsNetworkConnected = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsNetworkConnected", "Engine.BACCCIHGDG">;
 			using HK_LUI_CoD_LuaCall_IsPremiumPlayer = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsPremiumPlayer", "Engine.CFHBIHABCB">;
 			using HK_LUI_CoD_LuaCall_IsPremiumPlayerReady = HookPlate::LuaHook<"LUI_CoD_LuaCall_IsPremiumPlayerReady", "Engine.ECFHDAEIDA">;
 			using HK_LUI_CoD_LuaCall_NotifyServer = HookPlate::LuaHook<"LUI_CoD_LuaCall_NotifyServer", "Engine.EBHIFJCGBH">;
+			using HK_LUI_CoD_LuaCall_OfflineDataFetched = HookPlate::LuaHook<"LUI_CoD_LuaCall_OfflineDataFetched", "Fences.BGCHCGICDB">;
 			using HK_LUI_CoD_LuaCall_ShouldShowDebugInfo = HookPlate::LuaHook<"LUI_CoD_LuaCall_ShouldShowDebugInfo", "Debug.CHFBFDCHBA">;
 
 			// Game

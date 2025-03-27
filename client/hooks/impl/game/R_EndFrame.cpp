@@ -2,6 +2,7 @@
 #include "engine/iw8/XUID.hpp"
 #include "game/game.hpp"
 #include "game/map_validator.hpp"
+#include "game/settings.hpp"
 #include "hooks/hook.hpp"
 #include "hooks/util/hook_util.hpp"
 #include "memory/memory.hpp"
@@ -74,6 +75,7 @@ void Client::Hook::Hooks::HK_R_EndFrame::hkCallback() {
 			g_Pointers->m_Unk_BNetClass->m_Var5 = 0x00000000;
 
 			LOG("Game/R_EndFrame", INFO, "Patched auth.");
+			Settings::Load();
 			Hook::Util::InitialiseCRM();
 			s_PatchedAuth = true;
 		}

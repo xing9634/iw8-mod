@@ -3,6 +3,13 @@
 
 template <>
 bool Client::Hook::Hooks::HK_Content_DoWeHaveContentPack::hkCallback(int contentPack) {
-	_Unreferenced_parameter_(contentPack);
-	return true;
+	static std::vector<int> scannedAlready{};
+	bool og = m_Original(contentPack);
+
+	if (std::find(scannedAlready.begin(), scannedAlready.end(), contentPack) == scannedAlready.end()) {
+		LOG("Game/Content_DoWeHaveContentPack", DEBUG, "{} -> {}", contentPack, og ? "Yes!" : "No.");
+		scannedAlready.push_back(contentPack);
+	}
+
+	return og;
 }

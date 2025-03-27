@@ -11,6 +11,7 @@ IW8::XAssetHeader Client::Hook::Hooks::HK_DB_FindXAssetHeader::hkCallback(IW8::X
 		std::filesystem::path thisFontPath = AssetReplacer::GetAssetReplaceDir("ttf") / givenName;
 
 		if (std::filesystem::exists(thisFontPath)) {
+			std::lock_guard _(AssetReplacer::g_Mutex);
 			std::ifstream font;
 
 			font.open(thisFontPath, std::ios::binary | std::ios::ate);

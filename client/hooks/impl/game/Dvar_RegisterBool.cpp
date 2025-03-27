@@ -19,6 +19,7 @@ std::map<std::pair<const char*, const char*>, bool> s_PatchedBooleanDvars = {
 	{ { "lui_cod_points_enabled", "LNTOKPTKS" }, false },
 	{ { "lui_enable_magma_blade_layout", "LRKPTLNQTT" }, false },
 	{ { "lui_force_online_menus", "LMMRONPQMO" }, false },
+	{ { "lui_wz_tutorial_optional", "LSPSKLPNQT" }, true },
 	{ { "online_lan_cross_play", "LTOQRQMMLQ" }, true },
 	{ { "ui_onlineRequired", "MTSTMKPMRM" }, false }
 };
