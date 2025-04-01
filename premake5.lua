@@ -164,7 +164,8 @@ project "client"
 		"client/**.cpp",
 		"client/**.h",
 		"client/**.c",
-		"client/**.rc"
+		"client/**.rc",
+		"client/resources/**.*"
 	}
 	vpaths {
 		["*"] = {}
@@ -190,6 +191,7 @@ project "client"
 		"vendor/minhook/include/"
 	}
 	defines {
+		"_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR",
 		"NOMINMAX",
 		"CURL_STRICTER",
 		"CURL_STATICLIB",
@@ -237,6 +239,7 @@ project "common"
 		"vendor/minhook/include/"
 	}
 	defines {
+		"_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR",
 		"NOMINMAX"
 	}
 	prebuildcommands {
@@ -257,10 +260,20 @@ group "vendor"
 		kind "StaticLib"
 		language "C++"
 
-		files { "vendor/%{prj.name}/backward.hpp", "vendor/%{prj.name}/backward.cpp" }
-		vpaths { ["*"] = {} }
-		includedirs { "vendor/%{prj.name}/" }
-		defines { "NOMINMAX" }
+		files {
+			"vendor/%{prj.name}/backward.hpp",
+			"vendor/%{prj.name}/backward.cpp"
+		}
+		vpaths {
+			["*"] = {}
+		}
+		includedirs {
+			"vendor/%{prj.name}/"
+		}
+		defines {
+			"_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR",
+			"NOMINMAX"
+		}
 		disablewarnings {
 			"4996"	-- C4996: This function or variable may be unsafe. Consider using [...] instead.
 		}
@@ -277,7 +290,9 @@ group "vendor"
 			"vendor/%{prj.name}/lib/**.h",
 			"vendor/%{prj.name}/lib/**.c"
 		}
-		vpaths { ["*"] = {} }
+		vpaths {
+			["*"] = {}
+		}
 		links {
 			"Crypt32.lib"
 		}
@@ -286,6 +301,7 @@ group "vendor"
 			"vendor/%{prj.name}/lib/"
 		}
 		defines {
+			"_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR",
 			"CURL_STRICTER",
 			"CURL_STATICLIB",
 			"CURL_DISABLE_LDAP",
@@ -309,9 +325,14 @@ group "vendor"
 			"vendor/%{prj.name}/**.h",
 			"vendor/%{prj.name}/**.cpp"
 		}
-		vpaths { ["*"] = {} }
+		vpaths {
+			["*"] = {}
+		}
 		includedirs {
 			"vendor/%{prj.name}/"
+		}
+		defines {
+			"_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR"
 		}
 		disablewarnings {
 			"4996",	-- C4996: This function or variable may be unsafe. Consider using [...] instead.
@@ -333,8 +354,16 @@ group "vendor"
 			"vendor/%{prj.name}/backends/imgui_impl_win32.h",
 			"vendor/%{prj.name}/backends/imgui_impl_win32.cpp"
 		}
-		vpaths { ["*"] = {} }
-		includedirs { "vendor/%{prj.name}/" }
+		vpaths {
+			["*"] = {}
+		
+		}
+		includedirs {
+			"vendor/%{prj.name}/"
+		}
+		defines {
+			"_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR"
+		}
 
 		targetdir(buildDir)
 		objdir(intBuildDir)
@@ -347,9 +376,14 @@ group "vendor"
 			"vendor/%{prj.name}/src/**.h",
 			"vendor/%{prj.name}/src/**.cpp"
 		}
-		vpaths { ["*"] = {} }
-		includedirs { "vendor/%{prj.name}/src/" }
+		vpaths {
+			["*"] = {}
+		}
+		includedirs {
+			"vendor/%{prj.name}/src/"
+		}
 		defines {
+			"_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR",
 			"ASMJIT_STATIC"
 		}
 		disablewarnings {
@@ -363,9 +397,15 @@ group "vendor"
 		kind "StaticLib"
 		language "C++"
 
-		files { "vendor/%{prj.name}/single_include/**.hpp" }
-		vpaths { ["*"] = {} }
-		includedirs { "vendor/%{prj.name}/single_include/" }
+		files {
+			"vendor/%{prj.name}/single_include/**.hpp"
+		}
+		vpaths {
+			["*"] = {}
+		}
+		includedirs {
+			"vendor/%{prj.name}/single_include/"
+		}
 
 		targetdir(buildDir)
 		objdir(intBuildDir)
@@ -379,10 +419,15 @@ group "vendor"
 			"vendor/%{prj.name}/src/**.h",
 			"vendor/%{prj.name}/src/**.c"
 		}
-		vpaths { ["*"] = {} }
+		vpaths {
+			["*"] = {}
+		}
 		includedirs {
 			"vendor/%{prj.name}/include/",
 			"vendor/%{prj.name}/src/"
+		}
+		defines {
+			"_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR"
 		}
 		disablewarnings {
 			"4100",	-- C4100: '[...]': unreferenced formal parameter

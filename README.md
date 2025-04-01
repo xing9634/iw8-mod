@@ -22,10 +22,8 @@ NOTE: You must legally own [Call of Duty®: Modern Warfare](https://store.steamp
   > git clone https://gitlab.com/xifil/iw8-mod.git --recurse-submodules
   > ```
   > depending on what Git you would like to use, however you always need the `--recurse-submodules` flag.
-- Update the submodules and run `premake5 vs2019` or simply use the delivered `generate.bat`.
-- Build via solution file in `iw8_vs2019.sln`.
-
-> Currently `vs2022` isn't a valid configuration as any mutex will fail to lock and cause an access violation, if you think you can figure this out you are literally insane, I've tried and failed and nothing I do fixes this.
+- Update the submodules and run `premake5 vs2022` or simply use the delivered `generate.bat`.
+- Build via solution file in `iw8_vs2022.sln`.
 
 <!--
 ### Premake arguments

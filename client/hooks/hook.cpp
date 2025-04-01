@@ -168,7 +168,6 @@ namespace Client::Hook {
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsBattleNetAuthReady>();
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsConnectedToGameServer>();
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsGameModeAllowed>();
-				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsNetworkConnected>();
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsPremiumPlayer>();
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_IsPremiumPlayerReady>();
 				_this->m_LuaHookStore.Register<HK_LUI_CoD_LuaCall_OfflineDataFetched>();

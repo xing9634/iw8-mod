@@ -66,7 +66,7 @@ if not os.path.isfile(arg_custom_exe_absolute):
 	tkinter.messagebox.showinfo("iw8-mod", f"Couldn't find executable \"{arg_custom_exe_absolute}\".")
 	exit()
 
-iw8_mod_dll = os.path.join(os.path.dirname(__file__), "..", "..", "build", "iw8_vs2019", "x64", "client", mod_dll_name)
+iw8_mod_dll = os.path.join(os.path.dirname(__file__), "..", "..", "build", "iw8_vs2022", "x64", "client", mod_dll_name)
 try:
 	shutil.copy(iw8_mod_dll, os.path.join(selected_directory, mod_dll_name))
 except FileNotFoundError:

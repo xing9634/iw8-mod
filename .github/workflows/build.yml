@@ -35,4 +35,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: iw8-mod
-        path: build/iw8_vs2019/x64/client/XInput9_1_0.dll
+        path: build/iw8_vs2022/x64/client/XInput9_1_0.dll
