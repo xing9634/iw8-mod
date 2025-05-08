@@ -15,7 +15,7 @@ namespace Client::Game {
 		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_SHIP)) {
 			batch.Add(SETUP_POINTER(AddBaseDrawTextCmd), "E8 ? ? ? ? 48 8B D0 48 85 C0 74 ? 48 8B 8C 24", SETUP_MOD(Add(1).Rip()));
 		}
-		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
+		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(AddBaseDrawTextCmd), "E8 ? ? ? ? 48 8B D0 48 85 C0 0F 84 ? ? ? ? 48 8B 8C 24", SETUP_MOD(Add(1).Rip()));
 		}
 
@@ -39,7 +39,7 @@ namespace Client::Game {
 
 		batch.Add(SETUP_POINTER(Com_SetErrorMessage), "E8 ? ? ? ? EB ? 40 38 2D", SETUP_MOD(Add(1).Rip()));
 
-		if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
+		if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(Content_DoWeHaveContentPack), "8B D1 83 F9 ? 75");
 		}
 
@@ -48,7 +48,7 @@ namespace Client::Game {
 		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP)) {
 			batch.Add(SETUP_POINTER(DB_LoadXFile), "E8 ? ? ? ? 8B F8 44 38 AB", SETUP_MOD(Add(1).Rip()));
 		}
-		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
+		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(DB_LoadXFile), "E8 ? ? ? ? 8B F8 33 ED 40 38 B3", SETUP_MOD(Add(1).Rip()));
 		}
 
@@ -56,7 +56,7 @@ namespace Client::Game {
 			batch.Add(SETUP_POINTER(DB_Zones_PerformZoneLoad), "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 54 41 55 41 56 41 57 48 83 EC ? 45 8B F9 41 0F"
 				" B6 F0");
 		}
-		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
+		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(DB_Zones_PerformZoneLoad), "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 54 41 55 41 56 41 57 48 83 EC ? 45 8B E1 41 0F"
 				" B6 E8");
 		}
@@ -92,7 +92,7 @@ namespace Client::Game {
 		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP, GameVersion::v1_38_3_9489393)) {
 			batch.Add(SETUP_POINTER(dwGetLogOnStatus), "40 53 48 83 EC ? 48 63 C1 BA");
 		}
-		else if (GameVersionIsAny(GameVersion::v1_44_0_10435696)) {
+		else if (GameVersionIsAny(GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(dwGetLogOnStatus), "40 53 48 83 EC ? 48 63 C1 BA ? ? ? ? 48 69 D8");
 		}
 
@@ -124,7 +124,7 @@ namespace Client::Game {
 
 		batch.Add(SETUP_POINTER(Live_GetLocalClientName), "E8 ? ? ? ? 4C 8B 4B ? 48 8D 0D", SETUP_MOD(Add(1).Rip()));
 
-		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_SHIP, GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
+		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_SHIP, GameVersion::v1_38_3_9489393, GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(Live_IsInSystemlinkLobby), "E8 ? ? ? ? 84 C0 75 ? 45 84 FF", SETUP_MOD(Add(1).Rip()));
 		}
 
@@ -164,7 +164,7 @@ namespace Client::Game {
 		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP)) {
 			batch.Add(SETUP_POINTER(LuaShared_PCall), "E8 ? ? ? ? 8B E8 F7 D6", SETUP_MOD(Add(1).Rip()));
 		}
-		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
+		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(LuaShared_PCall), "E8 ? ? ? ? 8B F8 85 C0 74 ? 4C 8D 44 24", SETUP_MOD(Add(1).Rip()));
 		}
 
@@ -177,7 +177,7 @@ namespace Client::Game {
 		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP)) {
 			batch.Add(SETUP_POINTER(LUI_EndTable), "E8 ? ? ? ? 44 3B 76", SETUP_MOD(Add(1).Rip()));
 		}
-		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
+		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(LUI_EndTable), "E8 ? ? ? ? 8B DF 3B BE", SETUP_MOD(Add(1).Rip()));
 		}
 
@@ -202,7 +202,7 @@ namespace Client::Game {
 		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP)) {
 			batch.Add(SETUP_POINTER(R_EndFrame), "48 8B 15 ? ? ? ? 45 33 D2 4C 8B 0D");
 		}
-		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
+		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(R_EndFrame), "48 83 EC ? E8 ? ? ? ? 48 8B 15 ? ? ? ? 45 33 D2");
 		}
 
@@ -210,14 +210,14 @@ namespace Client::Game {
 			batch.Add(SETUP_POINTER(SEH_StringEd_GetString), "E8 ? ? ? ? 48 8B CB 48 8B F8 E8 ? ? ? ? 48 8B D0 48 8B CF E8 ? ? ? ? 4C 8B 05 ? ? ? ? 48 8D"
 				" 0D ? ? ? ? 48 8B D0 E8 ? ? ? ? 48 8B 0D", SETUP_MOD(Add(1).Rip()));
 		}
-		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
+		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(SEH_StringEd_GetString), "E8 ? ? ? ? 48 8B D0 80 FB", SETUP_MOD(Add(1).Rip()));
 		}
 
 		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP)) {
 			batch.Add(SETUP_POINTER(SV_Cmd_Argv), "E8 ? ? ? ? 4C 8B D0 4C 2B D3", SETUP_MOD(Add(1).Rip()));
 		}
-		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
+		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(SV_Cmd_Argv), "E8 ? ? ? ? 48 89 44 24 ? 33 F6 0F", SETUP_MOD(Add(1).Rip()));
 		}
 
@@ -231,7 +231,7 @@ namespace Client::Game {
 			batch.Add(SETUP_POINTER(Unk_IsUnsupportedGPU), "48 83 EC ? 0F B6 05 ? ? ? ? 85 C0 75");
 		}
 
-		if (GameVersionIsAny(GameVersion::v1_44_0_10435696)) {
+		if (GameVersionIsAny(GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(Unk_IsUserSignedInToBnet), "40 53 48 83 EC ? 48 8B DA E8 ? ? ? ? 83 38 ? 75 ? E8 ? ? ? ? 84 C0");
 		}
 
@@ -247,14 +247,14 @@ namespace Client::Game {
 			batch.Add(SETUP_POINTER(LUI_luaVM), "4C 8B 05 ? ? ? ? 48 8D 0D ? ? ? ? 48 8B D0 E8 ? ? ? ? BA ? ? ? ? 48 8B CE E8 ? ? ? ? 4D 8D 7F",
 				SETUP_MOD(Add(3).Rip()));
 		}
-		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
+		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(LUI_luaVM), "48 8B 05 ? ? ? ? 45 33 C0 44 8B 4C 24 ? 48 89 44 24 ? 48 8B 5C 24", SETUP_MOD(Add(3).Rip()));
 		}
 
 		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY)) {
 			batch.Add(SETUP_POINTER(LUIMethod_LUIGlobalPackage_list), "48 8B 1D ? ? ? ? 48 8B 3D ? ? ? ? 48 85 DB", SETUP_MOD(Add(3).Rip()));
 		}
-		else if (GameVersionIsAny(GameVersion::v1_20_4_7623265_SHIP, GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
+		else if (GameVersionIsAny(GameVersion::v1_20_4_7623265_SHIP, GameVersion::v1_38_3_9489393, GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(LUIMethod_LUIGlobalPackage_list), "48 8B 1D ? ? ? ? 48 8B 3D ? ? ? ? 89 05", SETUP_MOD(Add(3).Rip()));
 		}
 
@@ -272,7 +272,7 @@ namespace Client::Game {
 			batch.Add(SETUP_POINTER(sharedUiInfo_assets), "48 89 05 ? ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? B2 ? 48 89 05 ? ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? 33 D2",
 				SETUP_MOD(Add(3).Rip()));
 		}
-		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_44_0_10435696)) {
+		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(sharedUiInfo_assets), "48 89 05 ? ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? B2 ? 48 89 05 ? ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? 80 3D",
 				SETUP_MOD(Add(3).Rip()));
 		}
@@ -290,7 +290,7 @@ namespace Client::Game {
 		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393)) {
 			batch.Add(SETUP_POINTER(Unk_XUIDCheck1), "48 8D 15 ? ? ? ? 48 FF C6 81 FF", SETUP_MOD(Add(3).Rip()));
 		}
-		else if (GameVersionIsAny(GameVersion::v1_44_0_10435696)) {
+		else if (GameVersionIsAny(GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
 			batch.Add(SETUP_POINTER(Unk_XUIDCheck1), "48 8D 1D ? ? ? ? 40 88 35", SETUP_MOD(Add(3).Rip()));
 		}
 

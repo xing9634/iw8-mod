@@ -356,7 +356,6 @@ group "vendor"
 		}
 		vpaths {
 			["*"] = {}
-		
 		}
 		includedirs {
 			"vendor/%{prj.name}/"

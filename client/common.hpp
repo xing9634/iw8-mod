@@ -20,7 +20,9 @@ namespace Client {
 		v1_20_4_7623265_REPLAY,
 		v1_20_4_7623265_SHIP,
 		v1_38_3_9489393,
-		v1_44_0_10435696
+		v1_42_1_10125479,
+		v1_44_0_10435696,
+		v1_46_0_10750827
 	};
 
 	struct GameIdentifier {
@@ -35,7 +37,9 @@ namespace Client {
 		{ 0xFF380251, { "1.20.4.7623265-replay", GameVersion::v1_20_4_7623265_REPLAY, false } },
 		{ 0x6E9C74C8, { "1.20.4.7623265-ship", GameVersion::v1_20_4_7623265_SHIP, true } },
 		{ 0xCE698CA4, { "1.38.3.9489393", GameVersion::v1_38_3_9489393, true } },
-		{ 0xD6C4C029, { "1.44.0.10435696", GameVersion::v1_44_0_10435696, true } }
+		{ 0x54FBBFD1, { "1.42.1.10125479", GameVersion::v1_42_1_10125479, true } },
+		{ 0xD6C4C029, { "1.44.0.10435696", GameVersion::v1_44_0_10435696, true } },
+		{ 0x5910A608, { "1.46.0.10750827", GameVersion::v1_46_0_10750827, true } }
 	};
 
 	inline HMODULE g_Module{};
