@@ -19,6 +19,7 @@ namespace Client {
 		v1_03_0_7209368,
 		v1_20_4_7623265_REPLAY,
 		v1_20_4_7623265_SHIP,
+		v1_30_0_8403677,
 		v1_38_3_9489393,
 		v1_42_1_10125479,
 		v1_44_0_10435696,
@@ -36,6 +37,7 @@ namespace Client {
 		{ 0x641EA3EB, { "1.03.0.7209368", GameVersion::v1_03_0_7209368, true } },
 		{ 0xFF380251, { "1.20.4.7623265-replay", GameVersion::v1_20_4_7623265_REPLAY, false } },
 		{ 0x6E9C74C8, { "1.20.4.7623265-ship", GameVersion::v1_20_4_7623265_SHIP, true } },
+		{ 0x7E37B0B9, { "1.30.0.8403677", GameVersion::v1_30_0_8403677, true } },
 		{ 0xCE698CA4, { "1.38.3.9489393", GameVersion::v1_38_3_9489393, true } },
 		{ 0x54FBBFD1, { "1.42.1.10125479", GameVersion::v1_42_1_10125479, true } },
 		{ 0xD6C4C029, { "1.44.0.10435696", GameVersion::v1_44_0_10435696, true } },
@@ -53,6 +55,14 @@ namespace Client {
 	template<typename... Args>
 	bool GameVersionIsAny(Args... args) {
 		return ((args == g_GameIdentifier.m_Checksum) || ...);
+	}
+
+	inline bool GameVersionIsNewerThan(GameVersion version) {
+		return static_cast<int>(version) < static_cast<int>(g_GameIdentifier.m_Checksum);
+	}
+
+	inline bool GameVersionIsOlderThan(GameVersion version) {
+		return static_cast<int>(version) > static_cast<int>(g_GameIdentifier.m_Checksum);
 	}
 
 	// runtime settings

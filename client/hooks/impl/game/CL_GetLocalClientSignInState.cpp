@@ -12,8 +12,11 @@ int Client::Hook::Hooks::HK_CL_GetLocalClientSignInState::hkCallback(int control
 		if (GameVersionIsAny(GameVersion::v1_20_4_7623265_REPLAY, GameVersion::v1_20_4_7623265_SHIP)) {
 			arrElemSize = 0x3A;
 		}
-		else if (GameVersionIsAny(GameVersion::v1_38_3_9489393, GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696, GameVersion::v1_46_0_10750827)) {
+		else if (GameVersionIsAny(GameVersion::v1_30_0_8403677, GameVersion::v1_38_3_9489393, GameVersion::v1_42_1_10125479, GameVersion::v1_44_0_10435696)) {
 			arrElemSize = 0x46;
+		}
+		else if (GameVersionIsAny(GameVersion::v1_46_0_10750827)) {
+			arrElemSize = 0x100;
 		}
 
 		if (arrElemSize != 0) {

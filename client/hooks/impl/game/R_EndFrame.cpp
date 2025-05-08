@@ -43,7 +43,9 @@ void Client::Hook::Hooks::HK_R_EndFrame::hkCallback() {
 				*g_Pointers->m_Unk_XUIDCheck2 = xuidMagic | xuidId;
 			}
 
-			(*g_Pointers->m_s_presenceData)[0].m_Current.m_CrossTitlePresenceData.m_PlatformID = xuidMagic | xuidId / 6;
+			if (g_Pointers->m_s_presenceData != nullptr) {
+				(*g_Pointers->m_s_presenceData)[0].m_Current.m_CrossTitlePresenceData.m_PlatformID = xuidMagic | xuidId / 6;
+			}
 
 			*g_Pointers->m_s_isContentEnumerationFinished = true;
 			g_Pointers->m_Unk_BNetClass->m_State = 2;
