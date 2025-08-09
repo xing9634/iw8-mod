@@ -101,7 +101,7 @@ namespace Client {
 						LOG("GameSettings", DEBUG, "Can't load setting \"{}\" as the 'STRING' type is not implemented.", settingName);
 						{
 							auto stringValue = json[settingName].get<std::string>().c_str();
-							float a = reinterpret_cast<int64_t>(const_cast<char*>(stringValue));
+							float a = reinterpret_cast<int64_t>(_strdup(stringValue));
 							g_Pointers->m_GamerProfile_SetDataByName(0, settingName.c_str(), a);
 						}
 						break;
