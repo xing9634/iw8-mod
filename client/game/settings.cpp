@@ -98,8 +98,12 @@ namespace Client {
 						break;
 					case IW8::GamerProfileDataType::TYPE_STRING:
 						// Maybe this is a string pointer?
-                        auto stringValue = json[settingName].get<std::string>().c_str();
-                        g_Pointers->m_GamerProfile_SetDataByName(0, settingName.c_str(), reinterpret_cast<const void*>(stringValue));
+						LOG("GameSettings", DEBUG, "Can't load setting \"{}\" as the 'STRING' type is not implemented.", settingName);
+						{
+							auto stringValue = json[settingName].get<std::string>().c_str();
+							float a = reinterpret_cast<int64_t>(const_cast<char*>(stringValue));
+							g_Pointers->m_GamerProfile_SetDataByName(0, settingName.c_str(), a);
+						}
 						break;
 					case IW8::GamerProfileDataType::TYPE_BUFFER:
 						LOG("GameSettings", DEBUG, "Can't load setting \"{}\" as the 'BUFFER' type is not implemented.", settingName);
