@@ -97,7 +97,8 @@ namespace Client {
 						g_Pointers->m_GamerProfile_SetDataByName(0, settingName.c_str(), json[settingName].get<float>());
 						break;
 					case IW8::GamerProfileDataType::TYPE_STRING:
-						LOG("GameSettings", DEBUG, "Can't load setting \"{}\" as the 'STRING' type is not implemented.", settingName);
+						// Maybe this is a string pointer?
+						g_Pointers->m_GamerProfile_SetDataByName(0, settingName.c_str(), json[settingName].get<char*>());
 						break;
 					case IW8::GamerProfileDataType::TYPE_BUFFER:
 						LOG("GameSettings", DEBUG, "Can't load setting \"{}\" as the 'BUFFER' type is not implemented.", settingName);
