@@ -98,7 +98,8 @@ namespace Client {
 						break;
 					case IW8::GamerProfileDataType::TYPE_STRING:
 						// Maybe this is a string pointer?
-						g_Pointers->m_GamerProfile_SetDataByName(0, settingName.c_str(), json[settingName].get<char*>());
+                        auto stringValue = json[settingName].get<std::string>().c_str();
+                        g_Pointers->m_GamerProfile_SetDataByName(0, settingName.c_str(), reinterpret_cast<const void*>(stringValue));
 						break;
 					case IW8::GamerProfileDataType::TYPE_BUFFER:
 						LOG("GameSettings", DEBUG, "Can't load setting \"{}\" as the 'BUFFER' type is not implemented.", settingName);
